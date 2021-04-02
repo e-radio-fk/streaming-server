@@ -1,6 +1,14 @@
-/* general scripts used everywhere */
+/* 
+ * general scripts used everywhere 
+ */
 
-const darkmode =  new Darkmode();
+const options = {
+  backgroundColor: '#4a2cb4',  // default: '#fff'
+  time: '0.5s',
+  autoMatchOsTheme: true
+}
+
+const darkmode =  new Darkmode(options);
 
 /**
  * toggle_dark_mode()
