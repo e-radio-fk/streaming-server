@@ -1,0 +1,45 @@
+@import url('general.less');
+
+.sign-in-or-up-space {
+    padding-top: 150px;
+    text-align: center;
+}
+
+.sign-in-or-up-space button {
+    display: inline-block;
+}
+
+.sign-in-or-up-space a {
+    color: bisque;
+}
+
+#sign-up-button:hover {
+    text-decoration: underline;
+    cursor: hand;
+}
+
+#login-box,
+#signup-box {
+    width: 360px;
+    overflow: hidden;
+    margin: auto;  
+    padding: 30px;
+    background: @background-color-light;
+    border-radius: 15px;
+    border-width: 3px;
+    visibility: hidden;
+
+    .no-select();
+}
+
+// back-button
+#login-box img,
+#signup-box img {
+    width: 30px; 
+    height: 30px;
+}
+
+#login-box-back-button {
+    width: 33px; 
+    height: 33px;
+}

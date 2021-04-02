@@ -1,0 +1,102 @@
+<html>
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">	
+
+	<title>FK Live E-Radio</title>
+	<link rel="stylesheet" href="css/main.css">
+
+	<!-- Firebase -->
+	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+	<script defer src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+
+	<!-- Initialise Firebase -->
+	<script defer src="scripts/Firebase/init-firebase.js"></script>
+</head>
+<header style="visibility: hidden;">
+    <div class="now-playing-banner" id="now-playing-banner-object">
+		<img class="play-button">
+        <p id="now-playing-banner-text">Last Christmas I Gave You My Heart</p>
+
+		<!-- Move banner -->
+		<script src="scripts/move_banner.js"></script>
+    </div>
+
+	<br>
+
+	<!-- Rounded switch -->
+	<div style="float: right; clear: both;">
+		<div style="float: left; padding-right: 5px; margin-top: -6px;">
+			<a style="font-size: 20px">🌓</a>
+		</div>
+		<label class="switch" style="float: right;" onclick="">
+			<input type="checkbox">
+			<span class="slider round"></span>
+		</label>
+	</div>
+
+	<script src="scripts/general.js"></script>
+	<script src="scripts/page-load.js"></script>
+</header>
+<body style="visibility: hidden;">
+	<div class="intro">
+		<h1>fk live patras radio</h1>
+		<p>Live e-ράδιο από φοιτητές</p>
+	</div>
+
+	<!-- 
+		SIGN IN OR UP BOX 
+	-->
+	<div class="sign-in-or-up-space" id="sign-in-or-up-space-id">
+		<button class="no-select" onclick="show_login_box()" id="sign-in-button">Sign In</button>
+		<p class="text_small" id="sign-in-text">Don't have an account? <a class="no-select" id="sign-up-button" onclick="show_signup_box()">Sign Up</a></p>
+
+		<!--
+			SIGN IN BOX
+		 -->
+		<div id="login-box">
+			<img class="back-button" id="login-box-back-button" onclick="hide_login_box()">
+
+			<div id="login-form">
+				<input type="text" name="Uname" class="textbox" id="login-form-uname" placeholder="Username">    
+				<br><br>
+				<input type="Password" name="Pass" class="textbox" id="login-form-passw" placeholder="Password">    
+				<br><br>
+				<button id="log" onclick="sign_in()">Sign In</button>
+				<br><br>
+				<input type="checkbox" id="check">
+				<span>Remember me</span>    
+				<br><br>
+				Forgot <a href="#">Password</a>
+			</div>
+		</div>
+
+		<!--
+			SIGN UP BOX
+		 -->
+		<div id="signup-box">
+			<img class="back-button" id="login-box-back-button" onclick="hide_signup_box()">
+
+			<div id="signup-form">
+				<input type="text" name="Uname" class="textbox" id="signup-form-uname" placeholder="Username">    
+				<br><br>
+				<input type="text" name="Email" class="textbox" id="signup-form-email" placeholder="Email">    
+				<br><br>
+				<input type="Password" name="Pass" class="textbox" id="signup-form-passw" placeholder="Password">    
+				<br><br>
+				<button id="create-account-button" onclick="sign_up()">Create Account</button>
+				<br><br>
+			</div>
+		</div>
+
+		<!-- Platform Login & more... -->
+		<script defer src="scripts/login.js"></script>
+		<script defer src="scripts/streaming-client.js"></script>
+	</div>
+</body>
+<footer>
+	<p>credits npyl @ 2021</p>
+</footer>
+</html>

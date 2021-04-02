@@ -1,21 +1,17 @@
-// TODO: do not allow every origin! see CORS.
+//
+// This is site's main
+//
 
-import { createServer, staticProvider } from 'express';
+var express = require('express');
 
-var app = createServer();
+const app = express();
 
-app.use(staticProvider(__dirname + '/public'));
+app.use(express.static(__dirname + '/docs'));
 
-app.all('*', function(req, res) {
+app.get('/', (req, res) => {
   res.sendFile('index.html');
 });
-
-// const io = require("socket.io")(8081, {
-// 	cors: {
-// 		origin: '*',
-// 	}
-// });
-
-// io.on("connection", (socket) => {
-// 	socket.emit("hello", "world");
-// });
+ 
+app.listen(3000, () =>
+  console.log('Example app listening on port 3000!'),
+);

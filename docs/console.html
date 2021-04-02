@@ -1,0 +1,42 @@
+<html>
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">	
+
+    <title>FK Live E-Radio: Control Panel</title>
+    <link rel="stylesheet" href="css/main.css">
+    
+	<!-- Firebase -->
+	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+	<script defer src="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.js"></script>
+	<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.6.1/firebase-ui-auth.css" />
+
+	<!-- Initialise Firebase -->
+	<script defer src="scripts/Firebase/init-firebase.js"></script>
+</head>
+<header style="visibility: hidden;">
+    <div class="now-playing-banner" id="control-panel-nav-bar" style="position: relative;">
+        <h4 style="position: absolute;" id="control-panel-nav-bar-title">Console</h4>
+        <h4>version 0.0.0.2</h4>
+        <div class="dropdown">
+            <div class="dropdown-content">
+              <a href="./settings.html">Settings</a>
+              <a onclick="sign_out()" id="console-sign-out-button">Sign Out</a>
+            </div>
+            <img class="dropbtn" id="banner-user-img" src="img/person.png">
+        </div>
+    </div>
+
+    <script defer src="scripts/login.js"></script>
+    <script defer src="scripts/console.js"></script>
+</header>
+<body style="visibility: hidden;">
+    <br>
+    <br>
+    <button onclick="start_mic()">start mic</button>
+
+    <h3>Playlists</h3>
+    <button>(+) import yt playlist</button>
+</body>
+</html>

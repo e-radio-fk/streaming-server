@@ -1,0 +1,70 @@
+.setttings-nav-bar img {
+    height: 50px;
+    width: 50px;
+}
+
+figure {
+    height: 230px;
+    width: 230px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    position: relative;
+
+    // border
+    border-radius: 100%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+
+    .no-select();
+}
+
+figure .user-photo-caption {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    transition: all .2s ease-in-out;
+    opacity: 0;
+    position: absolute;
+    background-color: black;
+}
+
+figure:hover .user-photo-caption {
+    opacity: 0.6;
+}
+
+#user-photo {
+    height: 230px;
+    width: 230px;
+    object-fit: fill;
+    display: block;
+}
+
+figure .user-photo-caption-text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+#spinner {
+    visibility: hidden;
+    text-align: center;
+    vertical-align: middle;
+    position: relative;
+}
+
+#settings-back-button {
+    height: 50px; 
+    width: 50px; 
+    position: absolute;
+}
