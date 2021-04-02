@@ -11,9 +11,6 @@ if ((!user) || (user.uid == undefined) || user == 'no-user')
 }
 else
 {
-    document.getElementsByTagName('header')[0].style.visibility = 'visible';
-    document.getElementsByTagName('body')[0].style.visibility = 'visible';
-
     /* construct photo path */
     var serverFilePath = '/' + user.uid + '/user_photo';
     var photoURL = 'https://eradiofk.sirv.com' + serverFilePath;
@@ -27,4 +24,15 @@ else
     
     /* set user photo */
     userPhoto.src = photoURL;
+
+    // run an AJAX get request to the route you setup above...
+    // respect the cross-domain policy by using the same domain
+    // you used to access your index.html file!
+    $.get('/enable-streaming', function() {
+        console.log('Sending!');
+    });
+    
+    /* initialisation has finished; show the UI */
+    document.getElementsByTagName('header')[0].style.visibility = 'visible';
+    document.getElementsByTagName('body')[0].style.visibility = 'visible';
 }
