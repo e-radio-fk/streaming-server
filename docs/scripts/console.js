@@ -25,11 +25,10 @@ else
     /* set user photo */
     userPhoto.src = photoURL;
 
-    // run an AJAX get request to the route you setup above...
-    // respect the cross-domain policy by using the same domain
-    // you used to access your index.html file!
+    // (TODO: if not already enabled!)
+    /* enable streaming */
     $.get('/enable-streaming', function() {
-        console.log('Sending!');
+        console.log('console: Starting stream...');
     });
     
     /* initialisation has finished; show the UI */

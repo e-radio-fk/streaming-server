@@ -1,6 +1,17 @@
 /* general scripts used everywhere */
 
-/** 
+const darkmode =  new Darkmode();
+
+/**
+ * toggle_dark_mode()
+ * 
+ * Toggles the dark mode of the app
+ */
+function toggle_dark_mode() {
+  darkmode.toggle();
+}
+
+/**
  *  show_error(error_message:string, error:whatever)
  *  
  *  takes the header element and adds an error banner

@@ -14,6 +14,9 @@
 
 	<!-- Initialise Firebase -->
 	<script defer src="scripts/Firebase/init-firebase.js"></script>
+
+	<!-- Darkmode -->
+	<script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
 </head>
 <header style="visibility: hidden;">
     <div class="now-playing-banner" id="now-playing-banner-object">
@@ -31,8 +34,8 @@
 		<div style="float: left; padding-right: 5px; margin-top: -6px;">
 			<a style="font-size: 20px">🌓</a>
 		</div>
-		<label class="switch" style="float: right;" onclick="">
-			<input type="checkbox">
+		<label class="switch" style="float: right;">
+			<input type="checkbox" onclick="toggle_dark_mode()">
 			<span class="slider round"></span>
 		</label>
 	</div>
