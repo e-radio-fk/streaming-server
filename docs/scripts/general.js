@@ -2,13 +2,15 @@
  * general scripts used everywhere 
  */
 
-const options = {
-  backgroundColor: '#4a2cb4',  // default: '#fff'
-  time: '0.5s',
-  autoMatchOsTheme: true
-}
+var options = {
+  light: "css/light.css",
+  dark: "css/dark.css",
+  checkSystemScheme: true,
+  saveOnToggle: true
+};
+var DarkMode = new DarkMode(options);
 
-const darkmode =  new Darkmode(options);
+document.getElementById('darkmode-toggle-button').onclick = toggle_dark_mode();
 
 /**
  * toggle_dark_mode()
@@ -16,7 +18,7 @@ const darkmode =  new Darkmode(options);
  * Toggles the dark mode of the app
  */
 function toggle_dark_mode() {
-  darkmode.toggle();
+  DarkMode.toggleMode();
 }
 
 /**
