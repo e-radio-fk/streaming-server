@@ -1,3 +1,23 @@
-* {
-    background-color: #4a2cb4;
+body {
+  background-color: #4a2cb4;
+  color: #FFF178;
+}
+h1 {
+  color: #FFFFFF;
+}
+button {
+  background-color: #FFEA2E;
+}
+.textbox {
+  border-color: #FFEA2E;
+}
+.dropdown-content {
+  background-color: #5a3ebe;
+}
+.dropdown-content a {
+  color: #FFEA2E;
+}
+#login-box,
+#signup-box {
+  background: #5a3ebe;
 }

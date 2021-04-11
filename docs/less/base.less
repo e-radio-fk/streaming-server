@@ -2,13 +2,6 @@
 
 @import url('general.less');
 
-@background-color: #4a2cb4;
-@background-color-light: #5a3ebe;
-@background-color-dark: #412c8a;
-@select-color: #FFF178;
-@text-color: #FFEA2E;
-@h1: #FFFFFF;
-
 html {
   font-size: 100%;
 }
@@ -17,15 +10,12 @@ body {
   font-family: 'Poppins', sans-serif;
   font-weight: 400;
   line-height: 1.75;
-  background-color: @background-color;
-  color: @select-color;
   text-shadow: 1px 1px #000000;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
 }
-
 
 p {margin-bottom: 1rem;}
 
@@ -41,7 +31,6 @@ h1, h2, h3, h4, h5 {
 h1 {
   margin-top: 0;
   font-size: 5.052rem;
-  color: @h1;
 }
 
 h2 {font-size: 2.441rem;}
@@ -55,7 +44,6 @@ h5 {font-size: 1.25rem;}
 small, .text_small {font-size: 0.8rem;}
 
 button {
-  background-color: @text-color;
   border: 2px solid #000000;
   border-radius: 10px;
   font-size: 25px;
@@ -72,7 +60,6 @@ button {
   width: 290px;
   border-radius: 7px;
   text-align: center;
-  border-color: @text-color;
   border-style: solid;
 }
 
@@ -164,7 +151,6 @@ br {
 }
 
 .dropdown-content {
-  background-color: @background-color-light;
   backdrop-filter: blur(10px);
   border-radius: 7px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -181,7 +167,6 @@ br {
 }
 
 .dropdown-content a {
-  color: @text-color;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
