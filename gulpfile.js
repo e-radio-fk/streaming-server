@@ -39,8 +39,16 @@ var streaming_client_config = {
     },
 }
 
+var livechat_config = {
+    js: {
+        src: './docs/_browserify/_livechat.js',         // Entry point
+        outputDir: './docs/scripts',                    // Directory to save bundle to
+        outputFile: 'livechat.js'                       // Name to use for bundle
+    },
+}
+
 // configs array
-var configs = [sirv_config, settings_config, streaming_client_config]
+var configs = [sirv_config, settings_config, streaming_client_config, livechat_config]
 
 // This method makes it easy to use common bundling options in different tasks
 function bundle (bundler, config) {

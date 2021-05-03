@@ -22,8 +22,9 @@ app.get('/enable-streaming', (req, res) => {
 	});
 
 	io.on("connection", (socket) => {
-		socket.emit("hello", "world");
+		socket.emit('message', 'hello from npyl!!!!', 'npyl');
 	});
+
 });
 
 app.listen(3000, () =>
