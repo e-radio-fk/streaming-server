@@ -1,5 +1,6 @@
 /*
  * General script to run when loading a page!
+ * ** Run in header **
  */
 
 const urlParams = new URLSearchParams(window.location.search);

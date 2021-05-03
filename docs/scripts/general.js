@@ -3,14 +3,14 @@
  */
 
 var options = {
-  light: "css/light.css",
-  dark: "css/dark.css",
+  light: "css/_light.css",
+  dark: "css/_dark.css",
   checkSystemScheme: true,
   saveOnToggle: true
 };
 var DarkMode = new DarkMode(options);
 
-document.getElementById('darkmode-toggle-button').onclick = toggle_dark_mode();
+document.getElementById('darkmode-toggle-button').onclick = toggle_dark_mode;
 
 /**
  * toggle_dark_mode()

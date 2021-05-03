@@ -5,6 +5,9 @@
 
 	<title>FK Live E-Radio</title>
 	<link rel="stylesheet" href="css/main.css">
+	<noscript>
+		<link rel="stylesheet" type="text/css" href="light.css">
+	</noscript>
 
 	<!-- Firebase -->
 	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
@@ -19,6 +22,10 @@
     <div class="now-playing-banner" id="now-playing-banner-object">
 		<img class="play-button">
         <p id="now-playing-banner-text">Last Christmas I Gave You My Heart</p>
+
+		<div class="dropdown">
+            <img class="dropbtn" id="banner-user-img" src="img/person.png" onclick="window.location.pathname='login.html'">
+        </div>
 
 		<!-- Move banner -->
 		<script src="scripts/move_banner.js"></script>
@@ -45,8 +52,10 @@
 		<p>Live e-ράδιο από φοιτητές</p>
 	</div>
 
+	<br>
+	<br>
+
 	<!-- Chat space -->
-	<!-- Code from  -->
 	<div id="live-chat-container">
 		<yt-live-chat-renderer style="width: 300px; height: 300px;">
 			<yt-live-chat-ticker-renderer>
