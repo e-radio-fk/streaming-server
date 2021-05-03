@@ -57,7 +57,7 @@
 
 	<!-- Chat space -->
 	<div id="live-chat-container">
-		<yt-live-chat-renderer style="width: 300px; height: 300px;">
+		<yt-live-chat-renderer>
 			<yt-live-chat-ticker-renderer>
 				<yt-live-chat-ticker-paid-message-item-renderer style="background-color: rgba(0,184,212,1);">
 					<div id="content">
@@ -103,11 +103,21 @@
 					</div>
 				</yt-live-chat-paid-message-renderer>
 			</yt-live-chat-item-list-renderer>
-		</yt-live-chat-renderer>	
+
+			<input type="text" class="yt-live-chat-message-box" style="width: 100%; position: fixed">
+		</yt-live-chat-renderer>
 	</div>
 
+	<!-- Darkmode -->
 	<script src="scripts/darkmode.js"></script>
 	<script src="scripts/general.js"></script>
+
+	<!-- Livechat -->
+	<script src="scripts/livechat.js"></script>
+	<script>
+		console.log('adding!');
+		add_message_from_user('hello', 'npyl');
+	</script>
 </body>
 <footer>
 	<p>credits npyl @ 2021</p>

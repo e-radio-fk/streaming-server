@@ -21,3 +21,9 @@ button {
 #signup-box {
   background: #5a3ebe;
 }
+.play-button {
+  content: url('../img/play_dark_mode.png');
+}
+#banner-user-img {
+  content: url('../img/person_dark_mode.png');
+}

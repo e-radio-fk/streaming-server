@@ -443,7 +443,6 @@ input:checked + .slider:before {
 }
 /* Play button */
 .play-button {
-  content: url('../img/play.png');
   padding-left: 10px;
   display: inline-block;
   width: 40px;
@@ -610,7 +609,11 @@ figure .user-photo-caption-text {
   width: 99%;
   height: 600px;
   padding-left: 5px;
+  padding-right: 5px;
   margin: auto;
+}
+.yt-live-chat-message-box {
+  width: 100%;
 }
 /* Transparent background. */
 yt-live-chat-renderer {
