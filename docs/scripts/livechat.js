@@ -5,14 +5,65 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-list-renderer')[0];
+var livechat_message_box = document.getElementById('live-chat-message-box');
+var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-list-renderer')[0]; //
+// Communications
+//
+
+var socket = (0, _socket["default"])("http://127.0.0.1:8081");
+/* 
+ * upon receiving a message 
+ */
+
+socket.on("message", function () {
+  /* 
+      a message must always have the form: 
+      arg[0] = message, 
+      arg[1] = the user sending it 
+      arg[2] = his/her credentials
+  */
+  if (arguments.length != 3) return;
+  add_message_from_user(arguments.length <= 0 ? undefined : arguments[0], arguments.length <= 1 ? undefined : arguments[1], arguments.length <= 2 ? undefined : arguments[2]);
+});
+/*
+ * 
+ */
+
+function post_message_to_server(message, username, credentials) {
+  socket.emit('client-message', message, username, credentials);
+} //
+// Livechat Message Box
+//
+// TODO:    make sure the page has loaded only when 
+//          the connection and chatbox's event controller have been established
+
+/* 
+ * We must add an "Enter" pressed event handler
+ */
+
+
+livechat_message_box.addEventListener('keyup', function (event) {
+  event.preventDefault();
+
+  if (event.key == 'Enter') {
+    var message = livechat_message_box.value;
+    var username = 'npyl';
+    var credentials = 'owner';
+    post_message_to_server(message, username, credentials);
+    /* clear message box contents */
+
+    livechat_message_box.value = '';
+  }
+}); //
+// Livechat Interface
+//
+
 /*
  * adds a new message to the livechat
  */
 
 function add_message_from_user(message, username, credentials) {
   var timestamp = '12:00';
-  var credentials = 'owner';
   /* create message */
 
   var new_message = document.createElement('yt-live-chat-text-message-renderer');
@@ -20,24 +71,6 @@ function add_message_from_user(message, username, credentials) {
   new_message.innerHTML = '<div id="author-photo"></div>' + '<div id="content">' + '   <span id="timestamp">' + timestamp + '</span>' + '   <span id="author-badges">' + '       <yt-live-chat-author-badge-renderer type="owner">' + '       </yt-live-chat-author-badge-renderer>' + '   </span>' + '   <span id="author-name" type="owner">' + username + '</span>' + '   <span id="message">' + message + '</span>' + '</div>';
   livechat_messages_list.appendChild(new_message);
 }
-/*
- * send message to the server!
- */
-
-
-function send_message_to_everyone() {} //
-// Connection
-//
-
-
-var socket = (0, _socket["default"])("http://127.0.0.1:8081");
-/* receiving a message */
-
-socket.on("message", function () {
-  /* a message must always have the form: arg[0] = message, arg[1] = the user sending it */
-  if (arguments.length != 2) return;
-  add_message_from_user(arguments.length <= 0 ? undefined : arguments[0], arguments.length <= 1 ? undefined : arguments[1]);
-});
 
 },{"socket.io-client":31}],2:[function(require,module,exports){
 

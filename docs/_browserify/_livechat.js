@@ -1,6 +1,69 @@
 import io from "socket.io-client";
 
+var livechat_message_box = document.getElementById('live-chat-message-box');
 var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-list-renderer')[0];
+
+//
+// Communications
+//
+
+const socket = io("http://127.0.0.1:8081");
+
+/* 
+ * upon receiving a message 
+ */
+socket.on("message", (...args) => {
+    
+    /* 
+        a message must always have the form: 
+        arg[0] = message, 
+        arg[1] = the user sending it 
+        arg[2] = his/her credentials
+    */
+
+    if (args.length != 3)
+        return;
+
+    add_message_from_user(args[0], args[1], args[2]);
+});
+
+/*
+ * 
+ */
+function post_message_to_server(message, username, credentials)
+{
+    socket.emit('client-message', message, username, credentials);
+}
+
+//
+// Livechat Message Box
+//
+
+// TODO:    make sure the page has loaded only when 
+//          the connection and chatbox's event controller have been established
+
+/* 
+ * We must add an "Enter" pressed event handler
+ */
+livechat_message_box.addEventListener('keyup', event => {
+    event.preventDefault()
+    
+    if (event.key == 'Enter')
+    {
+        var message = livechat_message_box.value;
+        var username = 'npyl';
+        var credentials = 'owner';
+
+        post_message_to_server(message, username, credentials);
+
+        /* clear message box contents */
+        livechat_message_box.value = '';
+    }
+});
+
+//
+// Livechat Interface
+//
 
 /*
  * adds a new message to the livechat
@@ -8,7 +71,6 @@ var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-li
 function add_message_from_user(message, username, credentials) {
 
     var timestamp = '12:00';
-    var credentials = 'owner';
 
     /* create message */
     var new_message = document.createElement('yt-live-chat-text-message-renderer');
@@ -26,24 +88,3 @@ function add_message_from_user(message, username, credentials) {
 
     livechat_messages_list.appendChild(new_message);
 }
-
-/*
- * send message to the server!
- */
-function send_message_to_everyone() {}
-
-//
-// Connection
-//
-const socket = io("http://127.0.0.1:8081");
-
-/* receiving a message */
-socket.on("message", (...args) => {
-    
-    /* a message must always have the form: arg[0] = message, arg[1] = the user sending it */
-
-    if (args.length != 2)
-        return;
-
-    add_message_from_user(args[0], args[1]);
-});

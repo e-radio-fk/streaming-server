@@ -22,9 +22,11 @@ app.get('/enable-streaming', (req, res) => {
 	});
 
 	io.on("connection", (socket) => {
-		socket.emit('message', 'hello from npyl!!!!', 'npyl');
+		socket.on('client-message', (...args) => {
+			console.log('got a message from a client!');
+			io.emit('message', args[0], args[1], args[2]);
+		});
 	});
-
 });
 
 app.listen(3000, () =>
