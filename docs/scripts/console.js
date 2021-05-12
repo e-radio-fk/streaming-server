@@ -4,10 +4,7 @@ if ((!user) || (user.uid == undefined) || user == 'no-user')
 {
     console.log('console: restricting view to unauthorised user!');
 
-    if (window.location.href.indexOf('127.0.0.1') != -1)
-        window.location.pathname = "/" + '?error=UnauthorisedUser';
-    else
-        window.location.href = "https://e-radio-fk.github.io/app" + '?error=UnauthorisedUser';
+    window.location.pathname = '/?error=UnauthorisedUser';
 }
 else
 {
