@@ -105,10 +105,7 @@ function sign_up() {
 function sign_out() {
     firebase.auth().signOut().then(() => {
         /* signing-out; return to site home */
-        if (window.location.href.indexOf('127.0.0.1') != -1)
-            window.location.pathname = "/";
-        else
-            window.location.href = "https://e-radio-fk.github.io/app";
+        window.location.pathname = "/";
     }).catch((error) => {
         console.log('error: ', error);
     });
