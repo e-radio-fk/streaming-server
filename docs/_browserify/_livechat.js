@@ -7,7 +7,19 @@ var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-li
 // Communications
 //
 
-const socket = io("http://127.0.0.1:8081");
+var port = '8081'
+var getUrl = window.location;
+var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
+// check if we are running localhost to remove the webservice port 3000
+if (baseUrl.search('127.0.0.1') != -1)
+    baseUrl = baseUrl.substr(0, baseUrl.length - 6);
+
+baseUrl += ':' + port;
+
+console.log('using', baseUrl);
+
+const socket = io(baseUrl);
 
 /* 
  * upon receiving a message 
