@@ -5,9 +5,6 @@
 
 	<title>FK Live E-Radio</title>
 	<link rel="stylesheet" href="css/main.css">
-	<noscript>
-		<link rel="stylesheet" type="text/css" href="light.css">
-	</noscript>
 
 	<!-- Firebase -->
 	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
@@ -27,10 +24,9 @@
 		<!-- User Login Dropdwon -->
 		<div class="dropdown">
             <img class="dropbtn" id="user-login-dropdown-back-button" src="img/person.png" onclick="toggle_login_dropdown()">
-            
+
 			<div class="dropdown-content">
 				<div id="login-box" style="text-align: center;">
-					<br>
 					<div style="position: relative; margin:auto;">
 						<input type="text" name="Uname" class="textbox" id="login-form-uname" placeholder="Username">  
 						<span class="fa fa-user" style="position: absolute; left: 0;"></span>
@@ -39,21 +35,22 @@
 					<div style="position: relative; margin:auto;">
 						<input type="Password" name="Pass" class="textbox" id="login-form-passw" placeholder="Password">    
 						<span class="fa fa-lock" style="position: absolute; left: 0;"></span>
-						<br><br>
 					</div>
+					<br>
 					<button id="log" onclick="sign_in()">Sign In</button>
-					<br><br>
-					<div>
-						Forgot <a href="#">Password</a>
-						<p class="text_small" id="sign-in-text">Don't have an account? <a class="no-select" id="sign-up-button" onclick="show_signup_box()">Sign Up</a></p>	
-					</div>
-					</div>
+					<!-- <br><br>
+					Forgot <a href="#">Password</a>
+					<p class="text_small" id="sign-in-text">Don't have an account? <a class="no-select" id="sign-up-button" onclick="show_signup_box()">Sign Up</a></p>	 -->
 				</div>
 			</div>
+
+			<script src="scripts/login.js"></script>
         </div>
 
 		<!-- Move banner -->
 		<script src="scripts/move_banner.js"></script>
+
+		<!-- This is for the login dropdown -->
 		<script>
 			var login_button = document.getElementById('user-login-dropdown-back-button');
 			var dropdown_content = document.getElementsByClassName('dropdown-content')[0];
@@ -91,6 +88,11 @@
 	<script src="scripts/page-load.js"></script>
 </header>
 <body style="visibility: hidden;">
+	<br>
+	<br>
+	<br>
+	<br>
+
 	<div class="intro">
 		<h1>fk live patras radio</h1>
 		<p>Live e-ράδιο από φοιτητές</p>

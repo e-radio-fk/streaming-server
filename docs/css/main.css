@@ -222,6 +222,9 @@ br {
   /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
 }
+.dropbtn:hover {
+  backdrop-filter: brightness(120%);
+}
 .dropdown-content {
   backdrop-filter: blur(10px);
   border-radius: 7px;
@@ -232,7 +235,7 @@ br {
   min-width: 160px;
   right: 0;
   top: 60px;
-  z-index: 1;
+  z-index: 100;
   cursor: hand;
 }
 .dropdown-content a {
@@ -478,8 +481,6 @@ input:checked + .slider:before {
 #login-box,
 #signup-box {
   width: 300px;
-  height: 300px;
-  overflow: hidden;
   margin: auto;
   padding: 5px;
   border-radius: 15px;
@@ -513,6 +514,9 @@ input:checked + .slider:before {
   font-size: 23px;
   top: 8px;
   padding-left: 5px;
+}
+#login-box a {
+  width: 290px;
 }
 #login-box-back-button {
   width: 33px;

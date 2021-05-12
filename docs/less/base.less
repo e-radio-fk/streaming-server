@@ -162,6 +162,10 @@ br {
   .no-select();
 }
 
+.dropbtn:hover {
+  backdrop-filter: brightness(120%);
+}
+
 .dropdown-content {
   backdrop-filter: blur(10px);
   border-radius: 7px;
@@ -173,7 +177,8 @@ br {
   min-width: 160px;
   right: 0;
   top: 60px;
-  z-index: 1;
+
+  z-index: 100;
 
   cursor: hand;
 }

@@ -25,9 +25,30 @@
               <a href="./settings.html">Settings</a>
               <a onclick="sign_out()" id="console-sign-out-button">Sign Out</a>
             </div>
-            <img class="dropbtn" id="banner-user-img">
+            <img class="dropbtn" id="banner-user-img" onclick="toggle_login_dropdown()">
         </div>
     </div>
+
+    <!-- This is for the login dropdown -->
+    <script>
+        var login_button = document.getElementById('banner-user-img');
+        var dropdown_content = document.getElementsByClassName('dropdown-content')[0];
+
+        function toggle_login_dropdown() 
+        {
+            var clicked = login_button.getAttribute('clicked');
+            if (clicked == 'yes')
+            {
+                login_button.setAttribute('clicked', 'no');
+                dropdown_content.style.display = 'none';
+            }
+            else
+            {
+                login_button.setAttribute('clicked', 'yes');
+                dropdown_content.style.display = 'block';
+            }
+        }
+    </script>
 
     <script defer src="scripts/login.js"></script>
     <script defer src="scripts/console.js"></script>
