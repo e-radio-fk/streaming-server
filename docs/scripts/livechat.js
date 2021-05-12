@@ -14,7 +14,8 @@ var port = '8081';
 var getUrl = window.location;
 var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]; // check if we are running localhost to remove the webservice port 3000
 
-if (baseUrl.search('127.0.0.1') != -1) baseUrl = baseUrl.substr(0, baseUrl.length - 6);
+if (baseUrl.search('127.0.0.1') != -1) baseUrl = baseUrl.substr(0, baseUrl.length - 6);else baseUrl = baseUrl.substr(0, baseUrl.length - 1); // just remove /
+
 baseUrl += ':' + port;
 console.log('using', baseUrl);
 var socket = (0, _socket["default"])(baseUrl);

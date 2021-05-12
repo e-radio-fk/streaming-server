@@ -15,7 +15,7 @@ var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split
 if (baseUrl.search('127.0.0.1') != -1)
     baseUrl = baseUrl.substr(0, baseUrl.length - 6);
 else
-    baseUrl = baseUrl.substr(0, baseUrl.length - 2);    // just remove /
+    baseUrl = baseUrl.substr(0, baseUrl.length - 1);    // just remove /
 
 baseUrl += ':' + port;
 
