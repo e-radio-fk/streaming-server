@@ -2,7 +2,10 @@ var original_string = "Last Christmas I Gave You My Heart";
 
 function get_container_width()
 {
-    return document.getElementById('now-playing-banner-object').offsetWidth;
+    // The banner now contains the User Photo; we need to subtract its width!
+    var user_photo_width = 33;  // 33px
+
+    return document.getElementById('now-playing-banner-object').offsetWidth - user_photo_width;
 }
 
 function move_banner()

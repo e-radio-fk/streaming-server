@@ -9,7 +9,11 @@ button {
   background-color: #ff2e2e;
 }
 .textbox {
-  border-color: #ff2e2e;
+  background-color: #2c7f8a;
+}
+#login-box .textbox::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #ff2e2e;
 }
 .dropdown-content {
   background-color: #5a3ebe;

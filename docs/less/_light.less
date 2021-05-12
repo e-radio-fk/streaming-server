@@ -1,8 +1,9 @@
-@background-color: #4a2cb4;
-@background-color-light: #5a3ebe;
+// @background-color: #F4A5AE;
+@background-color: #A8577E;
+@background-color-light: #c07599;   // should be called background-color-light-darker
 @background-color-dark: #412c8a;
-@select-color: #FFF178;
-@text-color: #FFEA2E;
+@select-color: #FFC145;
+@text-color: #FFC145;
 @h1: #FFFFFF;
 
 body {
@@ -18,8 +19,17 @@ button {
     background-color: @text-color;
 }
 
-.textbox {
-    border-color: @text-color;
+// 
+// Login 
+// 
+#login-box .textbox::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: @text-color;
+}
+#login-box .textbox:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: @text-color;
+}
+#login-box .textbox::-ms-input-placeholder { /* Microsoft Edge */
+    color: @text-color;
 }
 
 .dropdown-content {

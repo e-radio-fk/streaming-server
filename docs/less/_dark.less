@@ -18,8 +18,21 @@ button {
     background-color: @text-color;
 }
 
+// 
+// Login 
+// 
+#login-box .textbox::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: @text-color;
+}
+#login-box .textbox:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: @text-color;
+}
+#login-box .textbox::-ms-input-placeholder { /* Microsoft Edge */
+    color: @text-color;
+}
+
 .textbox {
-    border-color: @text-color;
+    background-color: @background-color-dark;
 }
 
 .dropdown-content {
