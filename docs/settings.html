@@ -21,12 +21,10 @@
 </header>
 <body style="visibility: hidden;">
     <script>
-        function settings_go_back() {
+        function settings_go_back() 
+        {
             /* signing-out; return to site home */
-            if (window.location.href.indexOf('127.0.0.1') != -1)
-                window.location.pathname = "/console.html";
-            else
-                window.location.href = "https://e-radio-fk.github.io/app/console.html";
+            window.location.pathname = "/console.html";
         }
     </script>
 
