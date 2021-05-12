@@ -67,7 +67,7 @@ function sign_in() {
         firebase.auth().signInWithEmailAndPassword(email, passw)
         .then((user) => {
             /* change url (without logging to history => no back and forth)  */
-            window.location.replace('console.html');
+            window.location.pathname = '/console.html';
         })
         .catch((error) => {
             console.log('error: ', error);

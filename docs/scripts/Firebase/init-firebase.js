@@ -19,7 +19,7 @@ firebase.auth().onAuthStateChanged((user) => {
     //
     // If a user is already logged in, we should show the console or the user-view
     //
-    if (window.location.pathname == '/' || window.location.href == "https://e-radio-fk.github.io/app/")
+    if (window.location.pathname == '/')
     	window.location.replace('console.html');
   } else {
     console.log('First time: no-user');
