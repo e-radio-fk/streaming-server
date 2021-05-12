@@ -198,6 +198,12 @@ br {
   /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
 }
+.dropbtn[clicked='yes'] {
+  backdrop-filter: brightness(150%);
+}
+.dropbtn[clicked='no'] {
+  backdrop-filter: unset;
+}
 .dropdown {
   position: relative;
   float: right;
@@ -248,17 +254,8 @@ br {
   /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
 }
-.dropdown-content:hover {
-  display: block;
-}
-.dropdown-content:hover .login-box {
-  display: block;
-}
 .dropdown-content a:hover {
   backdrop-filter: brightness(150%);
-}
-.dropdown:hover .dropdown-content {
-  display: block;
 }
 #console-sign-out-button a:hover {
   text-decoration: none;
@@ -478,23 +475,10 @@ input:checked + .slider:before {
   margin-left: auto;
   margin-right: auto;
 }
-.sign-in-or-up-space {
-  padding-top: 150px;
-  text-align: center;
-}
-.sign-in-or-up-space button {
-  display: inline-block;
-}
-.sign-in-or-up-space a {
-  color: bisque;
-}
-#sign-up-button:hover {
-  text-decoration: underline;
-  cursor: hand;
-}
 #login-box,
 #signup-box {
   width: 300px;
+  height: 300px;
   overflow: hidden;
   margin: auto;
   padding: 5px;

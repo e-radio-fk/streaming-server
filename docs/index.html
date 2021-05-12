@@ -26,9 +26,9 @@
 
 		<!-- User Login Dropdwon -->
 		<div class="dropdown">
-            <img class="dropbtn" id="banner-user-img" src="img/person.png">
+            <img class="dropbtn" id="user-login-dropdown-back-button" src="img/person.png" onclick="toggle_login_dropdown()">
             
-			<div class="dropdown-content">	
+			<div class="dropdown-content">
 				<div id="login-box" style="text-align: center;">
 					<br>
 					<div style="position: relative; margin:auto;">
@@ -54,6 +54,25 @@
 
 		<!-- Move banner -->
 		<script src="scripts/move_banner.js"></script>
+		<script>
+			var login_button = document.getElementById('user-login-dropdown-back-button');
+			var dropdown_content = document.getElementsByClassName('dropdown-content')[0];
+
+			function toggle_login_dropdown() 
+			{
+				var clicked = login_button.getAttribute('clicked');
+				if (clicked == 'yes')
+				{
+					login_button.setAttribute('clicked', 'no');
+					dropdown_content.style.display = 'none';
+				}
+				else
+				{
+					login_button.setAttribute('clicked', 'yes');
+					dropdown_content.style.display = 'block';
+				}
+			}
+		</script>
     </div>
 
 	<br>

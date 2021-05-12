@@ -145,7 +145,7 @@ console.log('settings: user is ', user);
 /* sanity checks */
 
 if (!user || user.uid == undefined || user == 'no-user') {
-  if (window.location.href.indexOf('127.0.0.1') != -1) window.location.pathname = "/" + '?error=UnauthorisedUser';else window.location.href = "https://e-radio-fk.github.io/app" + '?error=UnauthorisedUser';
+  window.location.pathname = '/?error=UnauthorisedUser';
 } else {
   document.getElementsByTagName('body')[0].style.visibility = 'visible';
   /* construct photo path */

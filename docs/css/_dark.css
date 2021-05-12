@@ -8,12 +8,20 @@ h1 {
 button {
   background-color: #ff2e2e;
 }
-.textbox {
-  background-color: #2c7f8a;
-}
 #login-box .textbox::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #ff2e2e;
+}
+#login-box .textbox:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #ff2e2e;
+}
+#login-box .textbox::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #ff2e2e;
+}
+.textbox {
+  background-color: #2c7f8a;
 }
 .dropdown-content {
   background-color: #5a3ebe;

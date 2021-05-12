@@ -148,6 +148,13 @@ br {
   .no-select();
 }
 
+.dropbtn[clicked='yes'] {
+  backdrop-filter: brightness(150%);
+}
+.dropbtn[clicked='no'] {
+  backdrop-filter: unset;
+}
+
 .dropdown {
   position: relative;
   float: right;
@@ -181,10 +188,6 @@ br {
 
 .dropdown-content a:hover {
   backdrop-filter: brightness(150%);
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
 }
 
 #console-sign-out-button a:hover {
