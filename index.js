@@ -3,8 +3,9 @@
 //
 
 var express = require('express');
-
-const app = express();
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server)
 
 app.use(express.static(__dirname + '/docs'));
 
@@ -15,14 +16,6 @@ app.get('/', (req, res) => {
 app.get('/enable-streaming', (req, res) => {
     console.log('[1] Enabling stream.io...');
 
-	const io = require("socket.io")(8081, {
-		cors: {
-			origin: '*',
-		}
-	});
-
-	// const io = require('socket.io')(3000, {});
-
 	io.on("connection", (socket) => {
 		socket.on('client-message', (...args) => {
 			console.log('got a message from a client!');
@@ -31,6 +24,4 @@ app.get('/enable-streaming', (req, res) => {
 	});
 });
 
-app.listen(8081, () =>
-    console.log('Example app listening on port 3000!'),
-);
+server.listen(3000);

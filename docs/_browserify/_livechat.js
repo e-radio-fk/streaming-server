@@ -7,21 +7,21 @@ var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-li
 // Communications
 //
 
-var port = '8081';
-var getUrl = window.location;
-var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+// var port = '8081';
+// var getUrl = window.location;
+// var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
 
-// check if we are running localhost to remove the webservice port 3000
-if (baseUrl.search('127.0.0.1') != -1)
-    baseUrl = baseUrl.substr(0, baseUrl.length - 6);
-else
-    baseUrl = baseUrl.substr(0, baseUrl.length - 1);    // just remove /
+// // check if we are running localhost to remove the webservice port 3000
+// if (baseUrl.search('127.0.0.1') != -1)
+//     baseUrl = baseUrl.substr(0, baseUrl.length - 6);
+// else
+//     baseUrl = baseUrl.substr(0, baseUrl.length - 1);    // just remove /
 
-baseUrl += ':' + port;
+// baseUrl += ':' + port;
 
-console.log('using', baseUrl);
+// console.log('using', baseUrl);
 
-const socket = io(':8081');
+const socket = io.connect('/');
 
 /* 
  * upon receiving a message 
