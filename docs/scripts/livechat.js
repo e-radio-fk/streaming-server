@@ -18,7 +18,7 @@ if (baseUrl.search('127.0.0.1') != -1) baseUrl = baseUrl.substr(0, baseUrl.lengt
 
 baseUrl += ':' + port;
 console.log('using', baseUrl);
-var socket = (0, _socket["default"])(baseUrl);
+var socket = (0, _socket["default"])(':8081');
 /* 
  * upon receiving a message 
  */

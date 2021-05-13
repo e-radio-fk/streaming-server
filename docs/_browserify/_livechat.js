@@ -21,7 +21,7 @@ baseUrl += ':' + port;
 
 console.log('using', baseUrl);
 
-const socket = io(baseUrl);
+const socket = io(':8081');
 
 /* 
  * upon receiving a message 
