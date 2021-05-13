@@ -15,13 +15,13 @@ app.get('/', (req, res) => {
 app.get('/enable-streaming', (req, res) => {
     console.log('[1] Enabling stream.io...');
 
-	// const io = require("socket.io")(3000, {
-	// 	// cors: {
-	// 	// 	origin: '*',
-	// 	// }
-	// });
+	const io = require("socket.io")(8081, {
+		cors: {
+			origin: '*',
+		}
+	});
 
-	const io = require('socket.io')();
+	// const io = require('socket.io')(3000, {});
 
 	io.on("connection", (socket) => {
 		socket.on('client-message', (...args) => {
