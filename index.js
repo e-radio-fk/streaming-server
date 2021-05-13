@@ -15,12 +15,13 @@ app.get('/', (req, res) => {
 app.get('/enable-streaming', (req, res) => {
     console.log('[1] Enabling stream.io...');
 
-	const io = require("socket.io")(3000, {
-		// cors: {
-		// 	origin: '*',
-		// }
-		// cors is not needed if we are using the same port!
-	});
+	// const io = require("socket.io")(3000, {
+	// 	// cors: {
+	// 	// 	origin: '*',
+	// 	// }
+	// });
+
+	const io = require('socket.io')();
 
 	io.on("connection", (socket) => {
 		socket.on('client-message', (...args) => {

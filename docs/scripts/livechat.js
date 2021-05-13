@@ -9,19 +9,18 @@ var livechat_message_box = document.getElementById('live-chat-message-box');
 var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-list-renderer')[0]; //
 // Communications
 //
+// var port = '3000';
+// var getUrl = window.location;
+// var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+// // check if we are running localhost to remove the webservice port 3000
+// if (baseUrl.search('127.0.0.1') != -1)
+//     baseUrl = baseUrl.substr(0, baseUrl.length - 6);
+// else
+//     baseUrl = baseUrl.substr(0, baseUrl.length - 1);    // just remove /
+// baseUrl += ':' + port;
+// console.log('using', baseUrl);
 
-var port = '3000';
-var getUrl = window.location;
-var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1]; // check if we are running localhost to remove the webservice port 3000
-
-if (baseUrl.search('127.0.0.1') != -1) {
-  baseUrl = baseUrl.substr(0, baseUrl.length - 6);
-  baseUrl += ':' + port;
-} else baseUrl = baseUrl.substr(0, baseUrl.length - 1); // just remove /
-
-
-console.log('using', baseUrl);
-var socket = (0, _socket["default"])(baseUrl);
+var socket = (0, _socket["default"])();
 /* 
  * upon receiving a message 
  */
