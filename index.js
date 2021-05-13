@@ -31,6 +31,6 @@ app.get('/enable-streaming', (req, res) => {
 	});
 });
 
-app.listen(3000, () =>
+app.listen(8081, () =>
     console.log('Example app listening on port 3000!'),
 );
