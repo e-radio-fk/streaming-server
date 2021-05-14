@@ -102,15 +102,17 @@ function upload_photo(file) {
   /* SIRV login */
 
   s.login(function (res) {
-    if (!res.ok) {
+    // if (!res.ok)
+    // {
+    //     stop_spinner();
+    //     g.show_error('Failed to upload photo!', res);
+    // }
+    // else
+    // {
+    s.uploadFile(serverFilePath, file, function (res) {
+      update_photo();
       stop_spinner();
-      g.show_error('Failed to upload photo!', res);
-    } else {
-      s.uploadFile(serverFilePath, file, function (res) {
-        update_photo();
-        stop_spinner();
-      });
-    }
+    }); // }
   });
 }
 

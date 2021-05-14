@@ -48,8 +48,20 @@
         </div>
 
         <div style="margin-left: 45%;">
-            <p>Username</p>
-            <p>Password</p>
+            <div style="position: relative; margin:auto;">
+                <input type="text" name="Uname" class="textbox" id="login-form-uname" placeholder="Username">  
+                <span class="fa fa-user" style="position: absolute; left: 0;"></span>
+            </div>
+            <div style="position: relative; margin:auto;">
+                <input type="text" name="Email" class="textbox" id="login-form-uname" placeholder="Email">  
+                <span class="fa fa-user" style="position: absolute; left: 0;"></span>
+            </div>
+            <div style="position: relative; margin:auto;">
+                <input type="Password" name="Pass" class="textbox" id="login-form-passw" placeholder="Password">    
+                <span class="fa fa-lock" style="position: absolute; left: 0;"></span>
+            </div>
+
+            <button id="update_user_information" onclick="update_user_information()">Update</button>   
         </div>
     </div>
 
