@@ -7,20 +7,6 @@ var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-li
 // Communications
 //
 
-// var port = '8081';
-// var getUrl = window.location;
-// var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
-
-// // check if we are running localhost to remove the webservice port 3000
-// if (baseUrl.search('127.0.0.1') != -1)
-//     baseUrl = baseUrl.substr(0, baseUrl.length - 6);
-// else
-//     baseUrl = baseUrl.substr(0, baseUrl.length - 1);    // just remove /
-
-// baseUrl += ':' + port;
-
-// console.log('using', baseUrl);
-
 const socket = io.connect('/');
 
 /* 
@@ -49,6 +35,19 @@ function post_message_to_server(message, username, credentials)
     socket.emit('client-message', message, username, credentials);
 }
 
+function get_current_user() 
+{
+    var user_name = 'guest';
+
+    var user = JSON.parse(sessionStorage.getItem('currentUser'));
+    if ((!user) || (user.uid == undefined) || user == 'no-user')
+        user_name = 'guest';
+    else
+        user_name = user.displayName;
+
+    return user_name;
+}
+
 //
 // Livechat Message Box
 //
@@ -65,7 +64,7 @@ livechat_message_box.addEventListener('keyup', event => {
     if (event.key == 'Enter')
     {
         var message = livechat_message_box.value;
-        var username = 'npyl';
+        var username = get_current_user();
         var credentials = 'owner';
 
         post_message_to_server(message, username, credentials);

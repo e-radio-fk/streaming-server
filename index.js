@@ -13,9 +13,8 @@ app.get('/', (req, res) => {
 	res.sendFile('index.html');
 });
 
-app.get('/enable-streaming', (req, res) => {
-    
-});
+// app.get('/enable-streaming', (req, res) => {
+// });
 
 console.log('[1] Enabling stream.io...');
 
@@ -27,4 +26,3 @@ io.on("connection", (socket) => {
 });
 
 server.listen(3000);
-
