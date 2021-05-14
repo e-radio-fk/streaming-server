@@ -14,14 +14,17 @@ app.get('/', (req, res) => {
 });
 
 app.get('/enable-streaming', (req, res) => {
-    console.log('[1] Enabling stream.io...');
+    
+});
 
-	io.on("connection", (socket) => {
-		socket.on('client-message', (...args) => {
-			console.log('got a message from a client!');
-			io.emit('message', args[0], args[1], args[2]);
-		});
+console.log('[1] Enabling stream.io...');
+
+io.on("connection", (socket) => {
+	socket.on('client-message', (...args) => {
+		console.log('got a message from a client!');
+		io.emit('message', args[0], args[1], args[2]);
 	});
 });
 
 server.listen(3000);
+
