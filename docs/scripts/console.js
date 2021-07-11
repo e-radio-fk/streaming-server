@@ -21,12 +21,6 @@ else
     
     /* set user photo */
     userPhoto.src = photoURL;
-
-    // (TODO: if not already enabled!)
-    /* enable streaming */
-    $.get('/enable-streaming', function() {
-        console.log('console: Starting stream...');
-    });
     
     /* initialisation has finished; show the UI */
     document.getElementsByTagName('header')[0].style.visibility = 'visible';

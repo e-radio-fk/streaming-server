@@ -18,8 +18,7 @@
 </head>
 <header style="visibility: hidden;">
     <div class="now-playing-banner" id="control-panel-nav-bar" style="position: relative;">
-        <h4 style="position: absolute;" id="control-panel-nav-bar-title">Console</h4>
-        <h4>version 0.0.0.2</h4>
+        <h4 style="position: absolute;" id="control-panel-nav-bar-title">Console&emsp;version 0.0.0.2</h4>
         <div class="dropdown">
             <div class="dropdown-content">
               <a href="./settings.html">Settings</a>
@@ -56,7 +55,7 @@
 <body style="visibility: hidden;">
     <br>
     <br>
-    <button onclick="start_mic()">start mic</button>
+    <button id="console-toggle-microphone" onclick="toggle_mic()">start mic</button>
 
     <h3>Playlists</h3>
     <button>(+) import yt playlist</button>
@@ -75,5 +74,62 @@
     <!-- Note: this is mainly for darkmode -->
     <script src="scripts/darkmode.js"></script>
     <script src="scripts/general.js"></script>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <script>
+        // let shouldStop = false;
+        // let stopped = false;
+
+        const socket = io.connect('/');
+
+        // microphone
+        const _options = {mimeType: 'audio/webm'};
+        const recordedChunks = [];
+        var mediaRecorder = null;
+
+        /* get microphone button handle */
+        var microphoneButton = document.getElementById('console-toggle-microphone');
+        microphoneButton.setAttribute('on', 'no');
+
+        /* initialise mic streaming capability */
+        navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
+            mediaRecorder = new MediaRecorder(stream, _options);
+
+            mediaRecorder.addEventListener('dataavailable', function(e) {
+                if (e.data.size > 0)
+                {
+                    recordedChunks.push(e.data);
+                }
+            });
+
+            mediaRecorder.addEventListener('stop', function() {
+                console.log('got: ', recordedChunks);
+                socket.emit('microphone-data', recordedChunks);
+            });
+        });
+
+        function toggle_mic() {
+            if (microphoneButton.getAttribute('on') == 'yes')
+            {
+                record_mic_stop();
+                microphoneButton.setAttribute('on', 'no');
+                microphoneButton.innerHTML = 'start mic';
+            }
+            else if (microphoneButton.getAttribute('on') == 'no') 
+            {
+                record_mic_start();
+                microphoneButton.setAttribute('on', 'yes');
+                microphoneButton.innerHTML = 'stop mic';
+            }
+        }
+
+        function record_mic_start() 
+        {
+            mediaRecorder.start();
+        }
+        function record_mic_stop() 
+        {
+            mediaRecorder.stop();
+        }
+    </script>
 </body>
 </html>
