@@ -10,7 +10,9 @@ var options = {
 };
 var DarkMode = new DarkMode(options);
 
-document.getElementById('darkmode-toggle-button').onclick = toggle_dark_mode;
+var darkmode_toggle_button = document.getElementById('darkmode-toggle-button');
+if (darkmode_toggle_button)
+  darkmode_toggle_button.onclick = toggle_dark_mode;
 
 /**
  * toggle_dark_mode()

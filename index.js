@@ -20,6 +20,11 @@ io.on("connection", (socket) => {
 		// console.log('got a message from a client!');
 		io.emit('message', args[0], args[1], args[2]);
 	});
+
+	// got microphone data from the console; broadcast to all clients!
+	socket.on('console-mic-chunks', data => {
+		io.emit('microphone-data-chunk', data);
+	})
 });
 
 server.listen(3000);
