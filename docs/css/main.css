@@ -841,3 +841,24 @@ yt-live-chat-text-message-renderer,
 yt-live-chat-legacy-paid-message-renderer {
   animation: none !important;
 }
+.podcast-news-table {
+  width: 100%;
+  height: 100%;
+}
+.podcast-news-table td {
+  border-bottom: 1px solid sandybrown;
+}
+.podcast-news-table-news-columns-separator {
+  position: relative;
+}
+.podcast-news-table-news-title {
+  font-size: 30px;
+}
+.podcast-news-table-news-description {
+  left: 0;
+  position: absolute;
+}
+.podcast-news-table-news-date {
+  right: 0;
+  position: absolute;
+}
