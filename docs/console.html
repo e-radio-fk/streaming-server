@@ -93,7 +93,12 @@
         /* initialise mic streaming capability */
         navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
             mediaRecorder = new MediaRecorder(stream, _options);
-
+            if (!mediaRecorder)
+            {
+                show_error('Error: Failure creating a mediaRecorder; Reload page!', '...');
+                return;
+            }
+            
             mediaRecorder.addEventListener('dataavailable', function(e) {
                 if (e.data.size > 0)
                 {
@@ -102,9 +107,12 @@
             });
 
             mediaRecorder.addEventListener('stop', function() {
-                console.log('got: ', recordedChunks);
-                socket.emit('microphone-data', recordedChunks);
+                // console.log('got: ', recordedChunks);
+                socket.emit('console-mic-chunks', recordedChunks);
             });
+        })
+        .catch(function(err) {
+            show_error('Error: Microphone access has been denied probably!', '...');
         });
 
         function toggle_mic() {

@@ -2,6 +2,10 @@
 
 @import url('general.less');
 
+* {
+  box-sizing: border-box;
+}
+
 html {
   font-size: 100%;
 }
@@ -69,10 +73,13 @@ button {
 }
 
 .back-button {
-  content: url('../img/back.png');
-  vertical-align: middle; 
   opacity: 0.8;
+  vertical-align: middle; 
   padding-right: 330px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 33px;
+  width: 33px;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
 
   -webkit-transition-duration: 0.3s;
@@ -137,6 +144,9 @@ br {
  *********************/
 
 .dropbtn {
+  background-size: contain;
+  background-repeat: no-repeat;
+  box-sizing: initial;    // TODO: find a way to have box-sizing: border-box;
   padding: 16px;
   font-size: 16px;
   height: 30px;

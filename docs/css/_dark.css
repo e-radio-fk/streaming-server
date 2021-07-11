@@ -33,9 +33,13 @@ button {
 #signup-box {
   background: #5a3ebe;
 }
-.play-button {
-  content: url('../img/play_dark_mode.png');
+.back-button {
+  background-image: url('../img/back.png');
 }
+.play-button {
+  background-image: url('../img/play_dark_mode.png');
+}
+#user-login-dropdown-back-button,
 #banner-user-img {
-  content: url('../img/person_dark_mode.png');
+  background-image: url('../img/person_dark_mode.png');
 }
