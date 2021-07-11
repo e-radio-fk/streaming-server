@@ -5,17 +5,29 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// const socket = io("https://e-radio-fk-server-zzhqz.ondigitalocean.app/streaming-server/stream");
-// const socket = io("http://127.0.0.1:8081");
-// socket.on("hello", (...args) => {
-//     console.log(args);
-// });
-// for now just attach a handler to the play-button
-var play_button = document.getElementsByClassName('play-button');
-play_button.addEventListener('onclick', function (event) {
+// attach a handler to the play-button
+var play_button = document.getElementsByClassName('play-button')[0];
+play_button.addEventListener('click', function (event) {
   event.preventDefault();
-  var livechat_box = document.getElementById('live-chat-container');
-  livechat_box.style.visibility = 'visible';
+  if (play_button.getAttribute('on') == 'yes') play_button.setAttribute('on', 'no');else if (microphoneButton.getAttribute('on') == 'no') play_button.setAttribute('on', 'yes');
+});
+/*
+ *  Establish connection with the server
+ */
+
+var socket = _socket["default"].connect('/');
+/* 
+ * upon receiving a microphone data chunk we must play it (but only if the play-button is ON)
+ */
+
+
+socket.on("microphone-data-chunk", function (arrayBuffer) {
+  var blob = new Blob([arrayBuffer], {
+    'type': 'audio/ogg; codecs=opus'
+  });
+  var audio = document.createElement('audio');
+  audio.src = window.URL.createObjectURL(blob);
+  audio.play();
 });
 
 },{"socket.io-client":31}],2:[function(require,module,exports){
