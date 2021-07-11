@@ -159,7 +159,8 @@ br {
 }
 
 .dropbtn[clicked='yes'] {
-  backdrop-filter: brightness(150%);
+  // backdrop-filter: brightness(150%);
+  .highlight();
 }
 .dropbtn[clicked='no'] {
   backdrop-filter: unset;
@@ -173,7 +174,8 @@ br {
 }
 
 .dropbtn:hover {
-  backdrop-filter: brightness(120%);
+  // backdrop-filter: brightness(120%);
+  .highlight();
 }
 
 .dropdown-content {
@@ -201,8 +203,8 @@ br {
   .no-select();
 }
 
-.dropdown-content a:hover {
-  backdrop-filter: brightness(150%);
+.dropdown-content-button:hover {
+  .highlight();
 }
 
 #console-sign-out-button a:hover {
