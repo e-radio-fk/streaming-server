@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
     
 	<!-- Firebase -->
-	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
 	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
 
 	<!-- Initialise Firebase -->
 	<script defer src="scripts/Firebase/init-firebase.js"></script>
@@ -69,7 +70,32 @@
             </div>
             <div class="modal-body">
                 <div>
-                    <button id="datepicker">Pick a date</button>
+                    <button id="podcast-datepicker">Pick a date</button>
+                    <p id="podcast-date-picked-label"></p>
+                </div>
+
+                <p>Θέμα</p>
+                <textarea class="textbox" id="podcast-title" rows="1" style="width: 99%; resize: none;"></textarea>
+                <p>Περιγραφή</p>
+                <textarea class="textbox" id="podcast-description" rows="10" style="width: 99%; height: 300px;  resize: none;"></textarea>
+            </div>
+            <div class="modal-footer">
+              <button type="button" onclick="schedule_new_podcast()">Καταχώρηση</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade " id="important-msg" tabindex="-1" role="dialog" aria-labelledby="important-msg-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="important-msg-label">Podcast Planner</h4>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <button id="podcast-datepicker">Pick a date</button>
                     <p id="podcast-date-picked-label"></p>
                 </div>
 

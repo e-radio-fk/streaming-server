@@ -8,6 +8,10 @@ if ((!user) || (user.uid == undefined) || user == 'no-user')
 }
 else
 {
+    /*
+     * Page Initialisation
+     */
+
     /* construct photo path */
     var serverFilePath = '/' + user.uid + '/user_photo';
     var photoURL = 'https://eradiofk.sirv.com' + serverFilePath;
@@ -26,10 +30,19 @@ else
     document.getElementsByTagName('header')[0].style.visibility = 'visible';
     document.getElementsByTagName('body')[0].style.visibility = 'visible';
 
-    /* Initialise MCDatepicker */
-    /* javascript */
+    /* 
+     * Modals Initialisation & Configuration 
+     */
+
+    // TODO:
+    /* on modal exit, all elements must be reverted to normal */
+
+    /*
+     *  Initialise MCDatepicker 
+     */
+    /* create */
     const datePicker = MCDatepicker.create({
-        el: '#datepicker',
+        el: '#podcast-datepicker',
         bodyType: 'modal'
     });
 
@@ -37,7 +50,13 @@ else
     datePicker.onOpen(() => {
         document.getElementsByClassName('mc-calendar--modal')[0].style.zIndex = "1062";
     });
+    /* on OK button, save the date on a label element */
     datePicker.onSelect((date, formatedDate) => {
         document.getElementById('podcast-date-picked-label').innerHTML = formatedDate;
     })
+
+    /*
+     * Initialise Firebase Realtime Database
+     */
+    var database = firebase.database();
 }
