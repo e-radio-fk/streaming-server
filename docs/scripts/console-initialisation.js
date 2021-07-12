@@ -34,7 +34,10 @@ else
     });
 
     /* hack: on open, quickly change z-index (>= 1061) so that calendar shows up above any bootstrap modal */
-    datePicker.onOpen(() =>{
+    datePicker.onOpen(() => {
         document.getElementsByClassName('mc-calendar--modal')[0].style.zIndex = "1062";
     });
+    datePicker.onSelect((date, formatedDate) => {
+        document.getElementById('podcast-date-picked-label').innerHTML = formatedDate;
+    })
 }

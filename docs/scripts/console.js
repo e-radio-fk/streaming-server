@@ -9,7 +9,5 @@ function schedule_new_podcast()
     var title       = document.getElementById();
     var description = document.getElementById();
     var date        = document.getElementById();
-    var time        = document.getElementById();
-
     
 }
