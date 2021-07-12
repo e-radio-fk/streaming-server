@@ -99,6 +99,9 @@ button {
   /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
 }
+.mc-calendar {
+  z-index: 1062;
+}
 .textbox {
   height: 50px;
   width: 290px;
