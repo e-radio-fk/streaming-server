@@ -7,14 +7,20 @@ try
         throw new Error('Failed to get the now-playing cookie!');
     }
 
-    document.getElementById('now-playing-banner-text').innerText = original_string;
+    var banner      = document.getElementById('now-playing-banner-object');
+    var banner_text = document.getElementById('now-playing-banner-text');
+    var user_photo  = document.getElementById('user-login-dropdown-back-button');
+
+    banner_text.innerText = original_string;
 
     function get_container_width()
     {
         // The banner now contains the User Photo; we need to subtract its width!
-        var user_photo_width = 33;  // 33px
+        var user_photo_width = user_photo.offsetWidth;
 
-        return document.getElementById('now-playing-banner-object').offsetWidth - user_photo_width;
+        console.log('user_photo_width: ', user_photo_width)
+
+        return banner.offsetWidth - user_photo_width;
     }
 
     function move_banner()
@@ -22,15 +28,15 @@ try
         var before = 0;
         var after = 0;
         
-        string_off = document.getElementById('now-playing-banner-text').offsetWidth;
+        string_off = banner_text.offsetWidth;
 
         // get old position
-        before = parseInt(document.getElementById('now-playing-banner-text').style.paddingLeft || 0, 10);
+        before = parseInt(banner_text.style.paddingLeft || 0, 10);
 
         // make sure text will 'cycle'
         if (string_off + 100 >= get_container_width())
         {
-            var text = document.getElementById('now-playing-banner-text').textContent;
+            var text = banner_text.textContent;
 
             if (text.length == 0)
             {
@@ -40,14 +46,14 @@ try
             else
                 text = text.substr(0, text.length - 2)
 
-            document.getElementById('now-playing-banner-text').textContent = text;
+                banner_text.textContent = text;
         }
 
         // increment position index
         after = before + 1 + "%";
 
         // set new position
-        document.getElementById('now-playing-banner-text').style.paddingLeft = after;
+        banner_text.style.paddingLeft = after;
 
         // make this a recurring function
         setTimeout(move_banner, 110);
