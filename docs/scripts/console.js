@@ -11,18 +11,24 @@ function schedule_new_podcast()
     var date        = document.getElementById('podcast-date-picked-label').innerText;
     // var time;
 
-    var currentdate = new Date(); 
-    var datetime = "Last Sync: " + currentdate.getDate() + "/"
-                    + (currentdate.getMonth()+1)  + "/" 
-                    + currentdate.getFullYear() + " @ "  
-                    + currentdate.getHours() + ":"  
-                    + currentdate.getMinutes() + ":" 
-                    + currentdate.getSeconds();
+    var currentdate = new Date();
+    var datetime    =   currentdate.getDate()           + "-"   +
+                        (currentdate.getMonth() + 1)    + "-"   +
+                        currentdate.getFullYear()       + " @ " +
+                        currentdate.getHours()          + ":"   +  
+                        currentdate.getMinutes()        + ":"   +
+                        currentdate.getSeconds();
 
-    database.ref('/' + datetime).set({
+    database.ref().child('/scheduled-podcasts').child(datetime).set({
         title: title,
         description: description,
         date: date,
         time: 'no-time-yet'
+    }, (error) => {
+        if (error) {
+            show_error('Error: ' + error, error);
+        } else {
+            show_error('Success!', '');
+        }
     });
 }

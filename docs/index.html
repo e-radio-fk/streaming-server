@@ -7,11 +7,12 @@
 	<link rel="stylesheet" href="css/main.css">
 
 	<!-- Firebase -->
-	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
-	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
 
 	<!-- Initialise Firebase -->
-	<script defer src="scripts/Firebase/init-firebase.js"></script>
+	<script src="scripts/Firebase/init-firebase.js"></script>
 </head>
 <header style="visibility: hidden;">
     <div class="now-playing-banner" id="now-playing-banner-object">
@@ -86,6 +87,7 @@
 	</div>
 
 	<script src="scripts/page-load.js"></script>
+	<script src="scripts/index-initialisation.js"></script>
 </header>
 <body style="visibility: hidden;">
 	<br>
@@ -104,33 +106,6 @@
 			<h4 style="text-decoration: underline; margin-left: 0; text-align: center;">Podcasts</h2>
 			<table class="podcast-news-table">
 				<tbody>
-					<tr>
-						<td>
-							<div class="podcast-news-table-news-title">title</div>
-							<div class="podcast-news-table-news-columns-separator">
-								<div class="podcast-news-table-news-description">description</div>	
-								<div class="podcast-news-table-news-date">20/06/21</div>	
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="podcast-news-table-news-title">title</div>
-							<div class="podcast-news-table-news-columns-separator">
-								<div class="podcast-news-table-news-description">description</div>	
-								<div class="podcast-news-table-news-date">20/06/21</div>	
-							</div>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div class="podcast-news-table-news-title">title</div>
-							<div class="podcast-news-table-news-columns-separator">
-								<div class="podcast-news-table-news-description">description</div>	
-								<div class="podcast-news-table-news-date">20/06/21</div>	
-							</div>
-						</td>
-					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -156,5 +131,57 @@
 
 	<!-- Livechat -->
 	<script src="scripts/streaming-client.js"></script>
+
+	<!-- Scheduled Podcasts List -->
+	<script>
+		var podcast_table = document.getElementsByClassName('podcast-news-table')[0];
+
+		function get_html(title, description, date)
+		{
+			const html =	"<td>"																					+
+								"<div class='podcast-news-table-news-title'>" + title + "</div>"					+
+								"<div class='podcast-news-table-news-columns-separator'>"							+
+									"<div class='podcast-news-table-news-description'>" + description + "</div>"	+
+									"<div class='podcast-news-table-news-date'>" + date + "</div>"					+
+								"</div>"																			+
+							"</td>";
+
+			return html;
+		}
+
+		var title = 'error';
+		var description = 'error';
+		var date = 'no-date';
+
+		database.ref().child('/scheduled-podcasts').get().then((snapshot) => {
+			if (snapshot.exists()) 
+			{
+				var i = 0;
+
+				var json = snapshot.val();
+
+				Object.keys(json).forEach(key => {
+					var element = json[key];
+
+					console.log('got element', element);
+
+					title 		= element['title'];
+					description = element['description'];
+					date 		= element['date'];
+
+					var row = podcast_table.insertRow(i++);
+					row.innerHTML = get_html(title, description, date);
+				});
+			}
+			else
+			{
+				// no data available; no podcasts scheduled for this week
+				var row = podcast_table.insertRow(0);
+				row.innerHTML = 'Sorry :( No podcasts scheduled for this week!';
+			}
+		}).catch((error) => {
+  			console.error(error);
+		});
+	</script>
 </body>
 </html>
