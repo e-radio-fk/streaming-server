@@ -4,7 +4,7 @@
  * Gathers information (such as podcast title, descreption and scheduled time)
  * from the podcast scheduler modal and uploads it to the Firestore NoSQL database.
  */
-function schedule_new_podcast() 
+function schedule_new_podcast()
 {
     var title       = document.getElementById('podcast-title').value;
     var description = document.getElementById('podcast-description').value;
@@ -28,7 +28,10 @@ function schedule_new_podcast()
         if (error) {
             show_error('Error: ' + error, error);
         } else {
-            show_error('Success!', '');
+            show_green('Success!');
         }
+
+        /* do not forget to close the modal */
+        $('#important-msg').modal('hide');
     });
 }

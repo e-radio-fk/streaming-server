@@ -18,6 +18,9 @@
     <!-- MCDatepicker -->
     <link href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"></script>
+
+    <!-- Time picker -->
+    <script src="scripts/timepicker-ui.js"></script>
 </head>
 <header style="visibility: hidden;">
     <div class="now-playing-banner" id="control-panel-nav-bar" style="position: relative;">
@@ -70,33 +73,14 @@
             </div>
             <div class="modal-body">
                 <div>
+                    <!-- Date Picker disguised as a button -->
                     <button id="podcast-datepicker">Pick a date</button>
                     <p id="podcast-date-picked-label"></p>
-                </div>
 
-                <p>Θέμα</p>
-                <textarea class="textbox" id="podcast-title" rows="1" style="width: 99%; resize: none;"></textarea>
-                <p>Περιγραφή</p>
-                <textarea class="textbox" id="podcast-description" rows="10" style="width: 99%; height: 300px;  resize: none;"></textarea>
-            </div>
-            <div class="modal-footer">
-              <button type="button" onclick="schedule_new_podcast()">Καταχώρηση</button>
-            </div>
-          </div>
-        </div>
-    </div>
-
-    <div class="modal fade " id="important-msg" tabindex="-1" role="dialog" aria-labelledby="important-msg-label" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              <h4 class="modal-title" id="important-msg-label">Podcast Planner</h4>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <button id="podcast-datepicker">Pick a date</button>
-                    <p id="podcast-date-picked-label"></p>
+                    <!-- Time Picker -->
+                    <div class="timepicker-ui">
+                        <input type="text" class="timepicker-ui-input" value="12:00 AM" />
+                    </div>
                 </div>
 
                 <p>Θέμα</p>

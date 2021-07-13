@@ -15,7 +15,7 @@ export default class general {
         var header = document.getElementsByTagName('header')[0];
     
         /* create node's contents */
-        node.innerHTML = '<div class="error">' + error_message + ' <span class="error-close-button" onclick="this.parentElement.style.display=\'none\';">&times;</span></div>';
+        node.innerHTML = '<div class="error-alert">' + error_message + ' <span class="alert-close-button" onclick="this.parentElement.style.display=\'none\';">&times;</span></div>';
     
         /* add node to header */
         header.insertBefore(node, header.firstChild);

@@ -18,8 +18,6 @@ try
         // The banner now contains the User Photo; we need to subtract its width!
         var user_photo_width = user_photo.offsetWidth;
 
-        console.log('user_photo_width: ', user_photo_width)
-
         return banner.offsetWidth - user_photo_width;
     }
 

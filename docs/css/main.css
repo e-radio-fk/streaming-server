@@ -99,9 +99,6 @@ button {
   /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
 }
-.mc-calendar {
-  z-index: 1062;
-}
 .textbox {
   height: 50px;
   width: 290px;
@@ -159,10 +156,10 @@ br {
   padding-top: 100px;
 }
 /*********************
- * ERRORS            *
+ * ALERTS            *
  *********************/
-/* The alert message box */
-.error {
+/* The error alert message box */
+.error-alert {
   padding: 20px;
   background-color: #f44336;
   /* Red */
@@ -170,7 +167,7 @@ br {
   margin-bottom: 15px;
 }
 /* The close button */
-.error-close-button {
+.alert-close-button {
   margin-left: 15px;
   color: white;
   font-weight: bold;
@@ -181,8 +178,16 @@ br {
   transition: 0.3s;
 }
 /* When moving the mouse over the close button */
-.error-close-button:hover {
+.alert-close-button:hover {
   color: black;
+}
+/* The alert message box */
+.green-alert {
+  padding: 20px;
+  background-color: lightgreen;
+  /* Red */
+  color: white;
+  margin-bottom: 15px;
 }
 /*********************
  * LOGIN ICON BUTTON *

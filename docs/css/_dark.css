@@ -1,5 +1,5 @@
 body {
-  background-color: #000;
+  background-color: #181133;
   color: #ff7878;
 }
 h1 {
@@ -21,17 +21,17 @@ button {
   color: #ff2e2e;
 }
 .textbox {
-  background-color: #2c7f8a;
+  background-color: #2d205f;
 }
 .dropdown-content {
-  background-color: #5a3ebe;
+  background-color: #2d1f5e;
 }
 .dropdown-content a {
   color: #ff2e2e;
 }
 #login-box,
 #signup-box {
-  background: #5a3ebe;
+  background: #2d1f5e;
 }
 .back-button {
   background-image: url('../img/back.png');
