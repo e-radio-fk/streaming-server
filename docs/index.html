@@ -11,6 +11,9 @@
 	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
 
+	<!-- JQuery Cookie -->
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
 	<!-- Initialise Firebase -->
 	<script src="scripts/Firebase/init-firebase.js"></script>
 </head>
@@ -20,7 +23,7 @@
 		<div class="play-button"></div>
 
 		<!-- Banner Text -->
-        <p id="now-playing-banner-text">Last Christmas I Gave You My Heart</p>
+        <p id="now-playing-banner-text"></p>
 
 		<!-- User Login Dropdwon -->
 		<div class="dropdown">
@@ -47,9 +50,6 @@
 
 			<script src="scripts/login.js"></script>
         </div>
-
-		<!-- Move banner -->
-		<script src="scripts/move_banner.js"></script>
 
 		<!-- This is for the login dropdown -->
 		<script>
@@ -87,6 +87,8 @@
 	</div>
 
 	<script src="scripts/page-load.js"></script>
+
+	<!-- Initialisation -->
 	<script src="scripts/index-initialisation.js"></script>
 </header>
 <body style="visibility: hidden;">
@@ -183,5 +185,8 @@
   			console.error(error);
 		});
 	</script>
+
+	<!-- Move banner -->
+	<script src="scripts/move_banner.js"></script>
 </body>
 </html>
