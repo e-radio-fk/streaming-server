@@ -9,7 +9,14 @@ function schedule_new_podcast()
     var title       = document.getElementById('podcast-title').value;
     var description = document.getElementById('podcast-description').value;
     var date        = document.getElementById('podcast-date-picked-label').innerText;
-    // var time;
+    var start_time  = document.getElementById('podcast-start-time').value;
+    var end_time    = document.getElementById('podcast-end-time').value;
+
+    if (!title || !description || !date || !start_time || !end_time)
+    {
+        alert('Συμπλήρωσε όλα τα πεδία!');
+        return;
+    }
 
     var currentdate = new Date();
     var datetime    =   currentdate.getDate()           + "-"   +
@@ -20,10 +27,11 @@ function schedule_new_podcast()
                         currentdate.getSeconds();
 
     database.ref().child('/scheduled-podcasts').child(datetime).set({
-        title: title,
-        description: description,
-        date: date,
-        time: 'no-time-yet'
+        title:          title,
+        description:    description,
+        date:           date,
+        start_time:     start_time,
+        end_time:       end_time
     }, (error) => {
         if (error) {
             show_error('Error: ' + error, error);

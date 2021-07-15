@@ -53,7 +53,7 @@ else
     /* on OK button, save the date on a label element */
     datePicker.onSelect((date, formatedDate) => {
         document.getElementById('podcast-date-picked-label').innerHTML = formatedDate;
-    })
+    });
 
     /*
      * Initialise Firebase Realtime Database

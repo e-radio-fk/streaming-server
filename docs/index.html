@@ -151,9 +151,11 @@
 			return html;
 		}
 
-		var title = 'error';
+		var title 		= 'error';
 		var description = 'error';
-		var date = 'no-date';
+		var date 		= 'no-date';
+		var start_time 	= 'start-time';
+		var end_time	= 'end-time';
 
 		database.ref().child('/scheduled-podcasts').get().then((snapshot) => {
 			if (snapshot.exists()) 
@@ -170,6 +172,8 @@
 					title 		= element['title'];
 					description = element['description'];
 					date 		= element['date'];
+					start_time 	= element['start_time'];
+					stop_time 	= element['stop_time'];
 
 					var row = podcast_table.insertRow(i++);
 					row.innerHTML = get_html(title, description, date);
