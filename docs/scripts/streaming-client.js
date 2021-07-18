@@ -5,30 +5,44 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-// attach a handler to the play-button
-var play_button = document.getElementsByClassName('play-button')[0];
-play_button.addEventListener('click', function (event) {
-  event.preventDefault();
-  if (play_button.getAttribute('on') == 'yes') play_button.setAttribute('on', 'no');else if (microphoneButton.getAttribute('on') == 'no') play_button.setAttribute('on', 'yes');
-});
-/*
- *  Establish connection with the server
- */
+try {
+  var play_button = document.getElementsByClassName('play-button')[0];
 
-var socket = _socket["default"].connect('/');
-/* 
- * upon receiving a microphone data chunk we must play it (but only if the play-button is ON)
- */
+  if (!play_button) {
+    throw new Error('Error getting play-button element!');
+  }
 
+  play_button.setAttribute('playing', 'no'); // attach a handler to the play-button
 
-socket.on("microphone-data-chunk", function (arrayBuffer) {
-  var blob = new Blob([arrayBuffer], {
-    'type': 'audio/ogg; codecs=opus'
+  play_button.addEventListener('click', function (event) {
+    if (play_button.getAttribute('playing') == 'yes') {
+      play_button.setAttribute('playing', 'no');
+      play_button.style.backgroundImage = "url('../img/play.png')";
+    } else if (play_button.getAttribute('playing') == 'no') {
+      play_button.setAttribute('playing', 'yes');
+      play_button.style.backgroundImage = "url('../img/pause.png')";
+      /*
+       *  Establish connection with the server
+       */
+
+      var socket = _socket["default"].connect('/');
+
+      var audio = document.createElement('audio');
+      audio.setAttribute('muted', 'muted');
+      /* 
+      * upon receiving a microphone data chunk we must play it (but only if the play-button is ON)
+      */
+
+      socket.on("microphone-data-chunk", function (arrayBuffer) {
+        audio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(arrayBuffer));
+        audio.play();
+        console.log('playing!');
+      });
+    }
   });
-  var audio = document.createElement('audio');
-  audio.src = window.URL.createObjectURL(blob);
-  audio.play();
-});
+} catch (e) {
+  console.error(e);
+}
 
 },{"socket.io-client":31}],2:[function(require,module,exports){
 

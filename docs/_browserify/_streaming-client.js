@@ -1,29 +1,52 @@
 import io from "socket.io-client";
 
-// attach a handler to the play-button
+try
+{
+    var play_button = document.getElementsByClassName('play-button')[0];
+    if (!play_button)
+    {
+        throw new Error('Error getting play-button element!');
+    }
 
-var play_button = document.getElementsByClassName('play-button')[0];
+    play_button.setAttribute('playing', 'no');
+    
+    // attach a handler to the play-button
+    play_button.addEventListener('click', event => {        
+        if (play_button.getAttribute('playing') == 'yes') 
+        {
+            play_button.setAttribute('playing', 'no');
+            play_button.style.backgroundImage = "url('../img/play.png')";
 
-play_button.addEventListener('click', event => {
-    event.preventDefault()
+            socket.on("microphone-data-chunk", (data) => {
+                // do nothing!
+            });
+        }
+        else if (play_button.getAttribute('playing') == 'no')
+        {
+            play_button.setAttribute('playing', 'yes');
+            play_button.style.backgroundImage = "url('../img/pause.png')";
 
-    if (play_button.getAttribute('on') == 'yes') 
-        play_button.setAttribute('on', 'no');
-    else if (microphoneButton.getAttribute('on') == 'no') 
-        play_button.setAttribute('on', 'yes');
-});
+            /*
+             *  Establish connection with the server
+             */
+            const socket = io.connect('/');
 
-/*
- *  Establish connection with the server
- */
-const socket = io.connect('/');
+            var audio = document.createElement('audio');
+            audio.setAttribute('muted', 'muted');
 
-/* 
- * upon receiving a microphone data chunk we must play it (but only if the play-button is ON)
- */
-socket.on("microphone-data-chunk", (arrayBuffer) => {
-    var blob = new Blob([arrayBuffer], { 'type' : 'audio/ogg; codecs=opus' });
-    var audio = document.createElement('audio');
-    audio.src = window.URL.createObjectURL(blob);
-    audio.play();
-});
+            /* 
+             * upon receiving a microphone data chunk we must play it (but only if the play-button is ON)
+             * Warning: Browsers force us to have this handler inside the event-listener because of Autoplay
+             */
+            socket.on("microphone-data-chunk", (arrayBuffer) => {
+                audio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(arrayBuffer));
+                audio.play();
+                console.log('playing!');
+            });
+        }
+    });
+}
+catch (e)
+{
+    console.error(e);
+}
