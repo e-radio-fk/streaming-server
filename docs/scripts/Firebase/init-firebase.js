@@ -66,7 +66,7 @@ firebase.auth().onAuthStateChanged((user) => {
       }
       else if (!result && window.location.pathname == '/')
       {
-          window.location.pathname = '/index.html';
+          window.location.pathname = '/profile.html';
       }
     });
   } 
