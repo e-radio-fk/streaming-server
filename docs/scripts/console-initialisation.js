@@ -1,12 +1,4 @@
-/* get current user */
-var user = JSON.parse(sessionStorage.getItem('currentUser'));
-if ((!user) || (user.uid == undefined) || user == 'no-user')
-{
-    console.log('console: restricting view to unauthorised user!');
-
-    window.location.pathname = '/?error=UnauthorisedUser';
-}
-else
+function initialise_console_page()
 {
     /*
      * Page Initialisation
@@ -126,4 +118,26 @@ else
             console.error('Error getting a list of week\'s scheduled podcasts: ' + error);
         });
     }
+}
+
+/* get current user */
+var user = JSON.parse(sessionStorage.getItem('currentUser'));
+if ((!user) || (user.uid == undefined) || user == 'no-user')
+{
+    console.log('console: restricting view to unauthorised user!');
+
+    window.location.pathname = '/?error=UnauthorisedUser';
+}
+else
+{
+    isAdmin(user).then((result) => {
+        if (result)
+            initialise_console_page();
+        else
+        {
+            console.log('console: restricting view to unauthorised user!');
+        
+            window.location.pathname = '/?error=UnauthorisedUser';
+        }
+    });
 }

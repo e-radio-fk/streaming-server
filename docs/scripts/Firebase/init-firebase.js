@@ -12,41 +12,6 @@ var firebaseConfig = {
 // Initialize Firebase
 var fb = firebase.initializeApp(firebaseConfig);
 
-
-/* isAdmin(user)
- *
- * takes a firebase `user` object and 
- * compares its uid to the uid of each of
- * the administrators stored inside the DB!
- * 
- * returns:
- *  true if admin
- *  false if not
- */
-async function isAdmin(user)
-{
-    var result = false;
-    var gotDBReply = false;
-
-    /* get a list of the admins from the DB */
-    var snapshot = await database.ref().child('/admins').get();
-
-    if (snapshot.exists())
-    {
-        var json = snapshot.val();
-
-        Object.keys(json).forEach(key => {
-            if (user.uid == json[key])
-            {
-                result = true;
-                // TODO: break;
-            }
-        });
-    }
-
-    return result;
-}
-
 //
 // If a user is already logged in, we should show the console or the user-view
 //
