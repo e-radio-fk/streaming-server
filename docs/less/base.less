@@ -188,22 +188,19 @@ br {
   background-size: contain;
   background-repeat: no-repeat;
   box-sizing: initial;    // TODO: find a way to have box-sizing: border-box;
-  padding: 16px;
-  font-size: 16px;
-  height: 30px;
-  width: 30px;
   border: none;
   cursor: pointer;
-  float: left;
 
   .no-select();
 }
 
-.dropbtn[clicked='yes'] {
-  .highlight();
-}
-.dropbtn[clicked='no'] {
-  backdrop-filter: unset;
+.now-playing-banner .dropbtn {
+  padding-right: 10px;
+  padding-left: 10px;
+  margin-top: 10px;
+  font-size: 16px;
+  height: 40px;
+  width: 40px;
 }
 
 .dropdown {
@@ -213,7 +210,11 @@ br {
   .no-select();
 }
 
-.dropbtn:hover {
+.now-playing-banner .dropdown {
+  height: 60px;
+}
+
+.dropdown:hover {
   .highlight();
 }
 
