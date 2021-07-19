@@ -14,7 +14,10 @@ try
     }
 
     play_button.setAttribute('playing', 'no');
-    
+
+    /* the audio element */
+    var audio = document.createElement('audio');
+
     // attach a handler to the play-button
     play_button.addEventListener('click', event => {
         if (play_button.getAttribute('playing') == 'yes') 
@@ -22,15 +25,14 @@ try
             play_button.setAttribute('playing', 'no');
             play_button.style.backgroundImage = "url('../img/play.png')";
 
-            audio.stop();
+            audio.pause();
+            audio.currentTime = 0;
             socket.removeAllListeners();
         }
         else if (play_button.getAttribute('playing') == 'no')
         {
             play_button.setAttribute('playing', 'yes');
             play_button.style.backgroundImage = "url('../img/pause.png')";
-
-            var audio = document.createElement('audio');
 
             /*
              * upon receiving microphone data chunks we must play it (but only if the play-button is ON)
@@ -39,7 +41,7 @@ try
             socket.on("microphone-data-chunk", (recordedChunks) => {
                 audio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(recordedChunks));
                 audio.play();
-                console.log('playing!');    
+                console.log('playing!');
             });
         }
     });
