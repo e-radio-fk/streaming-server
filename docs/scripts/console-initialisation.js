@@ -30,6 +30,27 @@ else
     document.getElementsByTagName('header')[0].style.visibility = 'visible';
     document.getElementsByTagName('body')[0].style.visibility = 'visible';
 
+    /* dropdowns */
+    var dropdown = document.getElementsByClassName('dropdown');
+    for (const dropdownElement of dropdown)
+    {
+        dropdownElement.onclick = () => {
+            var dropdown_content = dropdownElement.getElementsByClassName('dropdown-content')[0];
+
+            var clicked = dropdownElement.getAttribute('clicked');
+            if (clicked == 'yes')
+            {
+                dropdownElement.setAttribute('clicked', 'no');
+                dropdown_content.style.display = 'none';
+            }
+            else
+            {
+                dropdownElement.setAttribute('clicked', 'yes');
+                dropdown_content.style.display = 'block';
+            }
+        };
+    }
+
     /* 
      * Modals Initialisation & Configuration 
      */
@@ -59,4 +80,50 @@ else
      * Initialise Firebase Realtime Database
      */
     var database = firebase.database();
+
+    /*
+     * Fill contents of the start-podcast dropdown
+     */
+    var start_podcast_dropdown_content = document.getElementById('start-podcast-dropdown-content');
+    if (start_podcast_dropdown_content)
+    {
+		database.ref().child('/scheduled-podcasts').get().then((snapshot) => {
+			if (snapshot.exists())
+			{
+                function html(podcast_title, podcast_id)
+                {
+                    var html = "<p class='dropdown-content-button' onclick='start_podcast('" + podcast_id + "')'>" + podcast_title + "</p>"
+                    return html;
+                }
+
+                var inner_html;
+				var json = snapshot.val();
+
+                if (json)
+                {
+                    Object.keys(json).forEach(key => {
+                        var element = json[key];
+    
+                        if (element)
+                        {
+                            var title      = element['title'];
+                            var podcast_id = element['id'];
+        
+                            /* skip erroneous */
+                            if (title && podcast_id)
+                                inner_html += html(title, podcast_id);
+                        }
+                    });
+    
+                    start_podcast_dropdown_content.innerHTML += inner_html;
+                }
+            }
+            else
+            {
+                // show_error('Δεν έχουν προγραμματιστεί podcast για αυτή τη βδομάδα! Μπορείς να ξεκινήσεις νέο!', '');
+            }
+        }).catch((error) => {
+            console.error('Error getting a list of week\'s scheduled podcasts: ' + error);
+        });
+    }
 }

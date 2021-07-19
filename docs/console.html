@@ -28,30 +28,9 @@
               <a class="dropdown-content-button" href="./settings.html">Settings</a>
               <a class="dropdown-content-button" id="console-sign-out-button" onclick="sign_out()">Sign Out</a>
             </div>
-            <img class="dropbtn" id="banner-user-img" onclick="toggle_login_dropdown()">
+            <img class="dropbtn" id="banner-user-img">
         </div>
     </div>
-
-    <!-- This is for the login dropdown -->
-    <script>
-        var login_button = document.getElementById('banner-user-img');
-        var dropdown_content = document.getElementsByClassName('dropdown-content')[0];
-
-        function toggle_login_dropdown() 
-        {
-            var clicked = login_button.getAttribute('clicked');
-            if (clicked == 'yes')
-            {
-                login_button.setAttribute('clicked', 'no');
-                dropdown_content.style.display = 'none';
-            }
-            else
-            {
-                login_button.setAttribute('clicked', 'yes');
-                dropdown_content.style.display = 'block';
-            }
-        }
-    </script>
 
     <script defer src="scripts/login.js"></script>
     <script defer src="scripts/console-initialisation.js"></script>
@@ -61,7 +40,7 @@
     <br>
     <button onclick="show_podcast_planner()" data-toggle="modal" data-target="#important-msg">Plan Podcast</button>
 
-    <!-- Podcast Modal -->
+    <!-- Schedule Podcast Modal -->
     <div class="modal fade " id="important-msg" tabindex="-1" role="dialog" aria-labelledby="important-msg-label" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -108,7 +87,16 @@
         </div>
     </div>
 
-    <button id="console-start-podcast-button" onclick="start_podcast()">start podcast</button>
+    <!-- Start Podcast Dropdown -->
+    <button class="dropdown" id="console-start-podcast-button" style="float: unset;" onclick="toggle_dropdown()">
+        start podcast
+    
+        <div class="dropdown-content" id="start-podcast-dropdown-content">
+            <p class="dropdown-content-button" onclick="start_podcast('')">... Just a random podcast</p>
+            <!-- ... More entries must be filled here automatically from DB -->
+        </div>
+    </button>
+    
     <button id="console-test-mic-button">test mic</button>
     <!-- <button id="console-toggle-microphone" onclick="toggle_mic()">start mic</button> -->
 

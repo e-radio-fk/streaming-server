@@ -1,3 +1,19 @@
+//
+//  Helpers
+//
+
+// generates random id;
+// from: https://learnersbucket.com/examples/javascript/unique-id-generator-in-javascript/
+let guid = () => {
+    let s4 = () => {
+        return Math.floor((1 + Math.random()) * 0x10000)
+            .toString(16)
+            .substring(1);
+    }
+    //return id of format 'aaaaaaaa'-'aaaa'-'aaaa'-'aaaa'-'aaaaaaaaaaaa'
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
 /**
  * schedule_new_podcast()
  *
@@ -31,7 +47,8 @@ function schedule_new_podcast()
         description:    description,
         date:           date,
         start_time:     start_time,
-        end_time:       end_time
+        end_time:       end_time,
+        id:             guid()          /* create a unique random podcast-id */
     }, (error) => {
         if (error) {
             show_error('Error: ' + error, error);
@@ -42,4 +59,9 @@ function schedule_new_podcast()
         /* do not forget to close the modal */
         $('#important-msg').modal('hide');
     });
+}
+
+function start_podcast(podcast_id)
+{
+    
 }
