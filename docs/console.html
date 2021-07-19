@@ -1,7 +1,7 @@
 <html>
 <head>
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-	<meta content="utf-8" http-equiv="encoding">	
+	<meta content="utf-8" http-equiv="encoding">
 
     <title>FK Live E-Radio: Control Panel</title>
     <link rel="stylesheet" href="css/main.css">
@@ -108,7 +108,9 @@
         </div>
     </div>
 
-    <button id="console-toggle-microphone" onclick="toggle_mic()">start mic</button>
+    <button id="console-start-podcast-button" onclick="start_podcast()">start podcast</button>
+    <button id="console-test-mic-button">test mic</button>
+    <!-- <button id="console-toggle-microphone" onclick="toggle_mic()">start mic</button> -->
 
     <h3>Playlists</h3>
     <button style="height: 42px;">(+) import yt playlist</button>
@@ -127,7 +129,6 @@
     <!-- Note: this is mainly for darkmode -->
     <script src="scripts/darkmode.js"></script>
     <script src="scripts/general.js"></script>
-    <script src='https://cdn.jsdelivr.net/npm/sfmediastream@latest'></script>
     <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
     <script src="scripts/console-microphone.js"></script>
     

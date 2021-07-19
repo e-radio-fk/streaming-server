@@ -12,18 +12,69 @@ var firebaseConfig = {
 // Initialize Firebase
 var fb = firebase.initializeApp(firebaseConfig);
 
+
+/* isAdmin(user)
+ *
+ * takes a firebase `user` object and 
+ * compares its uid to the uid of each of
+ * the administrators stored inside the DB!
+ * 
+ * returns:
+ *  true if admin
+ *  false if not
+ */
+async function isAdmin(user)
+{
+    var result = false;
+    var gotDBReply = false;
+
+    /* get a list of the admins from the DB */
+    var snapshot = await database.ref().child('/admins').get();
+
+    if (snapshot.exists())
+    {
+        var json = snapshot.val();
+
+        Object.keys(json).forEach(key => {
+            if (user.uid == json[key])
+            {
+                result = true;
+                // TODO: break;
+            }
+        });
+    }
+
+    return result;
+}
+
+//
+// If a user is already logged in, we should show the console or the user-view
+//
 firebase.auth().onAuthStateChanged((user) => {
-  if (user) {
-    console.log('First time: ', user);
+  if (user) 
+  {
+    // a user is logged-in; he is either admin or normal user
+
+    console.log('current-user: ', user);
     sessionStorage.setItem('currentUser', JSON.stringify(user));
 
-    //
-    // If a user is already logged in, we should show the console or the user-view
-    //
-    if (window.location.pathname == '/')
-    	window.location.replace('console.html');
-  } else {
-    console.log('First time: no-user');
+    isAdmin(user).then(result => {
+      /* change url (without logging to history => no back and forth)  */
+      if (result && window.location.pathname == '/')
+      {
+          window.location.pathname = '/console.html';
+      }
+      else if (!result && window.location.pathname == '/')
+      {
+          window.location.pathname = '/index.html';
+      }
+    });
+  } 
+  else
+  {
+    // no user is logged-in
+
+    console.log('current-user: no-user');
     sessionStorage.setItem('currentUser', JSON.stringify('no-user'));
 
     document.getElementsByTagName('header')[0].style.visibility = 'visible';
