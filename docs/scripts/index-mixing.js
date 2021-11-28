@@ -30,3 +30,14 @@
  *      της μουσικής να γίνονται on-demand, πράγμα που ίσως και να είναι αδύνατον εάν σκεφτούμε ότι στέλνουμε
  *      κβαντισμένη πληροφορία.
  */
+
+exports.sound_unit = class {
+    constructor() {
+        // got microphone data from the console; broadcast to all clients!
+        socket.on('console-mic-chunks', data => {
+            io.emit('microphone-data-chunk', data);
+        })
+
+        // ... more events here!
+    }
+}
