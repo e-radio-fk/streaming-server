@@ -6,9 +6,13 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 try {
+  var audioPlayback = new Audio();
+  var audioPlaybackSrc = document.createElement("source");
+  audioPlaybackSrc.type = "audio/mpeg";
   /*
    *  Establish connection with the server
    */
+
   var socket = _socket["default"].connect('/');
 
   var play_button = document.getElementsByClassName('play-button')[0];
@@ -41,6 +45,16 @@ try {
         audio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(recordedChunks));
         audio.play();
         console.log('playing!');
+      });
+      socket.on('MUSIC_TRACK_START', function (song) {
+        console.log('client: playing song!');
+        audioPlaybackSrc.src = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
+        audioPlayback.appendChild(audioPlaybackSrc);
+        audioPlayback.play();
+      });
+      socket.on('MUSIC_TRACK_STOP', function () {
+        audioPlayback.pause();
+        audioPlayback.currentTime = 0;
       });
     }
   });

@@ -18,8 +18,10 @@
  *      RADIO_SESSION_STARTING
  *      RADIO_SESSION_STOPPING
  * 
+ *      MUSIC_TRACK_START
  *      MUSIC_TRACK_DATA
  *      MUSIC_TRACK_VOLUME
+ *      MUSIC_TRACK_STOP
  * 
  *      MICROPHONE_SESSION_STARTING
  *      MICROPHONE_SESSION_STOPPING
@@ -32,12 +34,21 @@
  */
 
 exports.sound_unit = class {
-    constructor() {
+    constructor(socket, io) {
+        console.log('server: sound_unit init');
+
         // got microphone data from the console; broadcast to all clients!
         socket.on('console-mic-chunks', data => {
             io.emit('microphone-data-chunk', data);
         })
 
-        // ... more events here!
+        socket.on('MUSIC_TRACK_START', song => {
+            console.log('server: broadcasting call to play song!');
+            io.emit('MUSIC_TRACK_START', song);
+        });
+
+        socket.on('MUSIC_TRACK_STOP', () => {
+            io.emit('MUSIC_TRACK_STOP');
+        });
     }
 }

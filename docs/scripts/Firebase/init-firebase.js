@@ -16,7 +16,7 @@ var fb = firebase.initializeApp(firebaseConfig);
 // If a user is already logged in, we should show the console or the user-view
 //
 firebase.auth().onAuthStateChanged((user) => {
-  if (user) 
+  if (user)
   {
     // a user is logged-in; he is either admin or normal user
 

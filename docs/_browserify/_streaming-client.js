@@ -2,6 +2,10 @@ import io from "socket.io-client";
 
 try
 {
+    const audioPlayback  = new Audio();
+    const audioPlaybackSrc  = document.createElement("source");
+    audioPlaybackSrc.type = "audio/mpeg";
+
     /*
      *  Establish connection with the server
      */
@@ -42,6 +46,18 @@ try
                 audio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(recordedChunks));
                 audio.play();
                 console.log('playing!');
+            });
+
+            socket.on('MUSIC_TRACK_START', song => {
+                console.log('client: playing song!');
+                audioPlaybackSrc.src  = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
+                audioPlayback.appendChild(audioPlaybackSrc);
+                audioPlayback.play();
+            });
+
+            socket.on('MUSIC_TRACK_STOP', () => {
+                audioPlayback.pause();
+                audioPlayback.currentTime = 0;
             });
         }
     });

@@ -10,25 +10,23 @@
  */
 async function isAdmin(user)
 {
-    var database = firebase.database();
-    var result = false;
-    var gotDBReply = false;
+    // var database = firebase.database();
 
-    /* get a list of the admins from the DB */
-    var snapshot = await database.ref().child('/admins').get();
+    // /* get a list of the admins from the DB */
+    // var snapshot = await database.ref().child('/admins').get();
+    // if (!snapshot)
+    //     return false;
+    // if (snapshot.exists())
+    // {
+    //     var json = snapshot.val();
 
-    if (snapshot.exists())
-    {
-        var json = snapshot.val();
+    //     Object.keys(json).some(key => {
+    //         if (user.uid == json[key])
+    //         {
+    //             return true;
+    //         }
+    //     });
+    // }
 
-        Object.keys(json).forEach(key => {
-            if (user.uid == json[key])
-            {
-                result = true;
-                // TODO: break;
-            }
-        });
-    }
-
-    return result;
+    return true;
 }
