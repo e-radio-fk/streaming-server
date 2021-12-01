@@ -33,5 +33,5 @@ function toggle_music()
 
 function change_volume(newVolume)
 {
-    
+    socket.emit('MUSIC_TRACK_VOLUME', newVolume);
 }

@@ -3,7 +3,7 @@
 //
 
 const express = require('express');
-const { sound_unit } = require('./docs/scripts/index-sound-unit');
+// const { sound_unit } = require('./docs/scripts/index-sound-unit');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -29,12 +29,16 @@ io.on("connection", (socket) => {
 	});
 
 	socket.on('MUSIC_TRACK_START', song => {
-		console.log('server: broadcasting call to play song!');
+		// console.log('server: broadcasting call to play song!');
 		io.emit('MUSIC_TRACK_START', song);
 	});
 
 	socket.on('MUSIC_TRACK_STOP', () => {
 		io.emit('MUSIC_TRACK_STOP');
+	});
+
+	socket.on('MUSIC_TRACK_VOLUME', newVolume => {
+		io.emit('MUSIC_TRACK_VOLUME', newVolume);
 	});
 });
 

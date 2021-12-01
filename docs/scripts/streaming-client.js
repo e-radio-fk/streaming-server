@@ -56,6 +56,9 @@ try {
         audioPlayback.pause();
         audioPlayback.currentTime = 0;
       });
+      socket.on('MUSIC_TRACK_VOLUME', function (newVolume) {
+        audioPlayback.volume = newVolume / 100;
+      });
     }
   });
 } catch (e) {
