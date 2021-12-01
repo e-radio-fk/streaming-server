@@ -1,12 +1,10 @@
 import io from "socket.io-client";
+import ss from "socket.io-stream";
 
 try
 {
     /* the audio element */
     const musicAudioPlayback  = new Audio();
-    const musicAudioPlaybackSrc  = document.createElement("source");
-    musicAudioPlaybackSrc.type = "audio/mpeg";
-
     const microphoneAudio = document.createElement('audio');
 
     /*
@@ -51,10 +49,9 @@ try
                 microphoneAudio.play();
             });
 
-            socket.on('MUSIC_TRACK_START', song => {
-                // TODO: must convert this to streaming capability!
-                musicAudioPlaybackSrc.src  = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
-                musicAudioPlayback.appendChild(musicAudioPlaybackSrc);
+            socket.on('MUSIC_TRACK_PART', (part) => {
+                console.log('client: playing music chunks!');
+                musicAudioPlayback.src = (window.URL || window.webkitURL).createObjectURL(new Blob(part));
                 musicAudioPlayback.play();
             });
 
@@ -62,8 +59,8 @@ try
                 musicAudioPlayback.pause();
                 musicAudioPlayback.currentTime = 0;
             });
-            
-            socket.on('MUSIC_TRACK_VOLUME', newVolume => {
+
+            socket.on('MUSIC_TRACK_VOLUME', (newVolume) => {
                 musicAudioPlayback.volume = newVolume / 100;
             });
         }

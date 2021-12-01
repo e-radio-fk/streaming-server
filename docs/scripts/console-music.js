@@ -6,10 +6,17 @@ toggleMusicButton.setAttribute('on', 'no');
 
 function startMusic()
 {
-    var song = 'blah';
     console.log('console: starting song!');
-    socket.emit('MUSIC_TRACK_START', song);
+
+    //
+    // Create a new music playback stream
+    //
+    var musicStream = ss.createStream();
+    var song = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
+    ss(socket).emit('MUSIC_TRACK_STREAM', musicStream, { name: song });
+    ss.createBlobReadStream(song).pipe(musicStream);
 }
+
 function stopMusic()
 {
     socket.emit('MUSIC_TRACK_STOP');
