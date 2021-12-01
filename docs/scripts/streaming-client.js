@@ -6,9 +6,11 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 try {
-  var audioPlayback = new Audio();
-  var audioPlaybackSrc = document.createElement("source");
-  audioPlaybackSrc.type = "audio/mpeg";
+  /* the audio element */
+  var musicAudioPlayback = new Audio();
+  var musicAudioPlaybackSrc = document.createElement("source");
+  musicAudioPlaybackSrc.type = "audio/mpeg";
+  var microphoneAudio = document.createElement('audio');
   /*
    *  Establish connection with the server
    */
@@ -21,17 +23,16 @@ try {
     throw new Error('Error getting play-button element!');
   }
 
-  play_button.setAttribute('playing', 'no');
-  /* the audio element */
-
-  var audio = document.createElement('audio'); // attach a handler to the play-button
+  play_button.setAttribute('playing', 'no'); // attach a handler to the play-button
 
   play_button.addEventListener('click', function (event) {
     if (play_button.getAttribute('playing') == 'yes') {
       play_button.setAttribute('playing', 'no');
       play_button.style.backgroundImage = "url('../img/play.png')";
-      audio.pause();
-      audio.currentTime = 0;
+      microphoneAudio.pause();
+      microphoneAudio.currentTime = 0;
+      musicAudioPlayback.pause();
+      musicAudioPlayback.currentTime = 0;
       socket.removeAllListeners();
     } else if (play_button.getAttribute('playing') == 'no') {
       play_button.setAttribute('playing', 'yes');
@@ -42,22 +43,21 @@ try {
        */
 
       socket.on("microphone-data-chunk", function (recordedChunks) {
-        audio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(recordedChunks));
-        audio.play();
-        console.log('playing!');
+        microphoneAudio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(recordedChunks));
+        microphoneAudio.play();
       });
       socket.on('MUSIC_TRACK_START', function (song) {
         console.log('client: playing song!');
-        audioPlaybackSrc.src = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
-        audioPlayback.appendChild(audioPlaybackSrc);
-        audioPlayback.play();
+        musicAudioPlaybackSrc.src = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
+        musicAudioPlayback.appendChild(musicAudioPlaybackSrc);
+        musicAudioPlayback.play();
       });
       socket.on('MUSIC_TRACK_STOP', function () {
-        audioPlayback.pause();
-        audioPlayback.currentTime = 0;
+        musicAudioPlayback.pause();
+        musicAudioPlayback.currentTime = 0;
       });
       socket.on('MUSIC_TRACK_VOLUME', function (newVolume) {
-        audioPlayback.volume = newVolume / 100;
+        musicAudioPlayback.volume = newVolume / 100;
       });
     }
   });

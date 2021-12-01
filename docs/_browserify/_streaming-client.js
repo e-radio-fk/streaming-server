@@ -2,9 +2,12 @@ import io from "socket.io-client";
 
 try
 {
-    const audioPlayback  = new Audio();
-    const audioPlaybackSrc  = document.createElement("source");
-    audioPlaybackSrc.type = "audio/mpeg";
+    /* the audio element */
+    const musicAudioPlayback  = new Audio();
+    const musicAudioPlaybackSrc  = document.createElement("source");
+    musicAudioPlaybackSrc.type = "audio/mpeg";
+
+    const microphoneAudio = document.createElement('audio');
 
     /*
      *  Establish connection with the server
@@ -19,9 +22,6 @@ try
 
     play_button.setAttribute('playing', 'no');
 
-    /* the audio element */
-    var audio = document.createElement('audio');
-
     // attach a handler to the play-button
     play_button.addEventListener('click', event => {
         if (play_button.getAttribute('playing') == 'yes') 
@@ -29,8 +29,12 @@ try
             play_button.setAttribute('playing', 'no');
             play_button.style.backgroundImage = "url('../img/play.png')";
 
-            audio.pause();
-            audio.currentTime = 0;
+            microphoneAudio.pause();
+            microphoneAudio.currentTime = 0;
+
+            musicAudioPlayback.pause();
+            musicAudioPlayback.currentTime = 0;
+
             socket.removeAllListeners();
         }
         else if (play_button.getAttribute('playing') == 'no')
@@ -43,25 +47,24 @@ try
              * Warning: Browsers force us to have this handler inside the event-listener because of Autoplay
              */
             socket.on("microphone-data-chunk", (recordedChunks) => {
-                audio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(recordedChunks));
-                audio.play();
-                console.log('playing!');
+                microphoneAudio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(recordedChunks));
+                microphoneAudio.play();
             });
 
             socket.on('MUSIC_TRACK_START', song => {
-                console.log('client: playing song!');
-                audioPlaybackSrc.src  = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
-                audioPlayback.appendChild(audioPlaybackSrc);
-                audioPlayback.play();
+                // TODO: must convert this to streaming capability!
+                musicAudioPlaybackSrc.src  = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
+                musicAudioPlayback.appendChild(musicAudioPlaybackSrc);
+                musicAudioPlayback.play();
             });
 
             socket.on('MUSIC_TRACK_STOP', () => {
-                audioPlayback.pause();
-                audioPlayback.currentTime = 0;
+                musicAudioPlayback.pause();
+                musicAudioPlayback.currentTime = 0;
             });
             
             socket.on('MUSIC_TRACK_VOLUME', newVolume => {
-                audioPlayback.volume = newVolume / 100;
+                musicAudioPlayback.volume = newVolume / 100;
             });
         }
     });
