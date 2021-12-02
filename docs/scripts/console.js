@@ -15,6 +15,17 @@ let guid = () => {
 }
 
 /**
+ * test_mic()
+ * 
+ * Checks whether the platform can get audio from the microphone before starting a
+ *  podcast.
+ */
+function test_mic()
+{
+
+}
+
+/**
  * schedule_new_podcast()
  *
  * Gathers information (such as podcast title, descreption and scheduled time)
@@ -57,11 +68,28 @@ function schedule_new_podcast()
         }
 
         /* do not forget to close the modal */
-        $('#important-msg').modal('hide');
+        $('#schedule-podcast-modal').modal('hide');
     });
 }
 
 function start_podcast(podcast_id)
 {
-    
+    var podcast_title = '';
+
+    if (!podcast_id)
+    {
+        podcast_title = 'Random Podcast';
+    }
+
+    $('#start-podcast-modal').modal('show');
+}
+
+/**
+ * start_podcast_after_soundcheck()
+ * 
+ * After all checks have been conducted pre-session we can start the session!
+ */
+function start_podcast_after_soundcheck()
+{
+    $('#console-panels-object').css("visibility", "visible");
 }

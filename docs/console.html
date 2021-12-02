@@ -6,7 +6,6 @@
     <title>FK Live E-Radio: Console</title>
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 	<!-- Firebase -->
     <script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
@@ -40,15 +39,15 @@
     <!-- Start Podcast Dropdown -->
     <h3>Podcast</h3>
 
-    <button onclick="show_podcast_planner()" data-toggle="modal" data-target="#important-msg">Plan Podcast</button>
+    <button onclick="show_podcast_planner()" data-toggle="modal" data-target="#schedule-podcast-modal">Plan Podcast</button>
 
     <!-- Schedule Podcast Modal -->
-    <div class="modal fade" id="important-msg" tabindex="-1" role="dialog" aria-labelledby="important-msg-label" aria-hidden="true">
+    <div class="modal fade" id="schedule-podcast-modal" tabindex="-1" role="dialog" aria-labelledby="schedule-podcast-modal-label" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-              <h4 class="modal-title" id="important-msg-label">Podcast Planner</h4>
+              <h4 class="modal-title" id="schedule-podcast-modal-label">Podcast Planner</h4>
             </div>
             <div class="modal-body">
                 <!-- Date Picker disguised as a button -->
@@ -93,12 +92,29 @@
         start podcast
     
         <div class="dropdown-content" id="start-podcast-dropdown-content">
-            <p class="dropdown-content-button" onclick="start_podcast('')">... Just a random podcast</p>
+            <p class="dropdown-content-button" onclick="start_podcast(null)">... Just a random podcast</p>
             <!-- ... More entries must be filled here automatically from DB -->
         </div>
     </button>
-    
-    <button id="console-test-mic-button">test mic</button>
+
+    <!-- Start Podcast Modal -->
+    <div class="modal fade" id="start-podcast-modal" tabindex="-1" role="dialog" aria-labelledby="start-podcast-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="schedule-podcast-modal-label">Έναρξη Podcast</h4>
+            </div>
+            <div class="modal-body">
+                <p>Πρωτού ξεκινήσεις, έλεγξε το μικρόφωνο:</p>
+                <button id="console-test-mic-button" onclick="test_mic();">test mic</button>
+            </div>
+            <div class="modal-footer">
+                <button id="console-start-podcast-after-soundcheck-button" onclick="start_podcast_after_soundcheck();">Εκκίνηση!</button>
+            </div>
+          </div>
+        </div>
+    </div>
 
     <h3>Playlists</h3>
     <button style="height: 42px;">(+) import yt playlist</button>
@@ -106,7 +122,7 @@
     <br>
     <br>
 
-    <div class="console-panels">
+    <div class="console-panels" id="console-panels-object" style="visibility: hidden;">
         <div class="console-panels-header">
             <h4 style="padding: 0; margin: 0;">Podcast Session (+ Title)</h4>
         </div>
@@ -119,7 +135,7 @@
 
         <div id="console-panels-view" style="display: block; display: flex;">
             <!-- Livechat -->
-            <div class="livechat">
+            <div class="livechat" style="visibility: visible;">
                 <div class="live-chat-container" id="console-panels-livechat" style="left: 0; padding: 0; margin: 0; width: 100%">
                     <yt-live-chat-renderer>
                         <yt-live-chat-item-list-renderer>
