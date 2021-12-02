@@ -52,6 +52,7 @@ io.on("connection", (socket) => {
 
 			if (stop_music_playback_interval)
 			{
+				parts = [];
 				clearInterval(musicPlaybackInterval);
 				stop_music_playback_inteval = false;
 			}

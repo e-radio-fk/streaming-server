@@ -7,6 +7,8 @@ try
     const musicAudioPlayback  = new Audio();
     const microphoneAudio = document.createElement('audio');
 
+    musicAudioPlayback.volume = 0.2;
+
     /*
      *  Establish connection with the server
      */

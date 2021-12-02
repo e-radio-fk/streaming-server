@@ -37,8 +37,9 @@
     <script defer src="scripts/console-initialisation.js"></script>
 </header>
 <body style="visibility: hidden;">
-    <br>
-    <br>
+    <!-- Start Podcast Dropdown -->
+    <h3>Podcast</h3>
+
     <button onclick="show_podcast_planner()" data-toggle="modal" data-target="#important-msg">Plan Podcast</button>
 
     <!-- Schedule Podcast Modal -->
@@ -88,7 +89,6 @@
         </div>
     </div>
 
-    <!-- Start Podcast Dropdown -->
     <button class="dropdown" id="console-start-podcast-button" style="float: unset;" onclick="toggle_dropdown()">
         start podcast
     
@@ -100,25 +100,55 @@
     
     <button id="console-test-mic-button">test mic</button>
     
-    <div style="display: block;">
-        <button id="toggle-music-button" onclick="toggle_music()">start music</button>
-        <input type="range" id="myRange" value="20" oninput="change_volume(this.value)" onchange="change_volume(this.value)">    
-    </div>
-
     <button id="console-toggle-microphone" onclick="toggle_mic()">start mic</button>
 
     <h3>Playlists</h3>
     <button style="height: 42px;">(+) import yt playlist</button>
 
-    <!-- Chat space -->
-	<div id="live-chat-container">
-		<yt-live-chat-renderer>
-			<yt-live-chat-item-list-renderer>
-			</yt-live-chat-item-list-renderer>
-		</yt-live-chat-renderer>
-		<input type="text" class="yt-live-chat-message-box" id="live-chat-message-box">
-	
-        <script src="scripts/livechat.js"></script>
+    <br>
+    <br>
+
+    <div class="console-panels">
+        <div class="console-panels-header">
+            <h3 style="padding: 0; margin: 0;">Podcast Session (+ Title)</h3>
+        </div>
+
+        <div id="console-panels-bar" class="now-playing-banner">
+            <button>Stop Session</button>
+            <!-- <p>Microphone <div id="microphone-visualisation"></div></p> -->
+        </div>
+
+        <div id="console-panels-view" style="display: block; display: flex;">
+            <!-- Livechat -->
+            <div class="live-chat-container" id="console-panels-livechat" style="left: 0; padding: 0; margin: 0; width: 100%">
+                <yt-live-chat-renderer>
+                    <yt-live-chat-item-list-renderer>
+                    </yt-live-chat-item-list-renderer>
+                </yt-live-chat-renderer>
+                <!-- <input type="text" class="yt-live-chat-message-box" id="live-chat-message-box"> -->
+            
+                <script src="scripts/livechat.js"></script>
+            </div>
+
+            <!-- Current Playlist Songs View -->
+            <div id="console-panel-playlist-view"></div>
+
+            <!-- Controls View -->
+            <div id="console-panel-controls" style="border-bottom-left-radius: 5px; border-bottom-right-radius: 5px;">
+                <!-- Music Section -->
+                <div id="console-panel-controls-music-section">
+                    <h3>Music Playback</h3>
+                    <div style="display: block;">
+                        <div style="display: block;">
+                            <i class="fa fa-backward"></i>
+                            <i class="fa fa-play" onclick="toggle_music()"></i>
+                            <i class="fa fa-forward"></i>
+                        </div>
+                        <!-- <input type="range" id="console-panel-controls-music-volume-slider" value="20" oninput="change_volume(this.value)" onchange="change_volume(this.value)">         -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Scripts -->
