@@ -616,29 +616,78 @@ figure .user-photo-caption-text {
   width: 33px;
   position: relative;
 }
+body {
+  background-color: #A8577E;
+  color: #FFC145;
+}
+h1 {
+  color: #FFFFFF;
+}
+button {
+  background-color: #FFC145;
+}
+#login-box .textbox::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #FFC145;
+}
+#login-box .textbox:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #FFC145;
+}
+#login-box .textbox::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #FFC145;
+}
+.dropdown-content {
+  background-color: #c07599;
+}
+.dropdown-content a {
+  color: #FFC145;
+}
+#login-box,
+#signup-box {
+  background: #c07599;
+}
+.back-button {
+  background-image: url('../img/back.png');
+}
+.play-button {
+  background-image: url('../img/play.png');
+}
+#user-login-dropdown-back-button,
+#banner-user-img {
+  background-image: url('../img/person.png');
+}
 .console-panels-header {
-  background-color: lightseagreen;
+  background-color: #74274c;
   text-align: center;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 #console-panels-bar {
-  padding: auto;
+  background-color: #74274c;
+  padding: 5px;
   margin: auto;
   position: initial;
   border-radius: initial;
 }
 .console-panels {
   width: 100%;
+  box-shadow: 1px 1px 5px #000000;
 }
 #console-panel-playlist-view,
 #console-panel-controls {
+  background-color: #74274c;
   width: 100%;
   height: auto;
-  border-style: solid;
+  border-style: none;
   right: 0;
   padding: 0;
   margin: 0;
+}
+#console-panel-controls {
+  border-top-left-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 #console-panels-livechat {
   border-top-left-radius: initial;

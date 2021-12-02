@@ -1,12 +1,15 @@
+@import url('_light.less');
+
 .console-panels-header {
-    background-color: lightseagreen; 
+    background-color: @background-color-dark;
     text-align: center; 
     border-top-left-radius: 5px; 
     border-top-right-radius: 5px;
 }
 
 #console-panels-bar {
-    padding: auto;
+    background-color: @background-color-dark;
+    padding: 5px;
     margin: auto;
     position: initial;
     border-radius: initial;
@@ -14,13 +17,15 @@
 
 .console-panels {
     width: 100%;
+    box-shadow: 1px 1px 5px #000000;
 }
 
 #console-panel-playlist-view, 
 #console-panel-controls {
+    background-color: @background-color-dark;
     width: 100%; 
     height: auto;
-    border-style: solid; 
+    border-style: none; 
     right: 0; 
     padding: 0;
     margin: 0;

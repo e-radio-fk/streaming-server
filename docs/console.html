@@ -43,7 +43,7 @@
     <button onclick="show_podcast_planner()" data-toggle="modal" data-target="#important-msg">Plan Podcast</button>
 
     <!-- Schedule Podcast Modal -->
-    <div class="modal fade " id="important-msg" tabindex="-1" role="dialog" aria-labelledby="important-msg-label" aria-hidden="true">
+    <div class="modal fade" id="important-msg" tabindex="-1" role="dialog" aria-labelledby="important-msg-label" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -99,8 +99,6 @@
     </button>
     
     <button id="console-test-mic-button">test mic</button>
-    
-    <button id="console-toggle-microphone" onclick="toggle_mic()">start mic</button>
 
     <h3>Playlists</h3>
     <button style="height: 42px;">(+) import yt playlist</button>
@@ -110,11 +108,12 @@
 
     <div class="console-panels">
         <div class="console-panels-header">
-            <h3 style="padding: 0; margin: 0;">Podcast Session (+ Title)</h3>
+            <h4 style="padding: 0; margin: 0;">Podcast Session (+ Title)</h4>
         </div>
 
-        <div id="console-panels-bar" class="now-playing-banner">
-            <button>Stop Session</button>
+        <div id="console-panels-bar">
+            <button style="top: 0; bottom: 0; margin: 0;">Stop Session</button>
+            <button style="top: 0; bottom: 0; margin: 0;" id="console-toggle-microphone" onclick="toggle_mic()">start mic</button>
             <!-- <p>Microphone <div id="microphone-visualisation"></div></p> -->
         </div>
 
@@ -140,9 +139,9 @@
                     <h3>Music Playback</h3>
                     <div style="display: block;">
                         <div style="display: block;">
-                            <i class="fa fa-backward"></i>
-                            <i class="fa fa-play" onclick="toggle_music()"></i>
-                            <i class="fa fa-forward"></i>
+                            <button class="fa fa-backward"></button>
+                            <button class="fa fa-play" onclick="toggle_music()"></button>
+                            <button class="fa fa-forward"></button>
                         </div>
                         <!-- <input type="range" id="console-panel-controls-music-volume-slider" value="20" oninput="change_volume(this.value)" onchange="change_volume(this.value)">         -->
                     </div>
