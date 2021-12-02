@@ -101,11 +101,8 @@
 		<p>Live e-ράδιο από φοιτητές</p>
 	</div>
 
-	<br>
-	<br>
-
-	<div style="position: relative; width: 100%; height: 100%;">
-		<div style="position: absolute; left: 0; width: 50%; height: 100%;">
+	<div style="display: flex;">
+		<div style="left: 0; width: 100%;">
 			<h4 style="text-decoration: underline; margin-left: 0; text-align: center;">Podcasts</h2>
 			<table class="podcast-news-table">
 				<tbody>
@@ -113,18 +110,17 @@
 			</table>
 		</div>
 
-		<br>
-		<br>
-
 		<!-- Chat space -->
-		<div class="live-chat-container" style="position: absolute; right: 0;">
-			<yt-live-chat-renderer>
-				<yt-live-chat-item-list-renderer>
-				</yt-live-chat-item-list-renderer>
-			</yt-live-chat-renderer>
+		<div class="livechat" style="right: 0; width: 100%;">
+			<div class="live-chat-container">
+				<yt-live-chat-renderer>
+					<yt-live-chat-item-list-renderer>
+					</yt-live-chat-item-list-renderer>
+				</yt-live-chat-renderer>
+			
+			</div>
 			<input type="text" class="yt-live-chat-message-box" id="live-chat-message-box">
-		
-			<script src="scripts/livechat.js"></script>
+			<script src="scripts/livechat.js"></script>	
 		</div>
 	</div>
 
@@ -194,7 +190,4 @@
 	<!-- Move banner -->
 	<script src="scripts/move_banner.js"></script>
 </body>
-<footer style="border-top: 2px solid sandybrown;">
-
-</footer>
 </html>
