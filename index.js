@@ -6,7 +6,6 @@ const express = require('express');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
-const ss = require('socket.io-stream');
 
 app.use(express.static(__dirname + '/docs'));
 
@@ -17,50 +16,39 @@ app.get('/', (req, res) => {
 console.log('[1] Enabling stream.io...');
 
 io.on("connection", (socket) => {
-
-	/*
-	 * Incase the music-playback-streaming must stop
-	 *  set this flag to remove the respective Interval.
-	 */
-	var stop_music_playback_interval = false;
-
 	socket.on('client-message', (...args) => {
 		io.emit('message', args[0], args[1], args[2]);
 	});
 
+	//
+	//	MICROPHONE PLAYBACK
+	// 
 	socket.on('console-mic-chunks', data => {
 		io.emit('microphone-data-chunk', data);
 	});
 
-	ss(socket).on('MUSIC_TRACK_STREAM', (stream, data) => {
-		console.log('server: started music track stream!');
+	// 
+	//	MUSIC PLAYBACK
+	// 
+	socket.on('MUSIC_TRACK_FILENAME', filename => {
+		io.emit('MUSIC_TRACK_FILENAME', filename);
+	});
 
-		parts = [];
-	
-		socket.on('data', (chunk) => {
-			console.log('server: getting music chunks!');
-			parts.push(chunk);
-		});
+	/*
+	 * Requesting Position Handler
+	 *
+	 * Δημιουργούμε έναν handler για την περίπτωση που οποιοσδήποτε client ζητά
+	 *  να μάθει την position στο song για να ξεκινήσει να το παίζει.
+	 */
+	socket.on('MUSIC_TRACK_REQUESTING_POSITION', () => {
+		socket.emit('MUSIC_TRACK_POSITION', 0.2);			// TODO: fixme
+	});
 
-		/* Set this inteval to play music streamed from the server every 4secs */
-		var musicPlaybackInterval = setInterval(() => {
-			if (parts.length > 0) 
-			{
-				/* send our newest chunks */
-				io.emit('MUSIC_TRACK_PART', parts);
-			}
-
-			if (stop_music_playback_interval)
-			{
-				parts = [];
-				clearInterval(musicPlaybackInterval);
-				stop_music_playback_inteval = false;
-			}
-		}, 4000);   // every 4 secs play music data!
+	socket.on('MUSIC_TRACK_START_WITH_FILENAME', (filename) => {
+		io.emit('MUSIC_TRACK_START_WITH_FILENAME', filename);
 	});
 
 	socket.on('MUSIC_TRACK_STOP', () => {
-		stop_music_playback_interval = true;
 		io.emit('MUSIC_TRACK_STOP');
 	});
 

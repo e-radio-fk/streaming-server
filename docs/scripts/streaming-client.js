@@ -11,6 +11,7 @@ try {
   /* the audio element */
   var musicAudioPlayback = new Audio();
   var microphoneAudio = document.createElement('audio');
+  musicAudioPlayback.volume = 0.2;
   /*
    *  Establish connection with the server
    */
@@ -46,9 +47,25 @@ try {
         microphoneAudio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(recordedChunks));
         microphoneAudio.play();
       });
-      socket.on('MUSIC_TRACK_PART', function (part) {
+      /*
+       * When we first connect to the server we request that he give us the filename of the song currently playing
+       * This is done with MUSIC_TRACK_REQUESTING_FILENAME.
+       */
+
+      socket.on('MUSIC_TRACK_START_WITH_FILENAME', function (filename) {
+        if (!filename) return;
         console.log('client: playing music chunks!');
-        musicAudioPlayback.src = (window.URL || window.webkitURL).createObjectURL(new Blob(part));
+        musicAudioPlayback.src = filename;
+        /* sending request for song position */
+
+        socket.emit('MUSIC_TRACK_REQUESTING_POSITION');
+      });
+      /*
+       * After server sends us the song's position start playing it!
+       */
+
+      socket.on('MUSIC_TRACK_POSITION', function (position) {
+        musicAudioPlayback.currentTime = position;
         musicAudioPlayback.play();
       });
       socket.on('MUSIC_TRACK_STOP', function () {

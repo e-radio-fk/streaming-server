@@ -1,5 +1,4 @@
 import io from "socket.io-client";
-import ss from "socket.io-stream";
 
 try
 {
@@ -51,9 +50,25 @@ try
                 microphoneAudio.play();
             });
 
-            socket.on('MUSIC_TRACK_PART', (part) => {
+            /*
+             * When we first connect to the server we request that he give us the filename of the song currently playing
+             * This is done with MUSIC_TRACK_REQUESTING_FILENAME.
+             */
+            socket.on('MUSIC_TRACK_START_WITH_FILENAME', (filename) => {
+                if (!filename)
+                    return;
                 console.log('client: playing music chunks!');
-                musicAudioPlayback.src = (window.URL || window.webkitURL).createObjectURL(new Blob(part));
+                musicAudioPlayback.src = filename;
+
+                /* sending request for song position */
+                socket.emit('MUSIC_TRACK_REQUESTING_POSITION');
+            });
+
+            /*
+             * After server sends us the song's position start playing it!
+             */
+            socket.on('MUSIC_TRACK_POSITION', (position) => {
+                musicAudioPlayback.currentTime = position;
                 musicAudioPlayback.play();
             });
 

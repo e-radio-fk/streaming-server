@@ -4,17 +4,18 @@
 var toggleMusicButton = document.getElementById('toggle-music-button');
 toggleMusicButton.setAttribute('on', 'no');
 
+const musicAudioPlayback = new Audio();
+
 function startMusic()
 {
-    console.log('console: starting song!');
-
-    //
-    // Create a new music playback stream
-    //
-    var musicStream = ss.createStream();
     var song = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
-    ss(socket).emit('MUSIC_TRACK_STREAM', musicStream, { name: song });
-    ss.createBlobReadStream(song).pipe(musicStream);
+
+    musicAudioPlayback.src = song;
+    musicAudioPlayback.volume = 0;  // we do not actually play the song; this is a dummy!
+    musicAudioPlayback.play();
+
+    socket.emit('MUSIC_TRACK_START_WITH_FILENAME', song);
+    console.log('console: starting song!');
 }
 
 function stopMusic()
