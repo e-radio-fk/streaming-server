@@ -14,6 +14,7 @@ var     babelify   = require('babelify'),
         rename     = require('gulp-rename'),
         source     = require('vinyl-source-stream'),
         watchify   = require('watchify');
+const regeneratorRuntime = require("regenerator-runtime");
 
 var sirv_config = {
     js: {
@@ -47,8 +48,16 @@ var livechat_config = {
     },
 }
 
+var playlist_config = {
+    js: {
+        src: './docs/_browserify/_playlist.js',         // Entry point
+        outputDir: './docs/scripts',                    // Directory to save bundle to
+        outputFile: 'playlist.js'                       // Name to use for bundle
+    },
+}
+
 // configs array
-var configs = [sirv_config, settings_config, streaming_client_config, livechat_config]
+var configs = [sirv_config, settings_config, streaming_client_config, livechat_config, playlist_config]
 
 // This method makes it easy to use common bundling options in different tasks
 function bundle (bundler, config) {
@@ -68,7 +77,10 @@ gulp.task('bundle', function () {
 
     // for each config
     configs.forEach(function(config) {
-        var bundler = browserify(config.js.src).transform(babelify, { presets : [ '@babel/preset-env' ] });
+        var bundler = browserify(config.js.src).transform(babelify, { 
+            presets: [[ '@babel/preset-env' ]],
+            plugins: [[ '@babel/transform-runtime', { regenerator: true }]]
+        });
         bundle(bundler, config);
     });
 

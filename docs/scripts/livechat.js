@@ -1,9 +1,9 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 "use strict";
 
-var _socket = _interopRequireDefault(require("socket.io-client"));
+var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+var _socket = _interopRequireDefault(require("socket.io-client"));
 
 var livechat_message_box = document.getElementById('live-chat-message-box');
 var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-list-renderer')[0]; //
@@ -80,7 +80,16 @@ function add_message_from_user(message, username, credentials) {
   livechat_messages_list.appendChild(new_message);
 }
 
-},{"socket.io-client":31}],2:[function(require,module,exports){
+},{"@babel/runtime/helpers/interopRequireDefault":2,"socket.io-client":32}],2:[function(require,module,exports){
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+module.exports["default"] = module.exports, module.exports.__esModule = true;
+},{}],3:[function(require,module,exports){
 
 /**
  * Expose `Backoff`.
@@ -167,7 +176,7 @@ Backoff.prototype.setJitter = function(jitter){
 };
 
 
-},{}],3:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 /*
  * base64-arraybuffer
  * https://github.com/niklasvh/base64-arraybuffer
@@ -228,7 +237,7 @@ Backoff.prototype.setJitter = function(jitter){
   };
 })("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/");
 
-},{}],4:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -380,7 +389,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -2161,7 +2170,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"base64-js":4,"buffer":5,"ieee754":26}],6:[function(require,module,exports){
+},{"base64-js":5,"buffer":6,"ieee754":27}],7:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -2338,7 +2347,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 (function (process){(function (){
 /* eslint-env browser */
 
@@ -2611,7 +2620,7 @@ formatters.j = function (v) {
 };
 
 }).call(this)}).call(this,require('_process'))
-},{"./common":8,"_process":30}],8:[function(require,module,exports){
+},{"./common":9,"_process":31}],9:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -2874,7 +2883,7 @@ function setup(env) {
 
 module.exports = setup;
 
-},{"ms":27}],9:[function(require,module,exports){
+},{"ms":28}],10:[function(require,module,exports){
 module.exports = (() => {
   if (typeof self !== "undefined") {
     return self;
@@ -2885,7 +2894,7 @@ module.exports = (() => {
   }
 })();
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 const Socket = require("./socket");
 
 module.exports = (uri, opts) => new Socket(uri, opts);
@@ -2901,7 +2910,7 @@ module.exports.Transport = require("./transport");
 module.exports.transports = require("./transports/index");
 module.exports.parser = require("engine.io-parser");
 
-},{"./socket":11,"./transport":12,"./transports/index":13,"engine.io-parser":24}],11:[function(require,module,exports){
+},{"./socket":12,"./transport":13,"./transports/index":14,"engine.io-parser":25}],12:[function(require,module,exports){
 const transports = require("./transports/index");
 const Emitter = require("component-emitter");
 const debug = require("debug")("engine.io-client:socket");
@@ -3583,7 +3592,7 @@ function clone(obj) {
 
 module.exports = Socket;
 
-},{"./transports/index":13,"component-emitter":6,"debug":7,"engine.io-parser":24,"parseqs":28,"parseuri":29}],12:[function(require,module,exports){
+},{"./transports/index":14,"component-emitter":7,"debug":8,"engine.io-parser":25,"parseqs":29,"parseuri":30}],13:[function(require,module,exports){
 const parser = require("engine.io-parser");
 const Emitter = require("component-emitter");
 const debug = require("debug")("engine.io-client:transport");
@@ -3704,7 +3713,7 @@ class Transport extends Emitter {
 
 module.exports = Transport;
 
-},{"component-emitter":6,"debug":7,"engine.io-parser":24}],13:[function(require,module,exports){
+},{"component-emitter":7,"debug":8,"engine.io-parser":25}],14:[function(require,module,exports){
 const XMLHttpRequest = require("xmlhttprequest-ssl");
 const XHR = require("./polling-xhr");
 const JSONP = require("./polling-jsonp");
@@ -3751,7 +3760,7 @@ function polling(opts) {
   }
 }
 
-},{"./polling-jsonp":14,"./polling-xhr":15,"./websocket":18,"xmlhttprequest-ssl":20}],14:[function(require,module,exports){
+},{"./polling-jsonp":15,"./polling-xhr":16,"./websocket":19,"xmlhttprequest-ssl":21}],15:[function(require,module,exports){
 const Polling = require("./polling");
 const globalThis = require("../globalThis");
 
@@ -3953,7 +3962,7 @@ class JSONPPolling extends Polling {
 
 module.exports = JSONPPolling;
 
-},{"../globalThis":9,"./polling":16}],15:[function(require,module,exports){
+},{"../globalThis":10,"./polling":17}],16:[function(require,module,exports){
 /* global attachEvent */
 
 const XMLHttpRequest = require("xmlhttprequest-ssl");
@@ -4291,7 +4300,7 @@ function unloadHandler() {
 module.exports = XHR;
 module.exports.Request = Request;
 
-},{"../globalThis":9,"../util":19,"./polling":16,"component-emitter":6,"debug":7,"xmlhttprequest-ssl":20}],16:[function(require,module,exports){
+},{"../globalThis":10,"../util":20,"./polling":17,"component-emitter":7,"debug":8,"xmlhttprequest-ssl":21}],17:[function(require,module,exports){
 const Transport = require("../transport");
 const parseqs = require("parseqs");
 const parser = require("engine.io-parser");
@@ -4503,7 +4512,7 @@ class Polling extends Transport {
 
 module.exports = Polling;
 
-},{"../transport":12,"debug":7,"engine.io-parser":24,"parseqs":28,"yeast":39}],17:[function(require,module,exports){
+},{"../transport":13,"debug":8,"engine.io-parser":25,"parseqs":29,"yeast":40}],18:[function(require,module,exports){
 const globalThis = require("../globalThis");
 
 module.exports = {
@@ -4512,7 +4521,7 @@ module.exports = {
   defaultBinaryType: "arraybuffer"
 };
 
-},{"../globalThis":9}],18:[function(require,module,exports){
+},{"../globalThis":10}],19:[function(require,module,exports){
 (function (Buffer){(function (){
 const Transport = require("../transport");
 const parser = require("engine.io-parser");
@@ -4785,7 +4794,7 @@ class WS extends Transport {
 module.exports = WS;
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"../transport":12,"../util":19,"./websocket-constructor":17,"buffer":5,"debug":7,"engine.io-parser":24,"parseqs":28,"yeast":39}],19:[function(require,module,exports){
+},{"../transport":13,"../util":20,"./websocket-constructor":18,"buffer":6,"debug":8,"engine.io-parser":25,"parseqs":29,"yeast":40}],20:[function(require,module,exports){
 module.exports.pick = (obj, ...attr) => {
   return attr.reduce((acc, k) => {
     if (obj.hasOwnProperty(k)) {
@@ -4795,7 +4804,7 @@ module.exports.pick = (obj, ...attr) => {
   }, {});
 };
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 // browser shim for xmlhttprequest module
 
 const hasCORS = require("has-cors");
@@ -4837,7 +4846,7 @@ module.exports = function(opts) {
   }
 };
 
-},{"./globalThis":9,"has-cors":25}],21:[function(require,module,exports){
+},{"./globalThis":10,"has-cors":26}],22:[function(require,module,exports){
 const PACKET_TYPES = Object.create(null); // no Map = no polyfill
 PACKET_TYPES["open"] = "0";
 PACKET_TYPES["close"] = "1";
@@ -4860,7 +4869,7 @@ module.exports = {
   ERROR_PACKET
 };
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 const { PACKET_TYPES_REVERSE, ERROR_PACKET } = require("./commons");
 
 const withNativeArrayBuffer = typeof ArrayBuffer === "function";
@@ -4919,7 +4928,7 @@ const mapBinary = (data, binaryType) => {
 
 module.exports = decodePacket;
 
-},{"./commons":21,"base64-arraybuffer":3}],23:[function(require,module,exports){
+},{"./commons":22,"base64-arraybuffer":4}],24:[function(require,module,exports){
 const { PACKET_TYPES } = require("./commons");
 
 const withNativeBlob =
@@ -4967,7 +4976,7 @@ const encodeBlobAsBase64 = (data, callback) => {
 
 module.exports = encodePacket;
 
-},{"./commons":21}],24:[function(require,module,exports){
+},{"./commons":22}],25:[function(require,module,exports){
 const encodePacket = require("./encodePacket");
 const decodePacket = require("./decodePacket");
 
@@ -5011,7 +5020,7 @@ module.exports = {
   decodePayload
 };
 
-},{"./decodePacket":22,"./encodePacket":23}],25:[function(require,module,exports){
+},{"./decodePacket":23,"./encodePacket":24}],26:[function(require,module,exports){
 
 /**
  * Module exports.
@@ -5030,7 +5039,7 @@ try {
   module.exports = false;
 }
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -5117,7 +5126,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -5281,7 +5290,7 @@ function plural(ms, msAbs, n, name) {
   return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
 }
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 /**
  * Compiles a querystring
  * Returns string representation of the object
@@ -5320,7 +5329,7 @@ exports.decode = function(qs){
   return qry;
 };
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 /**
  * Parses an URI
  *
@@ -5390,7 +5399,7 @@ function queryKey(uri, query) {
     return data;
 }
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -5576,7 +5585,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Socket = exports.io = exports.Manager = exports.protocol = void 0;
@@ -5648,7 +5657,7 @@ exports.connect = lookup;
 var manager_2 = require("./manager");
 Object.defineProperty(exports, "Manager", { enumerable: true, get: function () { return manager_2.Manager; } });
 
-},{"./manager":32,"./socket":34,"./url":35,"debug":7,"socket.io-parser":37}],32:[function(require,module,exports){
+},{"./manager":33,"./socket":35,"./url":36,"debug":8,"socket.io-parser":38}],33:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Manager = void 0;
@@ -6019,7 +6028,7 @@ class Manager extends Emitter {
 }
 exports.Manager = Manager;
 
-},{"./on":33,"./socket":34,"backo2":2,"component-emitter":6,"debug":7,"engine.io-client":10,"socket.io-parser":37}],33:[function(require,module,exports){
+},{"./on":34,"./socket":35,"backo2":3,"component-emitter":7,"debug":8,"engine.io-client":11,"socket.io-parser":38}],34:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.on = void 0;
@@ -6031,7 +6040,7 @@ function on(obj, ev, fn) {
 }
 exports.on = on;
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Socket = void 0;
@@ -6494,7 +6503,7 @@ class Socket extends Emitter {
 }
 exports.Socket = Socket;
 
-},{"./on":33,"component-emitter":6,"debug":7,"socket.io-parser":37}],35:[function(require,module,exports){
+},{"./on":34,"component-emitter":7,"debug":8,"socket.io-parser":38}],36:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.url = void 0;
@@ -6562,7 +6571,7 @@ function url(uri, path = "", loc) {
 }
 exports.url = url;
 
-},{"debug":7,"parseuri":29}],36:[function(require,module,exports){
+},{"debug":8,"parseuri":30}],37:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.reconstructPacket = exports.deconstructPacket = void 0;
@@ -6644,7 +6653,7 @@ function _reconstructPacket(data, buffers) {
     return data;
 }
 
-},{"./is-binary":38}],37:[function(require,module,exports){
+},{"./is-binary":39}],38:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Decoder = exports.Encoder = exports.PacketType = exports.protocol = void 0;
@@ -6926,7 +6935,7 @@ class BinaryReconstructor {
     }
 }
 
-},{"./binary":36,"./is-binary":38,"component-emitter":6,"debug":7}],38:[function(require,module,exports){
+},{"./binary":37,"./is-binary":39,"component-emitter":7,"debug":8}],39:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.hasBinary = exports.isBinary = void 0;
@@ -6983,7 +6992,7 @@ function hasBinary(obj, toJSON) {
 }
 exports.hasBinary = hasBinary;
 
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 'use strict';
 
 var alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_'.split('')

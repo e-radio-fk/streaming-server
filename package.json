@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.16.4",
     "@babel/preset-env": "^7.13.8",
     "assert": "^2.0.0",
     "babelify": "^10.0.0",
@@ -44,7 +45,8 @@
     "utf-8-validate": "^5.0.3",
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
-    "watchify": "^4.0.0"
+    "watchify": "^4.0.0",
+    "ytdl-core": "^4.9.1"
   },
   "dependencies": {
     "node-gyp-build": "^4.3.0"

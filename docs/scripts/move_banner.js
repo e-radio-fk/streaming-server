@@ -3,7 +3,6 @@ try
     var original_string = Cookies.get('now-playing');
     if (!original_string)
     {
-        console.error('Failed to get the now-playing cookie!');
         throw new Error('Failed to get the now-playing cookie!');
     }
 

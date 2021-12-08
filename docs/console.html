@@ -125,6 +125,8 @@
         </div>
     </button>
 
+    <select name="playlists-selection" id="playlists-selection"></select>
+
     <!-- Import Playlist Modal -->
     <div class="modal fade" id="import-playlist-modal" tabindex="-1" role="dialog" aria-labelledby="import-playlist-modal-label" aria-hidden="true">
         <div class="modal-dialog">
@@ -200,6 +202,24 @@
     <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
     <!-- Bootstrap -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Playlist -->
+    <script src="scripts/playlist.js"></script>
+    <script>
+        var playlistHandler = new playlistHandler();
+        playlistHandler.list().then(list => {
+            if (!list)
+                throw new Error('No playlists created yet or error getting them!');
+
+            var sel = document.getElementById('playlists-selection');
+            if (!sel)
+                throw new Error('Error getting document element playlists-selection');
+
+            list.forEach(element => {
+                sel.add(element);
+            });
+        });
+    </script>
 
     <!-- Console Functionality -->
     <script src="scripts/console-microphone.js"></script>
