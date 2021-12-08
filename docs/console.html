@@ -117,10 +117,31 @@
     </div>
 
     <h3>Playlists</h3>
-    <button style="height: 42px;">(+) import yt playlist</button>
 
-    <br>
-    <br>
+    <button class="dropdown" id="import-playlist-button" onclick="toggle_dropdown()"><i class="fa fa-download" style="padding: 0; margin: 0;"></i> import
+        <div class="dropdown-content" id="start-podcast-dropdown-content">
+            <p class="dropdown-content-button" onclick="import_playlist_from('yt')">From YT</p>
+            <p class="dropdown-content-button" onclick="import_playlist_from('spotify')">From Spotify</p>
+        </div>
+    </button>
+
+    <!-- Import Playlist Modal -->
+    <div class="modal fade" id="import-playlist-modal" tabindex="-1" role="dialog" aria-labelledby="import-playlist-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="import-playlist-modal-label">Έναρξη Podcast</h4>
+            </div>
+            <div class="modal-body">
+                 <textarea name="" id="" cols="30" rows="10"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button id="import-playlist-modal-ok-button" onclick=""></button>
+            </div>
+            </div>
+        </div>
+    </div>
 
     <div class="console-panels" id="console-panels-object" style="visibility: hidden;">
         <div class="console-panels-header">
@@ -154,13 +175,13 @@
                 <!-- Music Section -->
                 <div id="console-panel-controls-music-section">
                     <h3>Music Playback</h3>
-                    <div style="display: block;">
-                        <div style="display: block;">
-                            <button class="fa fa-backward"></button>
-                            <button class="fa fa-play" id="toggle-music-button" onclick="toggle_music()"></button>
-                            <button class="fa fa-forward"></button>
+                    <div id="console-panel-controls-music-subsection">
+                        <div id="console-panel-controls-music-buttons">
+                            <button id="music-button-backward" class="fa fa-backward"></button>
+                            <button id="toggle-music-button" class="fa fa-play" onclick="toggle_music()"></button>
+                            <button id="music-button-forward" class="fa fa-forward"></button>
                         </div>
-                        <!-- <input type="range" id="console-panel-controls-music-volume-slider" value="20" oninput="change_volume(this.value)" onchange="change_volume(this.value)">         -->
+                        <input type="range" id="console-panel-controls-music-volume-slider" value="20" oninput="change_volume(this.value)" onchange="change_volume(this.value)">        
                     </div>
                 </div>
             </div>

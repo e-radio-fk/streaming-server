@@ -2,6 +2,8 @@
 //  Helpers
 //
 
+var import_playlist_platform;
+
 // generates random id;
 // from: https://learnersbucket.com/examples/javascript/unique-id-generator-in-javascript/
 let guid = () => {
@@ -12,6 +14,21 @@ let guid = () => {
     }
     //return id of format 'aaaaaaaa'-'aaaa'-'aaaa'-'aaaa'-'aaaaaaaaaaaa'
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+}
+
+/**
+ * import_playlist_from()
+ * 
+ * Με αυτή τη συνάρτηση επιλέγουμε κάποιο playlist από το yt ή το spotify και
+ *  όσο τα τραγούδια ανεβάζονται στο server δείχνουμε progress bar.
+ */
+function import_playlist_from(from)
+{
+    if ((from != 'yt') && (from != 'spotify'))
+        return;
+
+    import_playlist_platform = from;
+    $('#import-playlist-modal').modal('show');
 }
 
 /**
