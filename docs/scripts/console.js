@@ -39,7 +39,66 @@ function import_playlist_from(from)
  */
 function test_mic()
 {
-    
+    navigator.mediaDevices.getUserMedia({
+        audio: true
+    })
+    .then(function (stream) {
+        // visualiser: https://codepen.io/nfj525/pen/rVBaab
+        // https://gist.github.com/jarlg/250decbbc50ce091f79e
+
+        var context = new AudioContext();
+        var src = context.createMediaStreamSource(stream);
+        var analyser = context.createAnalyser();
+
+        var canvas = document.getElementById("console-microphone-visualisation");
+        var ctx = canvas.getContext("2d");
+
+        src.connect(analyser);
+        analyser.connect(context.destination);
+
+        analyser.fftSize = 256;
+
+        var bufferLength = analyser.frequencyBinCount;
+        console.log(bufferLength);
+
+        var dataArray = new Uint8Array(bufferLength);
+
+        var WIDTH = canvas.width;
+        var HEIGHT = canvas.height;
+
+        var barWidth = (WIDTH / bufferLength) * 2.5;
+        var barHeight;
+        var x = 0;
+
+        function renderFrame() {
+            requestAnimationFrame(renderFrame);
+
+            x = 0;
+
+            analyser.getByteFrequencyData(dataArray);
+
+            ctx.fillStyle = "rgba(255,255,255,0)";
+            ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+            for (var i = 0; i < bufferLength; i++) {
+                barHeight = dataArray[i];
+                
+                var r = barHeight + (25 * (i/bufferLength));
+                var g = 250 * (i/bufferLength);
+                var b = 50;
+
+                ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")";
+                ctx.fillRect(x, HEIGHT - barHeight, barWidth, barHeight);
+
+                x += barWidth + 1;
+            }
+        }
+
+        renderFrame();
+    })
+    .catch(function (err) {
+        console.log(err.message)
+    });
 }
 
 /**

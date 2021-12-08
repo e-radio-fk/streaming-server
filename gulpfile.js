@@ -14,7 +14,7 @@ var     babelify   = require('babelify'),
         rename     = require('gulp-rename'),
         source     = require('vinyl-source-stream'),
         watchify   = require('watchify');
-const regeneratorRuntime = require("regenerator-runtime");
+const regeneratorRuntime = require("regenerator-runtime");  // for await, async support
 
 var sirv_config = {
     js: {
@@ -48,16 +48,16 @@ var livechat_config = {
     },
 }
 
-var playlist_config = {
+var ytdl_config = {
     js: {
-        src: './docs/_browserify/_playlist.js',         // Entry point
-        outputDir: './docs/scripts',                    // Directory to save bundle to
-        outputFile: 'playlist.js'                       // Name to use for bundle
+        src: './docs/_browserify/_ytdl.js',             // Entry point
+        outputDir: './docs/scripts/lib',                // Directory to save bundle to
+        outputFile: 'ytdl.js'                           // Name to use for bundle
     },
 }
 
 // configs array
-var configs = [sirv_config, settings_config, streaming_client_config, livechat_config, playlist_config]
+var configs = [sirv_config, settings_config, streaming_client_config, livechat_config, ytdl_config]
 
 // This method makes it easy to use common bundling options in different tasks
 function bundle (bundler, config) {

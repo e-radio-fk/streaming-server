@@ -4,11 +4,9 @@
  * - Spotify
  */
 
-const ytdl = require('ytdl-core');
-
 const yt_api_key = 'AIzaSyDfz9hJULAgoMlhf3ExmmJXX_U0L8IehsU';
 
-export default class playlistHandler {
+class playlistHandler {
     /**
      * constructor(forPlaylist: optional)
      * 
@@ -31,6 +29,12 @@ export default class playlistHandler {
         }
     }
 
+    setPlaylist(playlistName) {
+        if (!playlistName)
+            throw new Error('playlistHandler: cannot set playlist of reference as null');
+        this.playlist = playlistName;
+    }
+
     /**
      * getList()
      * 
@@ -38,19 +42,23 @@ export default class playlistHandler {
      */
     static async getList() {
         /* get a list of the admins from the DB */
-        database.ref().child('/playlists').get().then(snapshot => {
-            if (!snapshot)
+        var database = firebase.database();
+        if (!database)
             return null;
 
-            if (snapshot.exists())
-            {
-                var json = snapshot.val();
-                return Object.keys(json);
-            }
+        var snapshot = await database.ref().child('/playlists').once('value');
+        if (!snapshot)
+            return null;
 
-        });
-
-        return null;
+        if (snapshot.exists())
+        {
+            var json = snapshot.val();
+            if (!json)
+                return null;
+            return Object.keys(json);
+        }
+        else
+            return null;
     }
 
     setPlaylist(playlistName) {

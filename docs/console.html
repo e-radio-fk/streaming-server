@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
 
 	<!-- Firebase -->
-    <script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
-	<script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
-    <script defer src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
 
 	<!-- Initialise Firebase -->
     <script src="scripts/Firebase/firebase-helpers.js"></script>
-	<script defer src="scripts/Firebase/init-firebase.js"></script>
+	<script src="scripts/Firebase/init-firebase.js"></script>
 
     <!-- MCDatepicker -->
     <link href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" rel="stylesheet" />
@@ -108,6 +108,7 @@
             <div class="modal-body">
                 <p>Πρωτού ξεκινήσεις, έλεγξε το μικρόφωνο:</p>
                 <button id="console-test-mic-button" onclick="test_mic();">test mic</button>
+                <canvas id="console-microphone-visualisation" height="50" width="50"></canvas>
             </div>
             <div class="modal-footer">
                 <button id="console-start-podcast-after-soundcheck-button" onclick="start_podcast_after_soundcheck();">Εκκίνηση!</button>
@@ -127,10 +128,15 @@
 
     <select name="playlists-selection" id="playlists-selection"></select>
 
+    <!-- <div class="playlist-view">
+        <div class="playlist-view-element"></div>
+    </div> -->
+
     <!-- Import Playlist Modal -->
     <div class="modal fade" id="import-playlist-modal" tabindex="-1" role="dialog" aria-labelledby="import-playlist-modal-label" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+                <h4>Import from playlist</h4>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title" id="import-playlist-modal-label">Έναρξη Podcast</h4>
@@ -203,26 +209,14 @@
     <!-- Bootstrap -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Playlist -->
-    <script src="scripts/playlist.js"></script>
-    <script>
-        var playlistHandler = new playlistHandler();
-        playlistHandler.list().then(list => {
-            if (!list)
-                throw new Error('No playlists created yet or error getting them!');
-
-            var sel = document.getElementById('playlists-selection');
-            if (!sel)
-                throw new Error('Error getting document element playlists-selection');
-
-            list.forEach(element => {
-                sel.add(element);
-            });
-        });
-    </script>
+    <!-- YT DL -->
+    <script src="scripts/lib/ytdl.js"></script>
+    <!-- Playlist Handler -->
+    <script src="scripts/lib/playlistHandler.js"></script>
 
     <!-- Console Functionality -->
     <script src="scripts/console-microphone.js"></script>
+    <script src="scripts/console-playlist.js"></script>
     <script src="scripts/console-music.js"></script>
     <script src="scripts/console.js"></script>
 
