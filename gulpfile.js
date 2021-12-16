@@ -18,40 +18,40 @@ const regeneratorRuntime = require("regenerator-runtime");  // for await, async 
 
 var sirv_config = {
     js: {
-        src: './docs/_browserify/_sirv.js',             // Entry point
-        outputDir: './docs/scripts',                    // Directory to save bundle to
+        src: './src/_browserify/_sirv.js',              // Entry point
+        outputDir: './src/scripts',                     // Directory to save bundle to
         outputFile: 'sirv.js'                           // Name to use for bundle
     },
 };
 
 var settings_config = {
     js: {
-        src: './docs/_browserify/_settings.js',         // Entry point
-        outputDir: './docs/scripts',                    // Directory to save bundle to
+        src: './src/_browserify/_settings.js',          // Entry point
+        outputDir: './src/scripts',                     // Directory to save bundle to
         outputFile: 'settings.js'                       // Name to use for bundle
     },
 }
 
 var streaming_client_config = {
     js: {
-        src: './docs/_browserify/_streaming-client.js', // Entry point
-        outputDir: './docs/scripts',                    // Directory to save bundle to
+        src: './src/_browserify/_streaming-client.js',  // Entry point
+        outputDir: './src/scripts',                     // Directory to save bundle to
         outputFile: 'streaming-client.js'               // Name to use for bundle
     },
 }
 
 var livechat_config = {
     js: {
-        src: './docs/_browserify/_livechat.js',         // Entry point
-        outputDir: './docs/scripts',                    // Directory to save bundle to
+        src: './src/_browserify/_livechat.js',          // Entry point
+        outputDir: './src/scripts',                     // Directory to save bundle to
         outputFile: 'livechat.js'                       // Name to use for bundle
     },
 }
 
 var ytdl_config = {
     js: {
-        src: './docs/_browserify/_ytdl.js',             // Entry point
-        outputDir: './docs/scripts/lib',                // Directory to save bundle to
+        src: './src/_browserify/_ytdl.js',              // Entry point
+        outputDir: './src/scripts/lib',                 // Directory to save bundle to
         outputFile: 'ytdl.js'                           // Name to use for bundle
     },
 }

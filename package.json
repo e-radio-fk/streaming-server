@@ -15,6 +15,7 @@
     "@babel/preset-env": "^7.13.8",
     "assert": "^2.0.0",
     "babelify": "^10.0.0",
+    "body-parser": "^1.19.1",
     "browserify": "^17.0.0",
     "browserify-zlib": "^0.2.0",
     "buffer": "^6.0.3",
@@ -25,6 +26,7 @@
     "crypto-browserify": "^3.12.0",
     "darkmode-js": "github:e-radio-fk/Darkmode.js",
     "express": "^4.17.1",
+    "firebase": "^8.2.3",
     "fs": "0.0.1-security",
     "fs-web": "^1.0.1",
     "gulp": "^4.0.2",
@@ -46,6 +48,7 @@
     "vinyl-buffer": "^1.0.1",
     "vinyl-source-stream": "^2.0.0",
     "watchify": "^4.0.0",
+    "ytdl": "^1.4.1",
     "ytdl-core": "^4.9.1"
   },
   "dependencies": {

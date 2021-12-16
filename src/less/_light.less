@@ -1,0 +1,58 @@
+@background-color: #A8577E;
+@background-color-light: #c07599;   // should be called background-color-light-darker
+@background-color-dark: #74274c;
+@select-color: #FFC145;
+@text-color: #FFC145;
+@h1: #FFFFFF;
+
+body {
+    background-color: @background-color;
+    color: @select-color;
+}
+
+h1 {
+    color: @h1;
+}
+
+button {
+    background-color: @text-color;
+}
+
+// 
+// Login 
+// 
+#login-box .textbox::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: @text-color;
+}
+#login-box .textbox:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: @text-color;
+}
+#login-box .textbox::-ms-input-placeholder { /* Microsoft Edge */
+    color: @text-color;
+}
+
+.dropdown-content {
+    background-color: @background-color-light;
+}
+
+.dropdown-content a {
+    color: @text-color;
+}
+
+#login-box,
+#signup-box {
+    background: @background-color-light;
+}
+
+.back-button {
+    background-image: url('../img/back.png');
+}
+
+.play-button {
+    background-image: url('../img/play.png');
+}
+
+#user-login-dropdown-back-button,
+#banner-user-img {
+    background-image: url('../img/person.png');
+}

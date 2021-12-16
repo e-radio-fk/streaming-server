@@ -1,0 +1,62 @@
+@background-color: #181133;
+@background-color-light: #2d205f;
+@background-color-dark: #2d1f5e;
+@select-color: #ff7878;
+@text-color: #ff2e2e;
+@h1: #FFFFFF;
+
+body {
+    background-color: @background-color;
+    color: @select-color;
+}
+
+h1 {
+    color: @h1;
+}
+
+button {
+    background-color: @text-color;
+}
+
+// 
+// Login 
+// 
+#login-box .textbox::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: @text-color;
+}
+#login-box .textbox:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: @text-color;
+}
+#login-box .textbox::-ms-input-placeholder { /* Microsoft Edge */
+    color: @text-color;
+}
+
+.textbox {
+    background-color: @background-color-light;
+}
+
+.dropdown-content {
+    background-color: @background-color-dark;
+}
+
+.dropdown-content a {
+    color: @text-color;
+}
+
+#login-box,
+#signup-box {
+    background: @background-color-dark;
+}
+
+.back-button {
+    background-image: url('../img/back.png');   
+}
+
+.play-button {
+    background-image: url('../img/play_dark_mode.png');
+}
+
+#user-login-dropdown-back-button,
+#banner-user-img {
+    background-image: url('../img/person_dark_mode.png');
+}

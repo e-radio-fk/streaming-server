@@ -1,0 +1,191 @@
+<html>
+<head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">	
+
+	<title>FK Live E-Radio</title>
+	<link rel="stylesheet" href="css/main.css">
+
+	<!-- Firebase -->
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-database.js"></script>
+
+	<!-- JQuery Cookie -->
+	<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+	<!-- Initialise Firebase -->
+	<script src="scripts/Firebase/firebase-helpers.js"></script>
+	<script src="scripts/Firebase/init-firebase.js"></script>
+</head>
+<header style="visibility: hidden;">
+    <div class="now-playing-banner" id="now-playing-banner-object">
+		<!-- Play button -->
+		<div class="play-button"></div>
+
+		<!-- Banner Text -->
+        <p id="now-playing-banner-text"></p>
+
+		<!-- User Login Dropdwon -->
+		<div class="dropdown" id="login-dropdown">
+            <div class="dropbtn" id="user-login-dropdown-back-button" onclick="toggle_login_dropdown()"></div>
+
+			<div class="dropdown-content">
+				<div id="login-box" style="text-align: center;">
+					<!-- TODO: put login here! -->
+					<br><br>
+					<div style="font-size: 12px;">Forgot <a href="#">Password</a></div>
+					<p class="text_small" style="font-size: 12px;" id="sign-in-text">Don't have an account? <a id="sign-up-button" onclick="show_signup_box()">Sign Up</a></p>
+				</div>
+			</div>
+
+			<script src="scripts/user-authentication.js"></script>
+        </div>
+
+		<!-- Rounded switch -->
+		<div style="float: left; clear: both; margin-top: 10px;">
+			<div style="float: left; padding-right: 5px; margin-top: -6px;">
+				<a style="font-size: 20px" class="darkmode-ignore">🌓</a>
+			</div>
+			<label class="switch" style="float: right;" id="darkmode-toggle-button">
+				<input type="checkbox" onclick="toggle_dark_mode()">
+				<span class="slider round"></span>
+			</label>
+		</div>
+
+		<!-- This is for the login dropdown -->
+		<script>
+			var login_button = document.getElementById('user-login-dropdown-back-button');
+			var dropdown_content = document.getElementsByClassName('dropdown-content')[0];
+
+			function toggle_login_dropdown()
+			{
+				var clicked = login_button.getAttribute('clicked');
+				if (clicked == 'yes')
+				{
+					login_button.setAttribute('clicked', 'no');
+					dropdown_content.style.display = 'none';
+				}
+				else
+				{
+					login_button.setAttribute('clicked', 'yes');
+					dropdown_content.style.display = 'block';
+				}
+			}
+		</script>
+    </div>
+
+	<br>
+
+	<script src="scripts/page-load.js"></script>
+
+	<!-- Initialisation -->
+	<script src="scripts/index-initialisation.js"></script>
+</header>
+<body style="visibility: hidden;">
+	<br>
+	<br>
+
+	<div>
+		<label for="login-form-uname">Username:</label><br>
+		<input type="text" id="login-form-uname" name="login-form-uname"><br>
+		<label for="login-form-passw">Password:</label><br>
+		<input type="password" id="login-form-passw" name="login-form-passw"><br><br>
+		<input type="submit" value="Submit" onclick="sign_in(event);">
+	</div>
+
+	<div class="intro">
+		<h1>fk live patras radio</h1>
+		<p>Live e-ράδιο από φοιτητές</p>
+	</div>
+
+	<div style="display: flex;">
+		<div style="left: 0; width: 100%;">
+			<h4 style="text-decoration: underline; margin-left: 0; text-align: center;">Podcasts</h2>
+			<table class="podcast-news-table">
+				<tbody>
+				</tbody>
+			</table>
+		</div>
+
+		<!-- Chat space -->
+		<div class="livechat" style="right: 0; width: 100%;">
+			<div class="live-chat-container">
+				<yt-live-chat-renderer>
+					<yt-live-chat-item-list-renderer>
+					</yt-live-chat-item-list-renderer>
+				</yt-live-chat-renderer>
+			
+			</div>
+			<input type="text" class="yt-live-chat-message-box" id="live-chat-message-box">
+			<script src="scripts/livechat.js"></script>	
+		</div>
+	</div>
+
+	<!-- Darkmode -->
+	<script src="scripts/darkmode.js"></script>
+	<script src="scripts/general.js"></script>
+
+	<!-- Livechat -->
+	<script src="scripts/streaming-client.js"></script>
+
+	<!-- Scheduled Podcasts List -->
+	<script>
+		var podcast_table = document.getElementsByClassName('podcast-news-table')[0];
+
+		function get_html(title, description, date)
+		{
+			const html =	"<td>"																					+
+								"<div class='podcast-news-table-news-title'>" + title + "</div>"					+
+								"<div class='podcast-news-table-news-columns-separator'>"							+
+									"<div class='podcast-news-table-news-description'>" + description + "</div>"	+
+									"<div class='podcast-news-table-news-date'>" + date + "</div>"					+
+								"</div>"																			+
+							"</td>";
+
+			return html;
+		}
+
+		var title 		= 'error';
+		var description = 'error';
+		var date 		= 'no-date';
+		var start_time 	= 'start-time';
+		var end_time	= 'end-time';
+
+		database.ref().child('/scheduled-podcasts').get().then((snapshot) => {
+			if (snapshot.exists()) 
+			{
+				var i = 0;
+
+				var json = snapshot.val();
+
+				Object.keys(json).forEach(key => {
+					var element = json[key];
+
+					console.log('got element', element);
+
+					title 		= element['title'];
+					description = element['description'];
+					date 		= element['date'];
+					start_time 	= element['start_time'];
+					stop_time 	= element['stop_time'];
+
+					var row = podcast_table.insertRow(i++);
+					row.innerHTML = get_html(title, description, date);
+				});
+			}
+			else
+			{
+				// no data available; no podcasts scheduled for this week
+				var row = podcast_table.insertRow(0);
+				row.innerHTML = 'Sorry :( No podcasts scheduled for this week!';
+			}
+		}).catch((error) => {
+  			console.error(error);
+		});
+	</script>
+
+	<!-- Move banner -->
+	<script src="scripts/move_banner.js"></script>
+</body>
+</html>

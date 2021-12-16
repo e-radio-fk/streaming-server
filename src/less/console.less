@@ -1,0 +1,81 @@
+@import url('_light.less');
+
+#import-playlist-button {
+    font-size: 20px;
+    text-align: center;
+    width: initial;
+    float: left;
+}
+
+.console-panels-header {
+    background-color: @background-color-dark;
+    text-align: center; 
+    border-top-left-radius: 5px; 
+    border-top-right-radius: 5px;
+}
+
+#console-panels-bar {
+    background-color: @background-color-dark;
+    padding: 5px;
+    margin: auto;
+    position: initial;
+    border-radius: initial;
+}
+
+.console-panels {
+    width: 100%;
+    box-shadow: 1px 1px 5px #000000;
+}
+
+#console-panel-playlist-view, 
+#console-panel-controls {
+    background-color: @background-color-dark;
+    width: 100%; 
+    height: auto;
+    border-style: none; 
+    right: 0; 
+    padding: 0;
+    margin: 0;
+}
+
+#console-panel-controls {
+    border-bottom-left-radius: 5px; 
+    border-bottom-right-radius: 5px;
+}
+
+#console-panels-livechat {
+    border-top-left-radius: initial;
+    border-top-right-radius: initial;
+    border-bottom-right-radius: initial;
+}
+
+#console-panel-controls-music-section {
+    display: block;
+}
+
+#console-panel-controls-music-subsection {
+    height: 70px;
+    display: block;
+}
+
+#console-panel-controls-music-buttons {
+    display: inline-block;
+    margin: auto;
+    height: inherit;
+    top: 0;
+    bottom: 0;
+}
+
+#music-button-backward,
+#music-button-forward,
+#toggle-music-button {
+    top: 0;
+    bottom: 0;
+}
+
+#console-panel-controls-music-volume-slider {
+    // make it vertical
+    transform: rotate(270deg);
+    display: inline-block;
+    width: 70px; // width will become height when rotated
+}
