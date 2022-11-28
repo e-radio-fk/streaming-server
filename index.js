@@ -144,39 +144,49 @@ io.on("connection", (socket) => {
 
 	//
 	//	MICROPHONE PLAYBACK
-	// 
-	socket.on('console-mic-chunks', data => {
-		io.emit('microphone-data-chunk', data);
+	//
+	var sampleRate;
+
+	socket.on('console-sends-mic-chunks', (data) => {
+		io.emit('server-sends-mic-chunks', data);
 	});
 
-	// 
-	//	MUSIC PLAYBACK
-	// 
-	socket.on('MUSIC_TRACK_FILENAME', filename => {
-		io.emit('MUSIC_TRACK_FILENAME', filename);
-	});
+	//
+	// console-sends:
+	//
 
-	/*
-	 * Requesting Position Handler
-	 *
-	 * Δημιουργούμε έναν handler για την περίπτωση που οποιοσδήποτε client ζητά
-	 *  να μάθει την position στο song για να ξεκινήσει να το παίζει.
-	 */
-	socket.on('MUSIC_TRACK_REQUESTING_POSITION', () => {
-		socket.emit('MUSIC_TRACK_POSITION', 0.2);			// TODO: fixme
-	});
+	//
+	//	client-requests:
+	//
 
-	socket.on('MUSIC_TRACK_START_WITH_FILENAME', (filename) => {
-		io.emit('MUSIC_TRACK_START_WITH_FILENAME', filename);
-	});
+	// // 
+	// //	MUSIC PLAYBACK
+	// // 
+	// socket.on('MUSIC_TRACK_FILENAME', filename => {
+	// 	io.emit('MUSIC_TRACK_FILENAME', filename);
+	// });
 
-	socket.on('MUSIC_TRACK_STOP', () => {
-		io.emit('MUSIC_TRACK_STOP');
-	});
+	// /*
+	//  * Requesting Position Handler
+	//  *
+	//  * Δημιουργούμε έναν handler για την περίπτωση που οποιοσδήποτε client ζητά
+	//  *  να μάθει την position στο song για να ξεκινήσει να το παίζει.
+	//  */
+	// socket.on('MUSIC_TRACK_REQUESTING_POSITION', () => {
+	// 	socket.emit('MUSIC_TRACK_POSITION', 0.2);			// TODO: fixme
+	// });
 
-	socket.on('MUSIC_TRACK_VOLUME', newVolume => {
-		io.emit('MUSIC_TRACK_VOLUME', newVolume);
-	});
+	// socket.on('MUSIC_TRACK_START_WITH_FILENAME', (filename) => {
+	// 	io.emit('MUSIC_TRACK_START_WITH_FILENAME', filename);
+	// });
+
+	// socket.on('MUSIC_TRACK_STOP', () => {
+	// 	io.emit('MUSIC_TRACK_STOP');
+	// });
+
+	// socket.on('MUSIC_TRACK_VOLUME', newVolume => {
+	// 	io.emit('MUSIC_TRACK_VOLUME', newVolume);
+	// });
 });
 
 server.listen(3000);

@@ -8750,29 +8750,20 @@ function set_photo() {
 //   CODE   //
 //==========//
 
-/* get current user */
 
+document.getElementsByTagName('body')[0].style.visibility = 'visible';
+/* construct photo path */
 
-user = JSON.parse(sessionStorage.getItem('currentUser'));
-console.log('settings: user is ', user);
-/* sanity checks */
+serverFilePath = '/' + user.uid + '/user_photo';
+photoURL = 'https://eradiofk.sirv.com' + serverFilePath;
+user_photo.src = photoURL + '?t=' + new Date().getTime();
+/*
+ * At this point we have defined our functions, but normal html cannot
+ *  see our Node.JS functions (e.g. set_photo()).  Therefore, we assign
+ *  onclick handlers through here!
+ */
 
-if (!user || user.uid == undefined || user == 'no-user') {//    window.location.pathname = '/?error=UnauthorisedUser';
-} else {
-  document.getElementsByTagName('body')[0].style.visibility = 'visible';
-  /* construct photo path */
-
-  serverFilePath = '/' + user.uid + '/user_photo';
-  photoURL = 'https://eradiofk.sirv.com' + serverFilePath;
-  user_photo.src = photoURL + '?t=' + new Date().getTime();
-  /*
-   * At this point we have defined our functions, but normal html cannot
-   *  see our Node.JS functions (e.g. set_photo()).  Therefore, we assign
-   *  onclick handlers through here!
-   */
-
-  user_photo_container.onclick = set_photo;
-}
+user_photo_container.onclick = set_photo;
 
 },{"./_general.js":43,"./_sirv.js":45,"@babel/runtime/helpers/interopRequireDefault":3}],45:[function(require,module,exports){
 (function (Buffer){(function (){

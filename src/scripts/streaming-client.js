@@ -6988,15 +6988,17 @@ var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefau
 var _socket = _interopRequireDefault(require("socket.io-client"));
 
 try {
-  /* the audio element */
-  var musicAudioPlayback = new Audio();
-  var microphoneAudio = document.createElement('audio');
-  musicAudioPlayback.volume = 0.2;
   /*
    *  Establish connection with the server
    */
-
   var socket = _socket["default"].connect('/');
+  /* the audio element */
+
+
+  var musicAudioPlayback = new Audio();
+  musicAudioPlayback.volume = 0.2; //
+  // play button
+  //
 
   var play_button = document.getElementsByClassName('play-button')[0];
 
@@ -7004,56 +7006,32 @@ try {
     throw new Error('Error getting play-button element!');
   }
 
-  play_button.setAttribute('playing', 'no'); // attach a handler to the play-button
+  play_button.setAttribute('playing', 'no'); //
+  // attach a handler to the play-button
+  //
 
   play_button.addEventListener('click', function (event) {
     if (play_button.getAttribute('playing') == 'yes') {
       play_button.setAttribute('playing', 'no');
-      play_button.style.backgroundImage = "url('../img/play.png')";
-      microphoneAudio.pause();
-      microphoneAudio.currentTime = 0;
-      musicAudioPlayback.pause();
-      musicAudioPlayback.currentTime = 0;
+      play_button.style.backgroundImage = "url('../img/play.png')"; // musicAudioPlayback.pause();
+      // musicAudioPlayback.currentTime = 0;
+
       socket.removeAllListeners();
     } else if (play_button.getAttribute('playing') == 'no') {
       play_button.setAttribute('playing', 'yes');
       play_button.style.backgroundImage = "url('../img/pause.png')";
+      var audio = document.createElement('audio');
       /*
        * upon receiving microphone data chunks we must play it (but only if the play-button is ON)
        * Warning: Browsers force us to have this handler inside the event-listener because of Autoplay
        */
 
-      socket.on("microphone-data-chunk", function (recordedChunks) {
-        microphoneAudio.src = (window.URL || window.webkitURL).createObjectURL(new Blob(recordedChunks));
-        microphoneAudio.play();
-      });
-      /*
-       * When we first connect to the server we request that he give us the filename of the song currently playing
-       * This is done with MUSIC_TRACK_REQUESTING_FILENAME.
-       */
-
-      socket.on('MUSIC_TRACK_START_WITH_FILENAME', function (filename) {
-        if (!filename) return;
-        console.log('client: playing music chunks!');
-        musicAudioPlayback.src = filename;
-        /* sending request for song position */
-
-        socket.emit('MUSIC_TRACK_REQUESTING_POSITION');
-      });
-      /*
-       * After server sends us the song's position start playing it!
-       */
-
-      socket.on('MUSIC_TRACK_POSITION', function (position) {
-        musicAudioPlayback.currentTime = position;
-        musicAudioPlayback.play();
-      });
-      socket.on('MUSIC_TRACK_STOP', function () {
-        musicAudioPlayback.pause();
-        musicAudioPlayback.currentTime = 0;
-      });
-      socket.on('MUSIC_TRACK_VOLUME', function (newVolume) {
-        musicAudioPlayback.volume = newVolume / 100;
+      socket.on('server-sends-mic-chunks', function (chunks) {
+        var blob = new Blob(chunks, {
+          'type': 'audio/ogg; codecs=opus'
+        });
+        audio.src = (window.URL || window.webkitURL).createObjectURL(blob);
+        audio.play(); // TODO: this should probably be planned to start in the future using the start(time) functionality...
       });
     }
   });
