@@ -88,7 +88,7 @@
         </div>
     </div>
 
-    <button class="dropdown" id="console-start-podcast-button" style="float: unset;" onclick="toggle_dropdown()">
+    <button class="dropdown" id="console-start-podcast-button" style="float: unset;" onclick="toggle_dropdown_with_ID('console-start-podcast-button')">
         start podcast
     
         <div class="dropdown-content" id="start-podcast-dropdown-content">
@@ -97,6 +97,27 @@
         </div>
 
         <!-- TODO: fix toggle_dropdown() -->
+
+        <script>
+            function toggle_dropdown_with_ID(id)
+            {
+                var dropdown = document.getElementById(id);
+                var dropdown_content = dropdown.getElementsByClassName('dropdown-content')[0];
+
+                var clicked = dropdown.getAttribute('clicked');
+                if (clicked == 'yes')
+                {
+                    dropdown.setAttribute('clicked', 'no');
+                    dropdown_content.style.display = 'none';
+                }
+                else
+                {
+                    dropdown.setAttribute('clicked', 'yes');
+                    dropdown_content.style.display = 'block';
+                }
+            }
+        </script>
+
     </button>
 
     <script src="scripts/audio-visualisation.js"></script>
