@@ -12,12 +12,11 @@ const auth 				= require('firebase/auth');
 
 const fetch 			= require('node-fetch');
 
-//const AudioContext 		= require('web-audio-api').AudioContext;
-// const AudioContext		= require('standardized-audio-context').AudioContext;
+//
+// NOTE: This library supports only WAV but it can support other decoders aswell (e.g. mp3decoder)
+//
+const AudioContext 		= require('@descript/web-audio-js').StreamAudioContext;		
 
-const AudioContext 		= require('@descript/web-audio-js').StreamAudioContext;
-
-// const __project_root = __dirname + '/src';
 const __project_root = __dirname + '/';
 
 var firebaseConfig = {
@@ -153,9 +152,123 @@ io.on("connection", (socket) => {
 	//	MICROPHONE PLAYBACK
 	//
 
-	socket.on('console-sends-mic-chunks', (data) => {
-		io.emit('server-sends-mic-chunks', data);
-	});
+	function start()
+	{
+		console.log('here!');
+
+		//
+		//  taken from: https://stackoverflow.com/questions/37459231/webaudio-seamlessly-playing-sequence-of-audio-chunks
+		//
+
+		//
+		// NOTE: This library doesn't work with ogg; use only MP3
+		//
+
+		// var sources = [ "https://upload.wikimedia.org/wikipedia/commons/b/be/Hidden_Tribe_-_Didgeridoo_1_Live.ogg", 
+		//         "https://upload.wikimedia.org/wikipedia/commons/6/6e/Micronesia_National_Anthem.ogg"];
+
+		// var sources = 	[ 	"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", 
+		// 					"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" ];
+
+		var sources 	= [ "http://127.0.0.1:3000/song1.wav", "http://127.0.0.1:3000/song2.wav" ];
+
+		var channels    = [[0, 1], [1, 0]];
+
+		var audio       = new AudioContext();
+
+		var merger      = audio.createChannelMerger(2);
+		var splitter    = audio.createChannelSplitter(2);
+
+		// TODO: try and implement this using https://github.com/kuu/node-media-capture
+		// var mixedAudio  = audio.createMediaStreamDestination();
+
+		var duration    = 60000;
+		var chunks      = [];
+
+		function get(src) {
+			return fetch(src).then((response) => {
+				// console.log('response: ', response.arrayBuffer());
+				return response.arrayBuffer()
+			})
+		}
+
+		function stopMix(duration, ...media) {
+			setTimeout((media) => {
+				media.forEach((node) => {
+					node.stop()
+				})
+			}, duration, media)
+		}
+
+		Promise.all(sources.map(get)).then((data) => 
+		{
+			return Promise.all(data.map((buffer, index) => 
+			{
+				// we create a source for each buffer
+				// each source is converted to the splitter
+				// the splitter is converted to the merger
+				return audio.decodeAudioData(buffer).then((bufferSource) => 
+				{
+					var channel = channels[index];
+					var source = audio.createBufferSource();
+					source.buffer = bufferSource;
+					source.connect(splitter);
+					splitter.connect(merger, channel[0], channel[1]);
+					return source
+				})
+			}))
+			.then((audionodes) => 
+			{
+				// returns an array of nodes [AudioBufferSourceNode, AudioBufferSourceNode]
+				// merger is connected to the mixedAudio (of which we will take the stream and wait for data on it => ondataavailable)
+				// merger is also connected to audio.destination (speakers)
+				merger.connect(mixedAudio);
+				//merger.connect(audio.destination);
+				
+				// (Example)
+				// merger.connect(audio.destination);
+				// console.log(audionodes);
+				// audio.pipe(process.stdout);
+
+				var recorder = new MediaRecorder(mixedAudio.stream);
+				recorder.start(0);
+				audionodes.forEach((node) => {
+					node.start(0)
+				});
+
+				stopMix(duration, ...audionodes, recorder);
+
+				recorder.ondataavailable = (event) => {
+					console.log('chunks: ', chunks);
+					chunks.push(event.data);
+				};
+
+				interval_ID = setInterval(() => {
+					recorder.stop();                // stop to write a chunk
+					recorder.start();               // start to repeat, until 1sec has passed (see Interval below)
+				}, 100);                            // 100ms frequency
+			
+				interval2_ID = setInterval(() => {
+					recorder.stop();                // stop
+					var chunks2 = chunks;           // copy for quick access
+					chunks = [];                    // clear
+					recorder.start();               // restart
+			
+					io.emit('server-sends-mic-chunks', chunks2);  // send the copy without causing interference
+				}, 1000);                           // 1sec frequency
+			})
+		})
+		.catch(function(e) {
+			console.log(e)
+		});
+	}
+
+	start();
+
+
+	// socket.on('console-sends-mic-chunks', (data) => {
+	// 	io.emit('server-sends-mic-chunks', data);
+	// });
 
 	//
 	// console-sends:
