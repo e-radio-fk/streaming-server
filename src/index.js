@@ -10,7 +10,15 @@ const bodyParser 		= require('body-parser');
 const firebase 			= require('firebase/app');
 const auth 				= require('firebase/auth');
 
-const __project_root = __dirname + '/src';
+const fetch 			= require('node-fetch');
+
+//const AudioContext 		= require('web-audio-api').AudioContext;
+// const AudioContext		= require('standardized-audio-context').AudioContext;
+
+const AudioContext 		= require('@descript/web-audio-js').StreamAudioContext;
+
+// const __project_root = __dirname + '/src';
+const __project_root = __dirname + '/';
 
 var firebaseConfig = {
 	apiKey: "AIzaSyB37xSmEXteSUAyUdkrV4W_hVjyk0dsETY",
@@ -117,7 +125,7 @@ app.get('/console', (req, res) => {
  * Handle Sign Up
  */
 app.post('/signup', (req, res) => {
-
+	res.sendFile('./');
 });
 
 app.get('/signout', (req, res) => {
@@ -131,7 +139,6 @@ app.get('/signout', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-	console.log('here!');
 	res.sendFile('permissionDenied.html', { root: __project_root });
 });
 
@@ -145,7 +152,6 @@ io.on("connection", (socket) => {
 	//
 	//	MICROPHONE PLAYBACK
 	//
-	var sampleRate;
 
 	socket.on('console-sends-mic-chunks', (data) => {
 		io.emit('server-sends-mic-chunks', data);
