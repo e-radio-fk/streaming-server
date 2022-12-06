@@ -52,6 +52,9 @@
     "ytdl-core": "^4.9.1"
   },
   "dependencies": {
-    "node-gyp-build": "^4.3.0"
+    "audio-mixer": "^2.1.4",
+    "node-fetch": "^2.6.7",
+    "node-gyp-build": "^4.3.0",
+    "speaker": "^0.5.4"
   }
 }

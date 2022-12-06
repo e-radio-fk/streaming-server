@@ -6,16 +6,18 @@ const express 			= require('express');
 const app 				= express();
 const server 			= require('http').Server(app);
 const io 				= require('socket.io')(server);
+const ss 				= require('socket.io-stream');
 const bodyParser 		= require('body-parser');
 const firebase 			= require('firebase/app');
 const auth 				= require('firebase/auth');
 
 const fetch 			= require('node-fetch');
 
-//
-// NOTE: This library supports only WAV but it can support other decoders aswell (e.g. mp3decoder)
-//
-const AudioContext 		= require('@descript/web-audio-js').StreamAudioContext;		
+// Mixing Support
+const Mixer 					= require('audio-mixer').Mixer;		// node package to support mixing
+const { Readable, Writable } 	= require('stream');
+const fs 						= require('fs');
+const debug 					= require('debug');
 
 const __project_root = __dirname + '/';
 
@@ -151,124 +153,43 @@ io.on("connection", (socket) => {
 	//
 	//	MICROPHONE PLAYBACK
 	//
+	var interval1_ID = null;
 
-	function start()
-	{
-		console.log('here!');
+	var file0 		= fs.createReadStream(__dirname + '/song1.wav');
+	var file1 		= fs.createReadStream(__dirname + '/song2.wav');
+	var mixedStream = ss.createStream();								// its a Duplex;
 
-		//
-		//  taken from: https://stackoverflow.com/questions/37459231/webaudio-seamlessly-playing-sequence-of-audio-chunks
-		//
-
-		//
-		// NOTE: This library doesn't work with ogg; use only MP3
-		//
-
-		// var sources = [ "https://upload.wikimedia.org/wikipedia/commons/b/be/Hidden_Tribe_-_Didgeridoo_1_Live.ogg", 
-		//         "https://upload.wikimedia.org/wikipedia/commons/6/6e/Micronesia_National_Anthem.ogg"];
-
-		// var sources = 	[ 	"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", 
-		// 					"https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" ];
-
-		var sources 	= [ "http://127.0.0.1:3000/song1.wav", "http://127.0.0.1:3000/song2.wav" ];
-
-		var channels    = [[0, 1], [1, 0]];
-
-		var audio       = new AudioContext();
-
-		var merger      = audio.createChannelMerger(2);
-		var splitter    = audio.createChannelSplitter(2);
-
-		// TODO: try and implement this using https://github.com/kuu/node-media-capture
-		// var mixedAudio  = audio.createMediaStreamDestination();
-
-		var duration    = 60000;
-		var chunks      = [];
-
-		function get(src) {
-			return fetch(src).then((response) => {
-				// console.log('response: ', response.arrayBuffer());
-				return response.arrayBuffer()
-			})
-		}
-
-		function stopMix(duration, ...media) {
-			setTimeout((media) => {
-				media.forEach((node) => {
-					node.stop()
-				})
-			}, duration, media)
-		}
-
-		Promise.all(sources.map(get)).then((data) => 
-		{
-			return Promise.all(data.map((buffer, index) => 
-			{
-				// we create a source for each buffer
-				// each source is converted to the splitter
-				// the splitter is converted to the merger
-				return audio.decodeAudioData(buffer).then((bufferSource) => 
-				{
-					var channel = channels[index];
-					var source = audio.createBufferSource();
-					source.buffer = bufferSource;
-					source.connect(splitter);
-					splitter.connect(merger, channel[0], channel[1]);
-					return source
-				})
-			}))
-			.then((audionodes) => 
-			{
-				// returns an array of nodes [AudioBufferSourceNode, AudioBufferSourceNode]
-				// merger is connected to the mixedAudio (of which we will take the stream and wait for data on it => ondataavailable)
-				// merger is also connected to audio.destination (speakers)
-				merger.connect(mixedAudio);
-				//merger.connect(audio.destination);
-				
-				// (Example)
-				// merger.connect(audio.destination);
-				// console.log(audionodes);
-				// audio.pipe(process.stdout);
-
-				var recorder = new MediaRecorder(mixedAudio.stream);
-				recorder.start(0);
-				audionodes.forEach((node) => {
-					node.start(0)
-				});
-
-				stopMix(duration, ...audionodes, recorder);
-
-				recorder.ondataavailable = (event) => {
-					console.log('chunks: ', chunks);
-					chunks.push(event.data);
-				};
-
-				interval_ID = setInterval(() => {
-					recorder.stop();                // stop to write a chunk
-					recorder.start();               // start to repeat, until 1sec has passed (see Interval below)
-				}, 100);                            // 100ms frequency
-			
-				interval2_ID = setInterval(() => {
-					recorder.stop();                // stop
-					var chunks2 = chunks;           // copy for quick access
-					chunks = [];                    // clear
-					recorder.start();               // restart
-			
-					io.emit('server-sends-mic-chunks', chunks2);  // send the copy without causing interference
-				}, 1000);                           // 1sec frequency
-			})
-		})
-		.catch(function(e) {
-			console.log(e)
-		});
+	var pause = () => {
+		file0.pause();
+		file1.pause();
 	}
+	var resume = () => {
+		file0.resume();
+		file1.resume();
+	};
 
-	start();
+	var chunks = [];
 
+	var mixer = new Mixer({
+		channels: 1
+	});
 
-	// socket.on('console-sends-mic-chunks', (data) => {
-	// 	io.emit('server-sends-mic-chunks', data);
-	// });
+	input0 = mixer.input({
+	    channels: 1,
+	    bitDepth: 16,
+	    sampleRate: 48000,
+	});
+	input1 = mixer.input({
+		    channels: 1,
+		    bitDepth: 16,
+		    sampleRate: 48000,
+	});
+
+	file0.pipe(input0);	
+	file1.pipe(input1);
+	mixer.pipe(mixedStream);
+
+	ss(socket).emit('server-sends-mixed-stream', mixedStream);
 
 	//
 	// console-sends:
