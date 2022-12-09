@@ -1,67 +1,127 @@
+/* get microphone button handle */
+var microphoneButton = document.getElementById('console-toggle-microphone');
+microphoneButton.setAttribute('on', 'no');
+
 //
 // Microphone Capture Code
 //
 
 const socket = io.connect('/');
 
-// microphone
-var _stream;
-var mediaRecorder = null;
+/* check if getUserMedia is available */
+if (!navigator.mediaDevices.getUserMedia)
+    show_error('Error: Unsupported feature getUserMedia()');
 
-// record_and_send() intervals
-var interval_ID;                    // for populating the chunks array      
-var interval2_ID;                   // for sending the chunks array
-
-/* get microphone button handle */
-var microphoneButton = document.getElementById('console-toggle-microphone');
-microphoneButton.setAttribute('on', 'no');
+// our microphone audio stream
+let audioStream;
+// our microphone stream; this will be sent over to the server containing manipulated data from audioStream
+var microphone_stream = ss.createStream();
+// our recorder; it will support start(), stop() and ondatareceive()                    (not actual names!)
+let recorder;
 
 /* initialise mic streaming capability */
-navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
-    _stream = stream;
+navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(_audioStream => {
+
+    audioStream = _audioStream;
+
+    socket.emit('console-sends-microphone-stream', microphone_stream, start_capture_and_send_pcm_data);
 })
 .catch((err) => {
     show_error('Error: Microphone access has been denied probably!', err);
 });
 
-function send_microphoneChunk(chunks)
+function start_capture_and_send_pcm_data()
 {
-    socket.emit('console-sends-mic-chunks', chunks);
-}
+    //--------------------------------------------------------------------------------------------------------------------------------------------
+    //  Capture microphone PCM data & send to server!
+    //
+    //  (will be run on server acknowledge of the microphone_stream)
+    //
+    //  This is different  than using the MediaRecorder API approach.  We use this way
+    //      because the MediaRecorder API doesn't support the PCM codec anymore and we
+    //      are obliged to gather *ONLY* PCM data and send them through a stream.
+    //
+    //  Code from:
+    //  https://medium.com/@ragymorkos/gettineg-monochannel-16-bit-signed-integer-pcm-audio-samples-from-the-microphone-in-the-browser-8d4abf81164d
+    //------------------------------------------------------------------------------------------------------------------------------------------
 
-function record_and_send() 
-{
-    var chunks = [];
+    const context = window.AudioContext || window.webkitAudioContext;
+    const audioContext = new context();
 
-    const recorder = new MediaRecorder(_stream);
+    // retrieve the current sample rate of microphone the browser is using
+    const sampleRate = audioContext.sampleRate;
 
-    // on dataavailable send chunk to clients
-    recorder.ondataavailable = e => chunks.push(e.data);
+    // creates a gain node
+    const volume = audioContext.createGain();
+    
+    // creates an audio node from the microphone incoming stream
+    const audioInput = audioContext.createMediaStreamSource(audioStream);
+    
+    // connect the stream to the gain node
+    audioInput.connect(volume);
+    
+    /*
+        From the spec: This value controls how frequently the audioprocess event is
+        dispatched and how many sample-frames need to be processed each call.
+        Lower values for buffer size will result in a lower (better) latency.
+        Higher values will be necessary to avoid audio breakup and glitches 
+    */
+    const bufferSize = 2048;
+    recorder = audioContext.createJavaScriptNode.call(audioContext, bufferSize, 1, 1);
 
-    interval_ID = setInterval(() => {
-        recorder.stop();                // stop to write a chunk
-        recorder.start();               // start to repeat, until 1sec has passed (see Interval below)
-    }, 100);                            // 100ms frequency
+    const leftChannel = [];
+    let recordingLength = 0;
 
-    interval2_ID = setInterval(() => {
-        recorder.stop();                // stop
-        var chunks2 = chunks;           // copy for quick access
-        chunks = [];                    // clear
-        recorder.start();               // restart
+    recorder.onaudioprocess = function(event) {
+        const samples = event.inputBuffer.getChannelData(0);
+        
+        // we clone the samples
+        leftChannel.push(new Float32Array(samples));
+        
+        recordingLength += bufferSize;
 
-        send_microphoneChunk(chunks2);  // send the copy without causing interference
-    }, 1000);                           // 1sec frequency
+        function mergeBuffers(channelBuffer, recordingLength)
+        {
+            let result = new Float32Array(recordingLength);
+            let offset = 0;
+            
+            for (let i = 0; i < channelBuffer.length; i++)
+            {
+                result.set(channelBuffer[i], offset);
+                offset += channelBuffer[i].length;
+            }
+            
+            return Array.prototype.slice.call(result);
+        }
+        
+        const PCM32fSamples = mergeBuffers(leftChannel, recordingLength);
+
+        const PCM16iSamples = [];
+
+        for (let i = 0; i < PCM32fSamples.length; i++)
+        {
+            let val = Math.floor(32767 * PCM32fSamples[i]);
+            val = Math.min(32767, val);
+            val = Math.max(-32768, val);
+            
+            PCM16iSamples.push(val);
+        }
+
+        // push data to the stream; they will be automatically sent to the server
+        microphone_stream.push(PCM16iSamples);
+    };
+        
+    // we connect the recorder
+    volume.connect(recorder);
 }
 
 function toggle_mic() 
 {
     if (microphoneButton.getAttribute('on') == 'yes')
     {
-        // clear intervals
-        clearInterval(interval_ID);
-        interval_ID = undefined;
-        clearInterval(interval2_ID);
-        interval2_ID = undefined;
+        recorder.disconnect();
+
+        // TODO: probably send a message to the server??
 
         microphoneButton.setAttribute('on', 'no');
         microphoneButton.innerHTML = 'start mic';
@@ -71,7 +131,9 @@ function toggle_mic()
         microphoneButton.setAttribute('on', 'yes');
         microphoneButton.innerHTML = 'stop mic';
 
-        // start recording and sending data to clients
-        record_and_send();
+        // TODO: is this the right way?
+        
+        // start recorder
+        recorder.connect(audioContext.destination);
     }
 }

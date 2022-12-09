@@ -145,88 +145,86 @@ app.get('*', (req, res) => {
 
 console.log('[1] Enabling stream.io...');
 
+// Our own e-radio baked-in Mixer
+class RadioMixer
+{
+	constructor(_microphone_stream, _music_stream)
+	{
+		this.microphone_stream = _microphone_stream;
+		this.music_stream = _music_stream;
+
+		// create a mixer object which does most of the work!
+		this.mixer = new Mixer({
+			channels: 1
+		});
+
+		//
+		// create 2 inputs
+		//
+		this.input0 = mixer.input({
+			    channels: 1,
+			    bitDepth: 16,
+			    sampleRate: 48000,
+		});
+		
+		this.input1 = mixer.input({
+			    channels: 1,
+			    bitDepth: 16,
+			    sampleRate: 48000,
+		});
+
+		// the output stream
+		this.mixedStream = ss.createStream();
+
+		// configure stream piping (like an audio graph)
+		this.microphone_stream.pipe(input0);
+		this.music_stream.pipe(input1);
+		this.mixer.pipe(this.mixedStream);
+	}
+
+	outputStream()
+	{
+		return this.mixedStream;
+	}
+}
+
 io.on("connection", (socket) => {
+
 	socket.on('client-message', (...args) => {
 		io.emit('message', args[0], args[1], args[2]);
 	});
 
 	//
-	//	MICROPHONE PLAYBACK
-	//
-	var interval1_ID = null;
+	// (*1): This is initialised to a socket.io-stream because it has a _write() function implemented.
+	// 			This way, we don't have to create our own class and the Mixer-class object can work with even a stream that hasn't yet started giving data.
 
-	var file0 		= fs.createReadStream(__dirname + '/song1.wav');
-	var file1 		= fs.createReadStream(__dirname + '/song2.wav');
-	var mixedStream = ss.createStream();								// its a Duplex;
+	var mixedStream 		= ss.createStream();
+	var microphoneStream 	= ss.createStream();				//	(*1)
 
-	var pause = () => {
-		file0.pause();
-		file1.pause();
-	}
-	var resume = () => {
-		file0.resume();
-		file1.resume();
-	};
+	/* first event our server must receive (communication with the console) */
+	socket.on('console-sends-microphone-stream', (_microphone_stream) => {
 
-	var chunks = [];
+		// get the microphone stream from console (it comes from a response when console is ready!)
+		microphone_stream = _microphone_stream;
 
-	var mixer = new Mixer({
-		channels: 1
+		// TODO: this will be selected using the playlist in the future
+		var file1 = fs.createReadStream(__dirname + '/song2.wav');
+
+		// create our mixer class & get output stream
+		const radio_mixer = new RadioMixer(microphone_stream, file1);
+
+		// get mixedStream
+		mixedStream = radio_mixer.outputStream();
+
+		socket.on('client-requests-mixed-stream', () => {
+			// if we have successfully established a connection between console & server (a.k.a. mixedStream is not null)
+			if (mixedStream)
+			{
+				// send the output stream (mixed stream) to all clients that are asking for it!
+				ss(socket).emit('server-sends-mixed-stream', mixedStream);
+			}
+		});
 	});
-
-	input0 = mixer.input({
-	    channels: 1,
-	    bitDepth: 16,
-	    sampleRate: 48000,
-	});
-	input1 = mixer.input({
-		    channels: 1,
-		    bitDepth: 16,
-		    sampleRate: 48000,
-	});
-
-	file0.pipe(input0);	
-	file1.pipe(input1);
-	mixer.pipe(mixedStream);
-
-	ss(socket).emit('server-sends-mixed-stream', mixedStream);
-
-	//
-	// console-sends:
-	//
-
-	//
-	//	client-requests:
-	//
-
-	// // 
-	// //	MUSIC PLAYBACK
-	// // 
-	// socket.on('MUSIC_TRACK_FILENAME', filename => {
-	// 	io.emit('MUSIC_TRACK_FILENAME', filename);
-	// });
-
-	// /*
-	//  * Requesting Position Handler
-	//  *
-	//  * Δημιουργούμε έναν handler για την περίπτωση που οποιοσδήποτε client ζητά
-	//  *  να μάθει την position στο song για να ξεκινήσει να το παίζει.
-	//  */
-	// socket.on('MUSIC_TRACK_REQUESTING_POSITION', () => {
-	// 	socket.emit('MUSIC_TRACK_POSITION', 0.2);			// TODO: fixme
-	// });
-
-	// socket.on('MUSIC_TRACK_START_WITH_FILENAME', (filename) => {
-	// 	io.emit('MUSIC_TRACK_START_WITH_FILENAME', filename);
-	// });
-
-	// socket.on('MUSIC_TRACK_STOP', () => {
-	// 	io.emit('MUSIC_TRACK_STOP');
-	// });
-
-	// socket.on('MUSIC_TRACK_VOLUME', newVolume => {
-	// 	io.emit('MUSIC_TRACK_VOLUME', newVolume);
-	// });
 });
 
 server.listen(3000);
