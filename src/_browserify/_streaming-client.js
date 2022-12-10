@@ -9,13 +9,15 @@ try
     /*
      *  Establish connection with the server
      */
-    const socket = io.connect('/');
+    const socket = io.connect('/clients-communication');
 
     var mixed_stream;
     
     // add handler for getting mixed-stream
     ss(socket).on('server-sends-mixed-stream', (_mixed_stream) => {
         console.log('Received mixed stream: ', _mixed_stream);
+
+        // TODO: if we get no reply, schedule a retry...
 
         mixed_stream = _mixed_stream;
     });

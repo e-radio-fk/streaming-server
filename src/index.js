@@ -15,9 +15,7 @@ const fetch 			= require('node-fetch');
 
 // Mixing Support
 const Mixer 					= require('audio-mixer').Mixer;		// node package to support mixing
-const { Readable, Writable } 	= require('stream');
 const fs 						= require('fs');
-const debug 					= require('debug');
 
 const __project_root = __dirname + '/';
 
@@ -33,6 +31,9 @@ var firebaseConfig = {
 };
 
 var loggedInUser = null;
+
+/* mixedStream is sent to every client to listen to */
+let mixedStream = null;
 
 /* project root */
 app.use(express.static(__project_root));
@@ -188,20 +189,14 @@ class RadioMixer
 	}
 }
 
-io.on("connection", (socket) => {
+io.of("/console-communication").on("connection", (socket) => {
 
-	// console.log('[1.1] Receive connection');
-
-	socket.on('client-message', (...args) => {
-		io.emit('message', args[0], args[1], args[2]);
-	});
+	console.log('[2] Connection with console');
 
 	/* first event our server must receive (communication with the console) */
 	ss(socket).on('console-sends-microphone-stream', (_microphone_stream) => {
 
 		io.emit('server-received-microphone-stream');
-
-		console.log('[2] Received microphone_stream from console');
 
 		// TODO: this will be selected using the playlist in the future
 		const file1 = fs.createReadStream(__dirname + '/song2.wav');
@@ -210,17 +205,29 @@ io.on("connection", (socket) => {
 		const radio_mixer = new RadioMixer(_microphone_stream, file1);
 
 		// get mixedStream
-		const mixedStream = radio_mixer.outputStream();
+		mixedStream = radio_mixer.outputStream();
+	});
+});
 
-		console.log('[3] mixed stream is ready ');
+io.of("/clients-communication").on("connection", (socket) => {
 
-		socket.on('client-requests-mixed-stream', () => {
+	console.log('[3] Connection with client');
 
-			console.log('[3] Client requests mixed_stream');
+	socket.on('client-message', (...args) => {
+		socket.emit('message', args[0], args[1], args[2]);
+	});
 
-			// send the output stream (mixed stream) to all clients that are asking for it!
-			ss(socket).emit('server-sends-mixed-stream', mixedStream);
-		});
+	socket.on('client-requests-mixed-stream', () => {
+
+		// TODO: could there be a case where a client connects to our server BEFORE the acquisition of the mixedStream in the line `mixedStream = radio_mixer.outputStream()`	???
+		// 			In any case, lets add a guard for now.
+		if (!mixedStream)
+			return;
+
+		console.log('[3] Client requests mixed_stream');
+
+		// send the output stream (mixed stream) to all clients that are asking for it!
+		ss(socket).emit('server-sends-mixed-stream', mixedStream);
 	});
 });
 

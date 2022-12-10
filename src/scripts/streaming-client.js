@@ -14543,12 +14543,13 @@ try {
   /*
    *  Establish connection with the server
    */
-  var socket = _socket["default"].connect('/');
+  var socket = _socket["default"].connect('/clients-communication');
 
   var mixed_stream; // add handler for getting mixed-stream
 
   (0, _socket2["default"])(socket).on('server-sends-mixed-stream', function (_mixed_stream) {
-    console.log('Received mixed stream: ', _mixed_stream);
+    console.log('Received mixed stream: ', _mixed_stream); // TODO: if we get no reply, schedule a retry...
+
     mixed_stream = _mixed_stream;
   }); // request mixed-stream
 

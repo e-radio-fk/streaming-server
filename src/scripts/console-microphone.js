@@ -6,7 +6,7 @@ microphoneButton.setAttribute('on', 'no');
 // Microphone Capture Code
 //
 
-const socket = io.connect('/');
+const socket = io.connect('/console-communication');
 
 /* check if getUserMedia is available */
 if (!navigator.mediaDevices.getUserMedia)
@@ -17,7 +17,7 @@ let audioStream;
 // our microphone stream; this will be sent over to the server containing manipulated data from audioStream
 var microphone_stream = ss.createStream();
 // our recorder; it will support start(), stop() and ondatareceive()                    (not actual names!)
-let recorder;
+let recorder = null;
 
 /* initialise mic capture capability */
 navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(_audioStream => {

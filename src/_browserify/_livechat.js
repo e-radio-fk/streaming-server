@@ -7,13 +7,13 @@ var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-li
 // Communications
 //
 
-const socket = io.connect('/');
+const socket = io.connect('/clients-communication');
 
 /* 
  * upon receiving a message 
  */
 socket.on("message", (...args) => {
-    
+
     /* 
         a message must always have the form: 
         arg[0] = message, 
