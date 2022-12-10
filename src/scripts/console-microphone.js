@@ -19,12 +19,15 @@ var microphone_stream = ss.createStream();
 // our recorder; it will support start(), stop() and ondatareceive()                    (not actual names!)
 let recorder;
 
-/* initialise mic streaming capability */
+/* initialise mic capture capability */
 navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(_audioStream => {
 
     audioStream = _audioStream;
 
-    socket.emit('console-sends-microphone-stream', microphone_stream, start_capture_and_send_pcm_data);
+    ss(socket).emit('console-sends-microphone-stream', microphone_stream, (answer) => {
+        /* upon server acknowledge start working... */
+        start_capture_and_send_pcm_data();
+    });
 })
 .catch((err) => {
     show_error('Error: Microphone access has been denied probably!', err);
@@ -115,7 +118,7 @@ function start_capture_and_send_pcm_data()
     volume.connect(recorder);
 }
 
-function toggle_mic() 
+function toggle_mic()
 {
     if (microphoneButton.getAttribute('on') == 'yes')
     {

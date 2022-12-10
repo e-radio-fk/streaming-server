@@ -161,13 +161,13 @@ class RadioMixer
 		//
 		// create 2 inputs
 		//
-		this.input0 = mixer.input({
+		this.input0 = this.mixer.input({
 			    channels: 1,
 			    bitDepth: 16,
 			    sampleRate: 48000,
 		});
 		
-		this.input1 = mixer.input({
+		this.input1 = this.mixer.input({
 			    channels: 1,
 			    bitDepth: 16,
 			    sampleRate: 48000,
@@ -177,8 +177,8 @@ class RadioMixer
 		this.mixedStream = ss.createStream();
 
 		// configure stream piping (like an audio graph)
-		this.microphone_stream.pipe(input0);
-		this.music_stream.pipe(input1);
+		this.microphone_stream.pipe(this.input0);
+		this.music_stream.pipe(this.input1);
 		this.mixer.pipe(this.mixedStream);
 	}
 
@@ -190,39 +190,36 @@ class RadioMixer
 
 io.on("connection", (socket) => {
 
+	// console.log('[1.1] Receive connection');
+
 	socket.on('client-message', (...args) => {
 		io.emit('message', args[0], args[1], args[2]);
 	});
 
-	//
-	// (*1): This is initialised to a socket.io-stream because it has a _write() function implemented.
-	// 			This way, we don't have to create our own class and the Mixer-class object can work with even a stream that hasn't yet started giving data.
-
-	var mixedStream 		= ss.createStream();
-	var microphoneStream 	= ss.createStream();				//	(*1)
-
 	/* first event our server must receive (communication with the console) */
-	socket.on('console-sends-microphone-stream', (_microphone_stream) => {
+	ss(socket).on('console-sends-microphone-stream', (_microphone_stream) => {
 
-		// get the microphone stream from console (it comes from a response when console is ready!)
-		microphone_stream = _microphone_stream;
+		io.emit('server-received-microphone-stream');
+
+		console.log('[2] Received microphone_stream from console');
 
 		// TODO: this will be selected using the playlist in the future
-		var file1 = fs.createReadStream(__dirname + '/song2.wav');
+		const file1 = fs.createReadStream(__dirname + '/song2.wav');
 
 		// create our mixer class & get output stream
-		const radio_mixer = new RadioMixer(microphone_stream, file1);
+		const radio_mixer = new RadioMixer(_microphone_stream, file1);
 
 		// get mixedStream
-		mixedStream = radio_mixer.outputStream();
+		const mixedStream = radio_mixer.outputStream();
+
+		console.log('[3] mixed stream is ready ');
 
 		socket.on('client-requests-mixed-stream', () => {
-			// if we have successfully established a connection between console & server (a.k.a. mixedStream is not null)
-			if (mixedStream)
-			{
-				// send the output stream (mixed stream) to all clients that are asking for it!
-				ss(socket).emit('server-sends-mixed-stream', mixedStream);
-			}
+
+			console.log('[3] Client requests mixed_stream');
+
+			// send the output stream (mixed stream) to all clients that are asking for it!
+			ss(socket).emit('server-sends-mixed-stream', mixedStream);
 		});
 	});
 });

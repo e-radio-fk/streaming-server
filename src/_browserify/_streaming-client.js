@@ -11,11 +11,17 @@ try
      */
     const socket = io.connect('/');
 
-    var stream;
+    var mixed_stream;
     
-    ss(socket).on('server-sends-mixed-stream', (_stream) => {
-        stream = _stream;
+    // add handler for getting mixed-stream
+    ss(socket).on('server-sends-mixed-stream', (_mixed_stream) => {
+        console.log('Received mixed stream: ', _mixed_stream);
+
+        mixed_stream = _mixed_stream;
     });
+
+    // request mixed-stream
+    socket.emit('client-requests-mixed-stream');
 
     //
     // play button
@@ -56,7 +62,7 @@ try
             play_button.setAttribute('playing', 'yes');
             play_button.style.backgroundImage = "url('../img/pause.png')";
 
-            stream.on('data', (pcm_data) => {
+            mixed_stream.on('data', (pcm_data) => {
                 // Now feed PCM data into player getting from websocket or ajax whatever the transport you are using.
                 player.feed(pcm_data);
             });

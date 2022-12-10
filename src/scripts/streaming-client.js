@@ -14466,6 +14466,7 @@ var _socket = _interopRequireDefault(require("socket.io-client"));
 
 var _socket2 = _interopRequireDefault(require("socket.io-stream"));
 
+// from: https://github.com/samirkumardas/pcm-player
 function PCMPlayer(t) {
   this.init(t);
 }
@@ -14543,15 +14544,15 @@ try {
    *  Establish connection with the server
    */
   var socket = _socket["default"].connect('/');
-  /* the audio element */
 
+  var mixed_stream; // add handler for getting mixed-stream
 
-  var musicAudioPlayback = new Audio();
-  musicAudioPlayback.volume = 0.2;
-  var stream;
-  (0, _socket2["default"])(socket).on('server-sends-mixed-stream', function (_stream) {
-    stream = _stream;
-  }); //
+  (0, _socket2["default"])(socket).on('server-sends-mixed-stream', function (_mixed_stream) {
+    console.log('Received mixed stream: ', _mixed_stream);
+    mixed_stream = _mixed_stream;
+  }); // request mixed-stream
+
+  socket.emit('client-requests-mixed-stream'); //
   // play button
   //
 
@@ -14561,38 +14562,34 @@ try {
     throw new Error('Error getting play-button element!');
   }
 
-  play_button.setAttribute('playing', 'no'); //
+  play_button.setAttribute('playing', 'no');
+  var player = new PCMPlayer({
+    encoding: '16bitInt',
+    channels: 2,
+    sampleRate: 48000,
+    flushingTime: 2000
+  }); //
   // attach a handler to the play-button
   //
+
+  /*
+   * upon receiving microphone data chunks we must play it (but only if the play-button is ON)
+   * Warning: Browsers force us to have this handler inside the event-listener because of Autoplay
+  */
 
   play_button.addEventListener('click', function (event) {
     if (play_button.getAttribute('playing') == 'yes') {
       play_button.setAttribute('playing', 'no');
-      play_button.style.backgroundImage = "url('../img/play.png')"; // musicAudioPlayback.pause();
-      // musicAudioPlayback.currentTime = 0;
+      play_button.style.backgroundImage = "url('../img/play.png')"; // TODO: implement stopping sound!
 
       socket.removeAllListeners();
     } else if (play_button.getAttribute('playing') == 'no') {
       play_button.setAttribute('playing', 'yes');
       play_button.style.backgroundImage = "url('../img/pause.png')";
-      var audio = document.createElement('audio');
-      var player = new PCMPlayer({
-        encoding: '16bitInt',
-        channels: 2,
-        sampleRate: 48000,
-        flushingTime: 2000
-      });
-      stream.on('data', function (pcm_data) {
+      mixed_stream.on('data', function (pcm_data) {
         // Now feed PCM data into player getting from websocket or ajax whatever the transport you are using.
         player.feed(pcm_data);
-      }); // /*
-      //  * upon receiving microphone data chunks we must play it (but only if the play-button is ON)
-      //  * Warning: Browsers force us to have this handler inside the event-listener because of Autoplay
-      //  */
-      // socket.on('server-sends-mic-chunks', (chunks) => {
-      //     
-      //     // TODO: this should probably be planned to start in the future using the start(time) functionality...
-      // });
+      });
     }
   });
 } catch (e) {
