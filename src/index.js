@@ -14,8 +14,8 @@ const auth 				= require('firebase/auth');
 const fetch 			= require('node-fetch');
 
 // Mixing Support
-const RadioMixer 				= require('./RadioMixer');
-const fs 						= require('fs');
+const RadioMixer 		= require('./RadioMixer');
+const fs 				= require('fs');
 
 const __project_root = __dirname + '/';
 
@@ -33,8 +33,13 @@ var firebaseConfig = {
 var loggedInUser = null;
 
 /* mixedStream is sent to every client to listen to */
-let mixedStream = null;
-let microphone_stream = null;
+var mixedStream = null;
+var microphone_stream = null;
+var got_microphone_stream = false;			// flag to determine whether our server has acquired the microphone_stream from the console and prevent race-conditions on clients connecting too fast
+
+var radio_mixer = null;
+
+var file1 = null;
 
 /* project root */
 app.use(express.static(__project_root));
@@ -157,10 +162,14 @@ io.of("/console-communication").on("connection", (socket) => {
 		// save it as global variable
 		microphone_stream = _microphone_stream;
 
+		// add flag
+		got_microphone_stream = true;
+
 		io.emit('server-received-microphone-stream');
 	});
 });
 
+// now we can start communications with clients!
 io.of("/clients-communication").on("connection", (socket) => {
 
 	console.log('[3] Connection with client');
@@ -172,11 +181,15 @@ io.of("/clients-communication").on("connection", (socket) => {
 	socket.on('client-requests-mixed-stream', () => {
 
 		// TODO: this will be selected using the playlist in the future
-		const file1 = fs.createReadStream(__dirname + '/song2.wav');
-		const file2 = fs.createReadStream(__dirname + '/song1.wav');
+		file1 = fs.createReadStream(__dirname + '/song2.wav');
+
+		if (!got_microphone_stream)
+			microphone_stream = ss.createStream();	// with no data ofcourse for now!
+		else
+			console.log('now have mic');
 
 		// create our mixer class & get output stream
-		const radio_mixer = new RadioMixer(file2, file1);
+		radio_mixer = new RadioMixer(microphone_stream, file1);
 
 		// get mixedStream
 		mixedStream = radio_mixer.outputStream();
@@ -184,7 +197,10 @@ io.of("/clients-communication").on("connection", (socket) => {
 		// TODO: could there be a case where a client connects to our server BEFORE the acquisition of the mixedStream in the line `mixedStream = radio_mixer.outputStream()`	???
 		// 			In any case, lets add a guard for now.
 		if (!mixedStream)
+		{
+			console.log('error: we have no mixedStream!');
 			return;
+		}
 
 		console.log('[3] Client requests mixed_stream');
 
