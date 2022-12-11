@@ -34,6 +34,7 @@ var loggedInUser = null;
 
 /* mixedStream is sent to every client to listen to */
 let mixedStream = null;
+let microphone_stream = null;
 
 /* project root */
 app.use(express.static(__project_root));
@@ -153,16 +154,10 @@ io.of("/console-communication").on("connection", (socket) => {
 	/* first event our server must receive (communication with the console) */
 	ss(socket).on('console-sends-microphone-stream', (_microphone_stream) => {
 
+		// save it as global variable
+		microphone_stream = _microphone_stream;
+
 		io.emit('server-received-microphone-stream');
-
-		// TODO: this will be selected using the playlist in the future
-		const file1 = fs.createReadStream(__dirname + '/song2.wav');
-
-		// create our mixer class & get output stream
-		const radio_mixer = new RadioMixer(_microphone_stream, file1);
-
-		// get mixedStream
-		mixedStream = radio_mixer.outputStream();
 	});
 });
 
@@ -175,6 +170,16 @@ io.of("/clients-communication").on("connection", (socket) => {
 	});
 
 	socket.on('client-requests-mixed-stream', () => {
+
+		// TODO: this will be selected using the playlist in the future
+		const file1 = fs.createReadStream(__dirname + '/song2.wav');
+		const file2 = fs.createReadStream(__dirname + '/song1.wav');
+
+		// create our mixer class & get output stream
+		const radio_mixer = new RadioMixer(file2, file1);
+
+		// get mixedStream
+		mixedStream = radio_mixer.outputStream();
 
 		// TODO: could there be a case where a client connects to our server BEFORE the acquisition of the mixedStream in the line `mixedStream = radio_mixer.outputStream()`	???
 		// 			In any case, lets add a guard for now.
