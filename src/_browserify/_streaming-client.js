@@ -15,7 +15,6 @@ try
     
     // add handler for getting mixed-stream
     ss(socket).on('server-sends-mixed-stream', (_mixed_stream) => {
-        console.log('Received mixed stream: ', _mixed_stream);
 
         // TODO: if we get no reply, schedule a retry...
 
