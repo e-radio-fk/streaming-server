@@ -24,14 +24,14 @@ class RadioMixer
 		//
 		this.input0 = this.mixer.input({
 			    channels: 1,
-			    bitDepth: 16,
-			    sampleRate: 48000,
+			    bitDepth: 16,
+			    sampleRate: 500,
 		});
 		
 		this.input1 = this.mixer.input({
 			    channels: 1,
-			    bitDepth: 16,
-			    sampleRate: 48000,
+			    bitDepth: 16,
+			    sampleRate: 500,
 		});
 
 		// the output stream

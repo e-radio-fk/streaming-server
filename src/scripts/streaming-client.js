@@ -14548,7 +14548,7 @@ try {
   var mixed_stream; // add handler for getting mixed-stream
 
   (0, _socket2["default"])(socket).on('server-sends-mixed-stream', function (_mixed_stream) {
-    // TODO: if we get no reply, schedule a retry...
+    // TODO: add a timeout here.  if we get no reply, schedule a retry...
     mixed_stream = _mixed_stream;
   }); // request mixed-stream
 
