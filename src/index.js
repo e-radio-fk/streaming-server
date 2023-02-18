@@ -35,7 +35,6 @@ var loggedInUser = null;
 /* mixedStream is sent to every client to listen to */
 var mixedStream = null;
 var microphone_stream = null;
-var got_microphone_stream = false;			// flag to determine whether our server has acquired the microphone_stream from the console and prevent race-conditions on clients connecting too fast
 
 var radio_mixer = null;
 
@@ -118,7 +117,6 @@ app.get('/profile', (req, res) => {
 	}
 });
 app.get('/console', (req, res) => {
-	console.log('requesting console!');
 	if (!loggedInUser)
 	{
 		res.sendFile('permissionDenied.html', { root: __project_root });
@@ -157,56 +155,53 @@ io.of("/console-communication").on("connection", (socket) => {
 	console.log('[2] Connection with console');
 
 	/* first event our server must receive (communication with the console) */
-	ss(socket).on('console-sends-microphone-stream', (_microphone_stream) => {
+	ss(socket).on('console-sends-microphone-stream', (_microphone_stream, callback) => {
+
+		console.log('[2.1] Received microphone stream');
 
 		// save it as global variable
 		microphone_stream = _microphone_stream;
 
-		// add flag
-		got_microphone_stream = true;
+		microphone_stream.on('data', (data) => {
+			console.log('got data!');
+		});
 
-		io.emit('server-received-microphone-stream');
+		callback({});	// acknowledgement
+
+		socket.on('buffer', (buffer) => {
+			microphone_stream.push(buffer);
+		});
+
+		// now we can start communications with clients!
+		io.of("/clients-communication").on("connection", (socket) => {
+
+			console.log('[3] Connection with client');
+
+			socket.on('client-requests-mixed-stream', () => {
+
+				// TODO: this will be selected using the playlist in the future
+				file1 = fs.createReadStream(__dirname + '/song2.wav');
+
+				// create our mixer class & get output stream
+				radio_mixer = new RadioMixer(microphone_stream, file1);
+				// radio_mixer = new RadioMixer(microphone_stream, ss.createStream());
+
+				// get mixedStream
+				mixedStream = radio_mixer.outputStream();
+
+				console.log('[3] Client requests mixed_stream');
+
+				// send the output stream (mixed stream) to all clients that are asking for it!
+				ss(socket).emit('server-sends-mixed-stream', mixedStream);
+			});
+		});
 	});
 });
 
-// now we can start communications with clients!
-io.of("/clients-communication").on("connection", (socket) => {
 
-	console.log('[3] Connection with client');
-
-	socket.on('client-message', (...args) => {
-		socket.emit('message', args[0], args[1], args[2]);
-	});
-
-	socket.on('client-requests-mixed-stream', () => {
-
-		// TODO: this will be selected using the playlist in the future
-		file1 = fs.createReadStream(__dirname + '/song2.wav');
-
-		if (!got_microphone_stream)
-			microphone_stream = ss.createStream();	// with no data ofcourse for now!
-		else
-			console.log('now have mic');
-
-		// create our mixer class & get output stream
-		radio_mixer = new RadioMixer(microphone_stream, file1);
-
-		// get mixedStream
-		mixedStream = radio_mixer.outputStream();
-
-		// TODO: could there be a case where a client connects to our server BEFORE the acquisition of the mixedStream in the line `mixedStream = radio_mixer.outputStream()`	???
-		// 			In any case, lets add a guard for now.
-		if (!mixedStream)
-		{
-			console.log('error: we have no mixedStream!');
-			return;
-		}
-
-		console.log('[3] Client requests mixed_stream');
-
-		// send the output stream (mixed stream) to all clients that are asking for it!
-		ss(socket).emit('server-sends-mixed-stream', mixedStream);
-	});
-});
+// TODO: fix this again
+// socket.on('client-message', (...args) => {
+// 	socket.emit('message', args[0], args[1], args[2]);
+// });
 
 server.listen(3000);

@@ -16,7 +16,7 @@ try
     // add handler for getting mixed-stream
     ss(socket).on('server-sends-mixed-stream', (_mixed_stream) => {
 
-        // TODO: if we get no reply, schedule a retry...
+        // TODO: add a timeout here.  if we get no reply, schedule a retry...
 
         mixed_stream = _mixed_stream;
     });
@@ -55,7 +55,6 @@ try
             play_button.style.backgroundImage = "url('../img/play.png')";
 
             // TODO: implement stopping sound!
-
             socket.removeAllListeners();
         }
         else if (play_button.getAttribute('playing') == 'no')
