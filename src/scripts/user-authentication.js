@@ -40,7 +40,7 @@ function sign_in(event)
     }
 
     // fetching data
-    fetch('signin', option).then(res => {
+    fetch('/signin', option).then(res => {
         // Ύστερα από επιτυχές sign-up μπορούμε να χρησιμοποιήσουμε το πρόγραμμα ως user
         window.location.href = res.url;
     })
