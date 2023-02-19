@@ -29,13 +29,13 @@ function sign_in(event)
 
     const option = {
         headers:{
-            "Content-Type": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded"
         },
         method: "POST",
-        body: JSON.stringify({
+        body: new URLSearchParams({
             username: username,
             password: password
-        }),
+        }).toString(),        
         redirect: "follow"
     }
 
