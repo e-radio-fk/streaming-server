@@ -86,7 +86,9 @@ app.post('/signin', (req, res) => {
 
 			// TODO: fix isAdmin() part
 
-			res.redirect('/profile');
+			// res.redirect('/profile');
+			// TODO: fixme
+			res.redirect('/console');
 			res.end();
 		})
 		.catch((error) => {
