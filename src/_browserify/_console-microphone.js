@@ -12,7 +12,11 @@ microphoneButton.setAttribute('on', 'no');
 // Microphone Capture Code
 //
 
-const socket = io.connect('/console-communication');
+const server_url = window.location.origin;
+
+const socket = io.connect(server_url + '/console-communication', { withCredentials: true });
+
+console.log(server_url + '/console-communication');
 
 /* check if getUserMedia is available */
 if (!navigator.mediaDevices.getUserMedia)

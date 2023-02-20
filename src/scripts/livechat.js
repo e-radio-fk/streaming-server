@@ -7001,7 +7001,11 @@ var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-li
 // Communications
 //
 
-var socket = _socket["default"].connect('/clients-communication');
+var server_url = window.location.origin;
+
+var socket = _socket["default"].connect(server_url + '/clients-communication', {
+  withCredentials: true
+});
 /* 
  * upon receiving a message 
  */

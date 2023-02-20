@@ -5,7 +5,12 @@
 const express 			= require('express');
 const app 				= express();
 const server 			= require('http').Server(app);
-const io 				= require('socket.io')(server);
+const io 				= require('socket.io')(server, {
+	cors: {
+		origin: "https://e-radio-fk.onrender.com",
+		methods: ["GET", "POST"]
+	}
+});
 const ss 				= require('socket.io-stream');
 const bodyParser 		= require('body-parser');
 const firebase 			= require('firebase/app');
@@ -182,7 +187,9 @@ io.of("/console-communication").on("connection", (socket) => {
 			socket.on('client-requests-mixed-stream', () => {
 
 				// TODO: this will be selected using the playlist in the future
-				file1 = fs.createReadStream(__dirname + '/song2.wav');
+				// file1 = fs.createReadStream(__dirname + '/song2.wav');
+				// TODO: fix for render.com! A good fix would be to stop using wav and switch to mp3!
+				file1 = ss.createStream();
 
 				// create our mixer class & get output stream
 				radio_mixer = new RadioMixer(microphone_stream, file1);

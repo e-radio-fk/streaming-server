@@ -6,10 +6,13 @@ function PCMPlayer(t){this.init(t)}PCMPlayer.prototype.init=function(t){this.opt
 
 try
 {
+    // get current url (the server is running on same domain!)
+    const server_url = window.location.origin;
+
     /*
      *  Establish connection with the server
      */
-    const socket = io.connect('/clients-communication');
+    const socket = io.connect(server_url + '/clients-communication', { withCredentials: true });
 
     var mixed_stream;
     

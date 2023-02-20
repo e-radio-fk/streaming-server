@@ -14540,10 +14540,15 @@ PCMPlayer.prototype.init = function (t) {
 };
 
 try {
+  // get current url (the server is running on same domain!)
+  var server_url = window.location.origin;
   /*
    *  Establish connection with the server
    */
-  var socket = _socket["default"].connect('/clients-communication');
+
+  var socket = _socket["default"].connect(server_url + '/clients-communication', {
+    withCredentials: true
+  });
 
   var mixed_stream; // add handler for getting mixed-stream
 

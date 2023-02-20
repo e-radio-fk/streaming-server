@@ -7,7 +7,9 @@ var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-li
 // Communications
 //
 
-const socket = io.connect('/clients-communication');
+const server_url = window.location.origin;
+
+const socket = io.connect(server_url + '/clients-communication', { withCredentials: true });
 
 /* 
  * upon receiving a message 

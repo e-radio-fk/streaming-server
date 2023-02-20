@@ -5812,7 +5812,11 @@ microphoneButton.setAttribute('on', 'no'); //
 // Microphone Capture Code
 //
 
-var socket = io.connect('/console-communication');
+var server_url = window.location.origin;
+var socket = io.connect(server_url + '/console-communication', {
+  withCredentials: true
+});
+console.log(server_url + '/console-communication');
 /* check if getUserMedia is available */
 
 if (!navigator.mediaDevices.getUserMedia) show_error('Error: Unsupported feature getUserMedia()'); // our microphone stream; this will be sent over to the server containing manipulated data from audioStream
