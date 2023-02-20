@@ -4,7 +4,7 @@
   "description": "server side of e_radio_fk",
   "main": "index.js",
   "scripts": {
-    "build": "./less.sh && gulp bundle",
+    "build": "git config --global url.\"https://github\".insteadOf \"ssh://git@github\" && npm install && ./less.sh && gulp bundle",
     "start": "node src/index.js"
   },
   "author": "",
