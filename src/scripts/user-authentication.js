@@ -27,17 +27,18 @@ function sign_in(event)
 
     // TODO: sanitisation checks
 
+
     const option = {
         headers:{
-            "Content-Type": "application/x-www-form-urlencoded"
+            "Content-Type": "application/json"
         },
         method: "POST",
-        body: new URLSearchParams({
+        method: "POST",
+        body: JSON.stringify({
             username: username,
             password: password
-        }).toString(),        
-        redirect: "follow"
-    }
+        })
+    };
 
     // fetching data
     fetch('/signin', option).then(res => {
