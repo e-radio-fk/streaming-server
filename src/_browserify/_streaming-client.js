@@ -21,6 +21,8 @@ try
 
         // TODO: add a timeout here.  if we get no reply, schedule a retry...
 
+        alert('got the mixed_stream!');
+
         mixed_stream = _mixed_stream;
     });
 

@@ -187,7 +187,7 @@ io.of("/console-communication").on("connection", (socket) => {
 			socket.on('client-requests-mixed-stream', () => {
 
 				// TODO: this will be selected using the playlist in the future
-				file1 = fs.createReadStream(__dirname + '/song2.wav');
+				file1 = fs.createReadStream(__dirname + '/song1.wav');
 				// TODO: fix for render.com! A good fix would be to stop using wav and switch to mp3!
 				// file1 = ss.createStream();
 
