@@ -1,3 +1,5 @@
+var database;
+
 function initialise_console_page()
 {
     /*
@@ -61,7 +63,7 @@ function initialise_console_page()
      */
     try
     {
-        var database = firebase.database();
+        database = firebase.database();
 
         /*
          * Fill contents of the start-podcast dropdown
