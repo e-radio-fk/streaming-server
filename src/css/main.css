@@ -3,7 +3,7 @@
   font-family: 'Poppins';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/poppins/v15/pxiEyp8kv8JHgFVrJJfedw.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/poppins/v20/pxiEyp8kv8JHgFVrJJfedw.ttf) format('truetype');
 }
 .no-select {
   /* disable selecting text */
@@ -75,7 +75,8 @@ small,
 .text_small {
   font-size: 0.8rem;
 }
-button {
+button,
+#login-box input[type=submit] {
   height: 42px;
   border-radius: 4px;
   border-style: none;
@@ -523,10 +524,9 @@ input:checked + .slider:before {
 #login-box button {
   width: 290px;
 }
-#login-box .textbox {
+#login-box input {
   height: 35px;
   width: 290px;
-  color: seashell;
   text-indent: 23px;
 }
 #login-box span,
@@ -623,7 +623,8 @@ body {
 h1 {
   color: #FFFFFF;
 }
-button {
+button,
+#login-box input[type=submit] {
   background-color: #FFC145;
 }
 #login-box .textbox::placeholder {
@@ -729,13 +730,13 @@ button {
   font-family: 'Changa One';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/changaone/v13/xfu00W3wXn3QLUJXhzq42AHivA.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/changaone/v18/xfu00W3wXn3QLUJXhzq42AHivA.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Imprima';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/imprima/v14/VEMxRoN7sY3yuy-7yoKNzA.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/imprima/v16/VEMxRoN7sY3yuy-7yoKNzA.ttf) format('truetype');
 }
 #live-chat-section {
   width: 100%;

@@ -15,12 +15,13 @@
     width: 290px;           // -10px of the box's width
 }
 
-#login-box .textbox {
+#login-box input {
     height: 35px;
     width: 290px;           // -10px of the box's width
-    color: seashell;
     text-indent: 23px;
 }
+
+#login-box input[type=submit]:extend(button) {}
 
 #login-box span,
 #signup-box span {
