@@ -17,31 +17,6 @@ function initialise_console_page()
     
     /* set user photo */
     userPhoto.src = photoURL;
-    
-    /* initialisation has finished; show the UI */
-    document.getElementsByTagName('header')[0].style.visibility = 'visible';
-    document.getElementsByTagName('body')[0].style.visibility = 'visible';
-
-    /* dropdowns */
-    var dropdown = document.getElementsByClassName('dropdown');
-    for (const dropdownElement of dropdown)
-    {
-        dropdownElement.onclick = () => {
-            var dropdown_content = dropdownElement.getElementsByClassName('dropdown-content')[0];
-
-            var clicked = dropdownElement.getAttribute('clicked');
-            if (clicked == 'yes')
-            {
-                dropdownElement.setAttribute('clicked', 'no');
-                dropdown_content.style.display = 'none';
-            }
-            else
-            {
-                dropdownElement.setAttribute('clicked', 'yes');
-                dropdown_content.style.display = 'block';
-            }
-        };
-    }
 
     /* 
      * Modals Initialisation & Configuration 
