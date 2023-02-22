@@ -532,6 +532,9 @@ input:checked + .slider:before {
   width: 290px;
   text-indent: 23px;
 }
+#login-box hr {
+  color: sandybrown;
+}
 #login-box span,
 #signup-box span {
   font-size: 23px;
