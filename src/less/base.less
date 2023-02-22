@@ -191,6 +191,8 @@ br {
   border: none;
   cursor: pointer;
 
+  z-index: 1000;
+
   .no-select();
 }
 
@@ -208,6 +210,11 @@ br {
   float: right;
 
   .no-select();
+}
+
+// NOTE: This is definitely needed: every element inside under the dropdown must be in the same level!
+.dropdown * {
+  z-index: 1000;
 }
 
 .now-playing-banner .dropdown {
@@ -228,8 +235,6 @@ br {
   min-width: 160px;
   right: 0;
   top: 60px;
-
-  z-index: 100;
 
   cursor: hand;
 }

@@ -39,7 +39,7 @@
     <!-- Start Podcast Dropdown -->
     <h3>Podcast</h3>
 
-    <button onclick="show_podcast_planner()" data-toggle="modal" data-target="#schedule-podcast-modal">Plan Podcast</button>
+    <button data-toggle="modal" data-target="#schedule-podcast-modal">Plan Podcast</button>
 
     <!-- Schedule Podcast Modal -->
     <div class="modal fade" id="schedule-podcast-modal" tabindex="-1" role="dialog" aria-labelledby="schedule-podcast-modal-label" aria-hidden="true">
@@ -58,11 +58,11 @@
                     <!-- Time Picker -->
                     <div style="left: 10px; position: absolute;">
                         <label for="time">Έναρξη</label>
-                        <input type="time" name="time" class="datepicker" id="podcast-start-time"/>    
+                        <input type="time" name="time" class="timepicker" id="podcast-start-time"/>
                     </div>
                     <div style="right: 10px; position: absolute;">
                         <label for="time">Λήξη</label>
-                        <input type="time" name="time" class="datepicker" id="podcast-end-time"/>
+                        <input type="time" name="time" class="timepicker" id="podcast-end-time"/>
                     </div>
                 </div>
 
@@ -240,13 +240,13 @@
     <!-- Playlist Handler -->
     <script src="scripts/lib/playlistHandler.js"></script>
 
+    <!-- Timepicker -->
+    <script src="scripts/timepicker.js"></script>
+
     <!-- Console Functionality -->
     <script src="scripts/console-microphone.js"></script>
     <script src="scripts/console-playlist.js"></script>
     <script src="scripts/console-music.js"></script>
     <script src="scripts/console.js"></script>
-
-    <!-- Timepicker -->
-    <script src="scripts/timepicker.js"></script>
 </body>
 </html>
