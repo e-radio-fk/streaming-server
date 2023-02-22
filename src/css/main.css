@@ -976,7 +976,6 @@ yt-live-chat-legacy-paid-message-renderer {
 }
 .podcast-news-table {
   width: 100%;
-  overflow-y: scroll;
 }
 .podcast-news-table td {
   width: 100%;
