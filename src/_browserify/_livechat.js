@@ -9,12 +9,12 @@ var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-li
 
 const server_url = window.location.origin;
 
-const socket = io.connect(server_url + '/clients-communication', { withCredentials: true });
+const socket = io.connect(server_url + '/livechat-communication', { withCredentials: true });
 
 /* 
  * upon receiving a message 
  */
-socket.on("message", (...args) => {
+socket.on("server-sends-message", (...args) => {
 
     /* 
         a message must always have the form: 

@@ -157,6 +157,14 @@ app.get('*', (req, res) => {
 
 console.log('[1] Enabling stream.io...');
 
+const livechat_communication = io.of("/livechat-communication");
+
+livechat_communication.on("connection", (socket) => {
+	socket.on('client-message', (...args) => {
+		livechat_communication.emit('server-sends-message', args[0], args[1], args[2]);
+	});
+});
+
 io.of("/console-communication").on("connection", (socket) => {
 
 	console.log('[2] Connection with console');
@@ -170,7 +178,7 @@ io.of("/console-communication").on("connection", (socket) => {
 		microphone_stream = _microphone_stream;
 
 		microphone_stream.on('data', (data) => {
-			console.log('got data!');
+			// console.log('got data!');
 		});
 
 		callback({});	// acknowledgement
@@ -206,11 +214,5 @@ io.of("/console-communication").on("connection", (socket) => {
 		});
 	});
 });
-
-
-// TODO: fix this again
-// socket.on('client-message', (...args) => {
-// 	socket.emit('message', args[0], args[1], args[2]);
-// });
 
 server.listen(3000);

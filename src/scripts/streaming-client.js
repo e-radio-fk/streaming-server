@@ -14554,6 +14554,7 @@ try {
 
   (0, _socket2["default"])(socket).on('server-sends-mixed-stream', function (_mixed_stream) {
     // TODO: add a timeout here.  if we get no reply, schedule a retry...
+    alert('got the mixed_stream!');
     mixed_stream = _mixed_stream;
   }); // request mixed-stream
 

@@ -7003,7 +7003,7 @@ var livechat_messages_list = document.getElementsByTagName('yt-live-chat-item-li
 
 var server_url = window.location.origin;
 
-var socket = _socket["default"].connect(server_url + '/clients-communication', {
+var socket = _socket["default"].connect(server_url + '/livechat-communication', {
   withCredentials: true
 });
 /* 
@@ -7011,7 +7011,7 @@ var socket = _socket["default"].connect(server_url + '/clients-communication', {
  */
 
 
-socket.on("message", function () {
+socket.on("server-sends-message", function () {
   /* 
       a message must always have the form: 
       arg[0] = message, 
