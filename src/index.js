@@ -45,7 +45,7 @@ var radio_mixer = null;
 
 var file1 = null;
 
-var _listening_for_clients = true;	// we can now start listening for clients!
+var _listening_for_clients = false;	// we can now start listening for clients!
 
 /* project root */
 app.use(express.static(__project_root));
