@@ -45,6 +45,8 @@ var radio_mixer = null;
 
 var file1 = null;
 
+var _listening_for_clients = true;	// we can now start listening for clients!
+
 /* project root */
 app.use(express.static(__project_root));
 
@@ -187,31 +189,41 @@ io.of("/console-communication").on("connection", (socket) => {
 			microphone_stream.push(buffer);
 		});
 
-		// now we can start communications with clients!
-		io.of("/clients-communication").on("connection", (socket) => {
+		// we can now start listening for clients!
+		_listening_for_clients = true;
+	});
+});
 
-			console.log('[3] Connection with client');
+// now we can start communications with clients!
+io.of("/clients-communication").on("connection", (socket) => {
 
-			socket.on('client-requests-mixed-stream', () => {
+	if (!_listening_for_clients)
+	{
+		socket.emit('server-sends-not-ready-yet');
+		socket.disconnect();
+		return;
+	}
 
-				// TODO: this will be selected using the playlist in the future
-				file1 = fs.createReadStream(__dirname + '/song1.wav');
-				// TODO: fix for render.com! A good fix would be to stop using wav and switch to mp3!
-				// file1 = ss.createStream();
+	console.log('[3] Connection with client');
 
-				// create our mixer class & get output stream
-				radio_mixer = new RadioMixer(microphone_stream, file1);
-				// radio_mixer = new RadioMixer(microphone_stream, ss.createStream());
+	socket.on('client-requests-mixed-stream', () => {
 
-				// get mixedStream
-				mixedStream = radio_mixer.outputStream();
+		// TODO: this will be selected using the playlist in the future
+		file1 = fs.createReadStream(__dirname + '/song1.wav');
+		// TODO: fix for render.com! A good fix would be to stop using wav and switch to mp3!
+		// file1 = ss.createStream();
 
-				console.log('[3] Client requests mixed_stream');
+		// create our mixer class & get output stream
+		radio_mixer = new RadioMixer(microphone_stream, file1);
+		// radio_mixer = new RadioMixer(microphone_stream, ss.createStream());
 
-				// send the output stream (mixed stream) to all clients that are asking for it!
-				ss(socket).emit('server-sends-mixed-stream', mixedStream);
-			});
-		});
+		// get mixedStream
+		mixedStream = radio_mixer.outputStream();
+
+		console.log('[3] Client requests mixed_stream');
+
+		// send the output stream (mixed stream) to all clients that are asking for it!
+		ss(socket).emit('server-sends-mixed-stream', mixedStream);
 	});
 });
 
