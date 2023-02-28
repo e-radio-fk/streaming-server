@@ -14538,72 +14538,87 @@ PCMPlayer.prototype.init = function (t) {
     this.startTime < this.audioCtx.currentTime && (this.startTime = this.audioCtx.currentTime), console.log("start vs current " + this.startTime + " vs " + this.audioCtx.currentTime + " duration: " + o.duration), s.buffer = o, s.connect(this.gainNode), s.start(this.startTime), this.startTime += o.duration, this.samples = new Float32Array();
   }
 };
+var check_server_interval;
+var _server_is_ready = false; // get current url (the server is running on same domain!)
 
-try {
-  // get current url (the server is running on same domain!)
-  var server_url = window.location.origin;
-  /*
-   *  Establish connection with the server
-   */
+var server_url = window.location.origin;
+/*
+ *  Establish connection with the server
+ */
 
-  var socket = _socket["default"].connect(server_url + '/clients-communication', {
-    withCredentials: true
-  });
+var socket = _socket["default"].connect(server_url + '/clients-communication', {
+  withCredentials: true
+});
 
-  var mixed_stream;
-  socket.on('server-sends-not-ready-yet', function () {
-    alert('Server is not ready! Please retry in a fair bit!');
-    throw new Error("server not ready!");
-  }); // add handler for getting mixed-stream
-
-  (0, _socket2["default"])(socket).on('server-sends-mixed-stream', function (_mixed_stream) {
-    // TODO: add a timeout here.  if we get no reply, schedule a retry...
-    alert('got the mixed_stream!');
-    mixed_stream = _mixed_stream;
-  }); // request mixed-stream
-
-  socket.emit('client-requests-mixed-stream'); //
-  // play button
-  //
-
-  var play_button = document.getElementsByClassName('play-button')[0];
-
-  if (!play_button) {
-    throw new Error('Error getting play-button element!');
+check_server_interval = setInterval(function () {
+  if (_server_is_ready) {
+    clearInterval(check_server_interval);
+    run_client();
   }
+}, 500);
 
-  play_button.setAttribute('playing', 'no');
-  var player = new PCMPlayer({
-    encoding: '16bitInt',
-    channels: 2,
-    sampleRate: 48000,
-    flushingTime: 2000
-  }); //
-  // attach a handler to the play-button
-  //
+function run_client() {
+  try {
+    var mixed_stream; // add handler for getting mixed-stream
 
-  /*
-   * upon receiving microphone data chunks we must play it (but only if the play-button is ON)
-   * Warning: Browsers force us to have this handler inside the event-listener because of Autoplay
-  */
+    (0, _socket2["default"])(socket).on('server-sends-mixed-stream', function (_mixed_stream) {
+      // TODO: add a timeout here.  if we get no reply, schedule a retry...
+      alert('got the mixed_stream!');
+      mixed_stream = _mixed_stream;
+    }); // request mixed-stream
 
-  play_button.addEventListener('click', function (event) {
-    if (play_button.getAttribute('playing') == 'yes') {
-      play_button.setAttribute('playing', 'no');
-      play_button.style.backgroundImage = "url('../img/play.png')"; // TODO: implement stopping sound!
+    socket.emit('client-requests-mixed-stream'); //
+    // play button
+    //
 
-      socket.removeAllListeners();
-    } else if (play_button.getAttribute('playing') == 'no') {
-      play_button.setAttribute('playing', 'yes');
-      play_button.style.backgroundImage = "url('../img/pause.png')";
-      mixed_stream.on('data', function (pcm_data) {
-        // Now feed PCM data into player getting from websocket or ajax whatever the transport you are using.
-        player.feed(pcm_data);
-      });
+    var play_button = document.getElementsByClassName('play-button')[0];
+
+    if (!play_button) {
+      throw new Error('Error getting play-button element!');
     }
-  });
-} catch (e) {
-  console.error(e);
-}
+
+    play_button.setAttribute('playing', 'no');
+    var player = new PCMPlayer({
+      encoding: '16bitInt',
+      channels: 2,
+      sampleRate: 48000,
+      flushingTime: 2000
+    }); //
+    // attach a handler to the play-button
+    //
+
+    /*
+        * upon receiving microphone data chunks we must play it (but only if the play-button is ON)
+        * Warning: Browsers force us to have this handler inside the event-listener because of Autoplay
+    */
+
+    play_button.addEventListener('click', function (event) {
+      if (play_button.getAttribute('playing') == 'yes') {
+        play_button.setAttribute('playing', 'no');
+        play_button.style.backgroundImage = "url('../img/play.png')"; // TODO: implement stopping sound!
+
+        socket.removeAllListeners();
+      } else if (play_button.getAttribute('playing') == 'no') {
+        play_button.setAttribute('playing', 'yes');
+        play_button.style.backgroundImage = "url('../img/pause.png')";
+        mixed_stream.on('data', function (pcm_data) {
+          // Now feed PCM data into player getting from websocket or ajax whatever the transport you are using.
+          player.feed(pcm_data);
+        });
+      }
+    });
+  } catch (e) {
+    console.error(e);
+  }
+} //
+// Socket Events
+//
+
+
+socket.on('server-sends-ready', function () {
+  _server_is_ready = true;
+});
+socket.on('disconnect', function () {// ...
+});
 
 },{"@babel/runtime/helpers/interopRequireDefault":1,"socket.io-client":51,"socket.io-stream":59}]},{},[92]);

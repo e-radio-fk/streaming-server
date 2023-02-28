@@ -204,6 +204,9 @@ io.of("/clients-communication").on("connection", (socket) => {
 		return;
 	}
 
+	// tell all clients they can start requesting for mixed_stream
+	socket.emit('server-sends-ready');
+
 	console.log('[3] Connection with client');
 
 	socket.on('client-requests-mixed-stream', () => {
