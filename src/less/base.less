@@ -141,7 +141,54 @@ br {
 .fa-instagram {
   background: #ee556e;
   color: white;
-} 
+}
+
+// ------------------------------
+//        Navigation Menu Bar
+// ------------------------------
+
+.nav-menu {
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: fit-content;
+
+  border-radius: 5%;
+
+  background-color: @background-color-dark;
+
+  .no-select();
+}
+
+.nav-menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+
+  .no-select();
+}
+
+.nav-menu li {
+  float: left;
+
+  .no-select();
+}
+
+.nav-menu li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+
+  .no-select();
+}
+
+  /* Change the link color to #111 (black) on hover */
+.nav-menu li a:hover {
+  background-color: #111;
+}
 
 /*********************
  * ALERTS            *
