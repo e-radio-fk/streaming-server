@@ -262,3 +262,31 @@ yt-live-chat-banner-manager {
 yt-live-chat-text-message-renderer, yt-live-chat-legacy-paid-message-renderer { 
   animation: none !important; 
 }
+
+// -----------------------------------
+// Open Livechat Button
+//  (like a dropdown)
+// -----------------------------------
+
+#open-chatbox-button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: aliceblue;
+  border-width: 3px;
+  float: right;
+  bottom: 0;
+
+  .no-select();
+}
+
+#open-chatbox-button img {
+  width: 25px;
+  height: 25px;
+  position: relative;
+  margin: 0;
+  left: 25%;
+  top: 25%;
+
+  .no-select();
+}
