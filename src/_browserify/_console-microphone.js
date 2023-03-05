@@ -1,5 +1,7 @@
-const getUserMedia      = require('./lib/_get-user-media-promise');
-const MicrophoneStream  = require('./lib/_microphone-stream').default;
+// const getUserMedia      = require('./lib/_get-user-media-promise');
+// const MicrophoneStream  = require('./lib/_microphone-stream').default;
+
+const MicrophoneStream = require('microphone-stream').default;
 
 const micStream = new MicrophoneStream();
 
