@@ -274,7 +274,8 @@ yt-live-chat-text-message-renderer, yt-live-chat-legacy-paid-message-renderer {
   border-radius: 50%;
   background-color: aliceblue;
   border-width: 3px;
-  float: right;
+  position: absolute;
+  right: 5px;
   bottom: 0;
 
   .no-select();
@@ -289,4 +290,10 @@ yt-live-chat-text-message-renderer, yt-live-chat-legacy-paid-message-renderer {
   top: 25%;
 
   .no-select();
+}
+
+#open-chatbox-button:hover {
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
 }

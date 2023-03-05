@@ -1053,7 +1053,8 @@ yt-live-chat-legacy-paid-message-renderer {
   border-radius: 50%;
   background-color: aliceblue;
   border-width: 3px;
-  float: right;
+  position: absolute;
+  right: 5px;
   bottom: 0;
   /* disable selecting text */
   -webkit-touch-callout: none;
@@ -1091,6 +1092,11 @@ yt-live-chat-legacy-paid-message-renderer {
   user-select: none;
   /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
+}
+#open-chatbox-button:hover {
+  border-style: solid;
+  border-width: 1px;
+  border-color: black;
 }
 .podcast-news-table-space {
   left: 0;
