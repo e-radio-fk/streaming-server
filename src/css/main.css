@@ -156,7 +156,6 @@ br {
 }
 .intro {
   text-align: center;
-  padding-top: 100px;
 }
 /*
  * Awesome Fonts
@@ -311,7 +310,7 @@ br {
   box-sizing: initial;
   border: none;
   cursor: pointer;
-  z-index: 1000;
+  z-index: 999;
   /* disable selecting text */
   -webkit-touch-callout: none;
   /* iOS Safari */
@@ -338,6 +337,7 @@ br {
 .dropdown {
   position: relative;
   float: right;
+  z-index: 1000;
   /* disable selecting text */
   -webkit-touch-callout: none;
   /* iOS Safari */
