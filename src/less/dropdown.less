@@ -1,0 +1,93 @@
+/**********************
+ *      Dropdown      *
+ **********************/
+
+.dropbtn {
+    background-size: contain;
+    background-repeat: no-repeat;
+    box-sizing: initial;    // TODO: find a way to have box-sizing: border-box;
+    border: none;
+    cursor: pointer;
+  
+    z-index: 999;
+  
+    .no-select();
+}
+  
+.now-playing-banner .dropbtn {
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: 10px;
+    font-size: 16px;
+    height: 40px;
+    width: 40px;
+}
+  
+.dropdown {
+    position: relative;
+    float: right;
+  
+    z-index: 1000;
+  
+    .no-select();
+}
+  
+  // NOTE: This is definitely needed: every element inside under the dropdown must be in the same level!
+.dropdown * {
+    z-index: 1000;
+}
+  
+.now-playing-banner .dropdown {
+    height: 60px;
+}
+  
+.dropdown:hover {
+    .highlight();
+}
+  
+.dropdown-content {
+    backdrop-filter: blur(10px);
+    border-radius: 7px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    right: 0;
+    top: 60px;
+  
+    cursor: hand;
+}
+  
+.dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  
+    .no-select();
+}
+  
+.dropdown-content-button:hover {
+    .highlight();
+}
+  
+#console-sign-out-button a:hover {
+    text-decoration: none;
+}
+  
+/**************************
+ * Dropup (like dropdown) *
+ **************************/
+
+.dropup {
+    position: relative; 
+    display: inline-block;
+}
+
+.dropup-content {
+    display: none;
+    position: absolute;
+    bottom: 100px;
+    min-width: 100px;
+    right: 100px;
+}

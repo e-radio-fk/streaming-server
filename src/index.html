@@ -30,7 +30,7 @@
 
 		<!-- User Login Dropdwon -->
 		<div class="dropdown" id="login-dropdown">
-            <div class="dropbtn" id="user-login-dropdown-back-button" onclick="toggle_login_dropdown()"></div>
+            <div class="dropbtn" id="user-login-dropdown-back-button" onclick="toggle_dropdown_with_ID('login-dropdown');"></div>
 
 			<div class="dropdown-content">
 				<div id="login-box">
@@ -60,20 +60,38 @@
 
 		<!-- This is for the login dropdown -->
 		<script>
-			var login_button = document.getElementById('user-login-dropdown-back-button');
-			var dropdown_content = document.getElementsByClassName('dropdown-content')[0];
-
-			function toggle_login_dropdown()
+			function toggle_dropdown_with_ID(id)
 			{
-				var clicked = login_button.getAttribute('clicked');
+				var dropdown = document.getElementById(id);
+				var dropdown_content = dropdown.getElementsByClassName('dropdown-content')[0];
+
+				var clicked = dropdown.getAttribute('clicked');
 				if (clicked == 'yes')
 				{
-					login_button.setAttribute('clicked', 'no');
+					dropdown.setAttribute('clicked', 'no');
 					dropdown_content.style.display = 'none';
 				}
 				else
 				{
-					login_button.setAttribute('clicked', 'yes');
+					dropdown.setAttribute('clicked', 'yes');
+					dropdown_content.style.display = 'block';
+				}
+			}
+
+			function toggle_dropup_with_ID(id)
+			{
+				var dropdown = document.getElementById(id);
+				var dropdown_content = dropdown.getElementsByClassName('dropup-content')[0];
+
+				var clicked = dropdown.getAttribute('clicked');
+				if (clicked == 'yes')
+				{
+					dropdown.setAttribute('clicked', 'no');
+					dropdown_content.style.display = 'none';
+				}
+				else
+				{
+					dropdown.setAttribute('clicked', 'yes');
 					dropdown_content.style.display = 'block';
 				}
 			}
@@ -120,22 +138,25 @@
 
 
 	<div style="display: flex;">
-		<!-- Chat space -->
-		<!-- <div class="livechat" style="right: 0; width: 100%;">
-			<div class="live-chat-container">
-				<yt-live-chat-renderer>
-					<yt-live-chat-item-list-renderer>
-					</yt-live-chat-item-list-renderer>
-				</yt-live-chat-renderer>
-			
-			</div>
-			<input type="text" class="yt-live-chat-message-box" id="live-chat-message-box">
-			<script src="scripts/livechat.js"></script>	
-		</div> -->
+
 	</div>
 
-	<div id="open-chatbox-button">
+	<div id="open-chatbox-button" class="dropup" onclick="toggle_dropup_with_ID('open-chatbox-button');">
 		<img src="./img/chat.png">
+
+		<div class="dropup-content">
+			<!-- Chat space -->
+			<div class="livechat" style="right: 0; width: 100%;">
+				<div class="live-chat-container">
+					<yt-live-chat-renderer>
+						<yt-live-chat-item-list-renderer>
+						</yt-live-chat-item-list-renderer>
+					</yt-live-chat-renderer>
+				</div>
+				<input type="text" class="yt-live-chat-message-box" id="live-chat-message-box">
+				<script src="scripts/livechat.js"></script>	
+			</div>
+		</div>
 	</div>
 
 	<!-- Darkmode -->
