@@ -17,7 +17,7 @@
     display: inline-block;
 }
 
-/* Play button */
+/* Play Button */
 
 .play-button {
     background-repeat: no-repeat;
@@ -37,6 +37,21 @@
 }
 
 .play-button:active {
+    transform: scale(0.95);
+}
+
+/* Sound Button */
+
+.sound-button {
+    .play-button();
+    width: 25px;
+    height: 25px;
+    background-image: url('../img/speaker.png');
+}
+.sound-button:hover {
+    transform: scale(1.25);
+}
+.sound-button:active {
     transform: scale(0.95);
 }
 

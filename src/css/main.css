@@ -546,7 +546,7 @@ input:checked + .slider:before {
   text-align: left;
   display: inline-block;
 }
-/* Play button */
+/* Play Button */
 .play-button {
   background-repeat: no-repeat;
   background-position: center;
@@ -563,6 +563,29 @@ input:checked + .slider:before {
   transform: scale(1.25);
 }
 .play-button:active {
+  transform: scale(0.95);
+}
+/* Sound Button */
+.sound-button {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  box-sizing: initial;
+  padding-left: 15px;
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  opacity: 0.8;
+  background-image: url('../img/play.png');
+  width: 25px;
+  height: 25px;
+  background-image: url('../img/speaker.png');
+}
+.sound-button:hover {
+  transform: scale(1.25);
+}
+.sound-button:active {
   transform: scale(0.95);
 }
 #control-panel-nav-bar {
