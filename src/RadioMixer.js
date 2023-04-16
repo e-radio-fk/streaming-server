@@ -16,7 +16,10 @@ class RadioMixer
 
 		// create a mixer object which does most of the work!
 		this.mixer = new Mixer({
-			channels: 1
+			channels: 2,
+			bitDepth: 16,
+			sampleRate: 44100,
+			clearInterval: 100
 		});
 
 		//
@@ -25,13 +28,13 @@ class RadioMixer
 		this.input0 = this.mixer.input({
 			    channels: 1,
 			    bitDepth: 16,
-			    sampleRate: 500,
+			    sampleRate: 44100,
 		});
 		
 		this.input1 = this.mixer.input({
-			    channels: 1,
+			    channels: 2,
 			    bitDepth: 16,
-			    sampleRate: 500,
+			    sampleRate: 44100,
 		});
 
 		// the output stream

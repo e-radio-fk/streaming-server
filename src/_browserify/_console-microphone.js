@@ -1,7 +1,6 @@
-// const getUserMedia      = require('./lib/_get-user-media-promise');
-// const MicrophoneStream  = require('./lib/_microphone-stream').default;
-
 const MicrophoneStream = require('microphone-stream').default;
+const { Transform } = require('stream');
+const bufferFrom = require('buffer-from');
 
 const micStream = new MicrophoneStream();
 
@@ -27,16 +26,31 @@ if (!navigator.mediaDevices.getUserMedia)
 // our microphone stream; this will be sent over to the server containing manipulated data from audioStream
 var microphone_stream = ss.createStream();
 
+// convert to 16bitInt
+function floatTo16BitPCM(input) {
+    var output = new DataView(new ArrayBuffer(input.length * 2)); // length is in bytes (8-bit), so *2 to get 16-bit length
+    for (var i = 0; i < input.length; i++) {
+        var multiplier = input[i] < 0 ? 0x8000 : 0x7fff; // 16-bit signed range is -32768 to 32767
+        output.setInt16(i * 2, (input[i] * multiplier) | 0, true); // index, value ("| 0" = convert to 32-bit int, round towards 0), littleEndian.
+    }
+    return bufferFrom(output.buffer);
+};
+
+const to16bitPCMTransform = new Transform({
+    transform: (chunk, encoding, done) => {
+        const raw = MicrophoneStream.toRaw(chunk);
+        const result = floatTo16BitPCM(raw);
+        done(null, result)
+    }
+});
+
 /* initialise mic capture capability */
 navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(_audioStream => {
 
     // use this library to pipe to our socket.io-microphone-stream
     micStream.setStream(_audioStream);
-    micStream.pipe(microphone_stream);
-
-    micStream.on('format', (format) => {
-        console.log('got format:', format);
-    });
+    micStream.pipe(to16bitPCMTransform);
+    to16bitPCMTransform.pipe(microphone_stream);
 
     // add handler for mic click
     document.getElementById('console-toggle-microphone').onclick = toggle_mic;

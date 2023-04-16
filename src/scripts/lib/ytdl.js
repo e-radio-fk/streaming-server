@@ -13676,72 +13676,46 @@ exports.checkForUpdates = () => {
 }).call(this)}).call(this,require('_process'))
 },{"../package.json":72,"_process":14,"miniget":13}],72:[function(require,module,exports){
 module.exports={
-  "_args": [
-    [
-      "ytdl-core@4.9.1",
-      "/mnt/c/Users/npyla/Documents/e_radio_fk.streaming.server"
-    ]
+  "name": "ytdl-core",
+  "description": "YouTube video downloader in pure javascript.",
+  "keywords": [
+    "youtube",
+    "video",
+    "download"
   ],
-  "_development": true,
-  "_from": "ytdl-core@4.9.1",
-  "_id": "ytdl-core@4.9.1",
-  "_inBundle": false,
-  "_integrity": "sha512-6Jbp5RDhUEozlaJQAR+l8oV8AHsx3WUXxSyPxzE6wOIAaLql7Hjiy0ZM58wZoyj1YEenlEPjEqcJIjKYKxvHtQ==",
-  "_location": "/ytdl-core",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "version",
-    "registry": true,
-    "raw": "ytdl-core@4.9.1",
-    "name": "ytdl-core",
-    "escapedName": "ytdl-core",
-    "rawSpec": "4.9.1",
-    "saveSpec": null,
-    "fetchSpec": "4.9.1"
+  "version": "4.9.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/fent/node-ytdl-core.git"
   },
-  "_requiredBy": [
-    "#DEV:/",
-    "/ytdl"
-  ],
-  "_resolved": "https://registry.npmjs.org/ytdl-core/-/ytdl-core-4.9.1.tgz",
-  "_spec": "4.9.1",
-  "_where": "/mnt/c/Users/npyla/Documents/e_radio_fk.streaming.server",
-  "author": {
-    "name": "fent",
-    "email": "fentbox@gmail.com",
-    "url": "https://github.com/fent"
-  },
-  "bugs": {
-    "url": "https://github.com/fent/node-ytdl-core/issues"
-  },
+  "author": "fent <fentbox@gmail.com> (https://github.com/fent)",
   "contributors": [
-    {
-      "name": "Tobias Kutscha",
-      "url": "https://github.com/TimeForANinja"
-    },
-    {
-      "name": "Andrew Kelley",
-      "url": "https://github.com/andrewrk"
-    },
-    {
-      "name": "Mauricio Allende",
-      "url": "https://github.com/mallendeo"
-    },
-    {
-      "name": "Rodrigo Altamirano",
-      "url": "https://github.com/raltamirano"
-    },
-    {
-      "name": "Jim Buck",
-      "url": "https://github.com/JimmyBoh"
-    }
+    "Tobias Kutscha (https://github.com/TimeForANinja)",
+    "Andrew Kelley (https://github.com/andrewrk)",
+    "Mauricio Allende (https://github.com/mallendeo)",
+    "Rodrigo Altamirano (https://github.com/raltamirano)",
+    "Jim Buck (https://github.com/JimmyBoh)"
   ],
+  "main": "./lib/index.js",
+  "types": "./typings/index.d.ts",
+  "files": [
+    "lib",
+    "typings"
+  ],
+  "scripts": {
+    "test": "nyc --reporter=lcov --reporter=text-summary npm run test:unit",
+    "test:unit": "mocha --ignore test/irl-test.js test/*-test.js --timeout 4000",
+    "test:irl": "mocha --timeout 16000 test/irl-test.js",
+    "lint": "eslint ./",
+    "lint:fix": "eslint --fix ./",
+    "lint:typings": "tslint typings/index.d.ts",
+    "lint:typings:fix": "tslint --fix typings/index.d.ts"
+  },
   "dependencies": {
     "m3u8stream": "^0.8.3",
     "miniget": "^4.0.0",
     "sax": "^1.1.3"
   },
-  "description": "YouTube video downloader in pure javascript.",
   "devDependencies": {
     "@types/node": "^13.1.0",
     "assert-diff": "^3.0.1",
@@ -13758,34 +13732,7 @@ module.exports={
   "engines": {
     "node": ">=10"
   },
-  "files": [
-    "lib",
-    "typings"
-  ],
-  "homepage": "https://github.com/fent/node-ytdl-core#readme",
-  "keywords": [
-    "youtube",
-    "video",
-    "download"
-  ],
-  "license": "MIT",
-  "main": "./lib/index.js",
-  "name": "ytdl-core",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/fent/node-ytdl-core.git"
-  },
-  "scripts": {
-    "lint": "eslint ./",
-    "lint:fix": "eslint --fix ./",
-    "lint:typings": "tslint typings/index.d.ts",
-    "lint:typings:fix": "tslint --fix typings/index.d.ts",
-    "test": "nyc --reporter=lcov --reporter=text-summary npm run test:unit",
-    "test:irl": "mocha --timeout 16000 test/irl-test.js",
-    "test:unit": "mocha --ignore test/irl-test.js test/*-test.js --timeout 4000"
-  },
-  "types": "./typings/index.d.ts",
-  "version": "4.9.1"
+  "license": "MIT"
 }
 
 },{}],73:[function(require,module,exports){

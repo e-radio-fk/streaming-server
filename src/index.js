@@ -171,6 +171,11 @@ io.of("/console-communication").on("connection", (socket) => {
 
 	console.log('[2] Connection with console');
 
+	socket.on('disconnect', () => {
+		// socket has been disconnected
+		console.log('[-] Disconnected ', socket.id);
+	});
+
 	/* first event our server must receive (communication with the console) */
 	ss(socket).on('console-sends-microphone-stream', (_microphone_stream, callback) => {
 
@@ -207,12 +212,19 @@ io.of("/clients-communication").on("connection", (socket) => {
 	// tell all clients they can start requesting for mixed_stream
 	socket.emit('server-sends-ready');
 
-	console.log('[3] Connection with client');
+	console.log('[3] Connection with client ', socket.id);
+
+	socket.on('disconnect', () => {
+		// socket has been disconnected
+		console.log('[!] Disconnected ', socket.id);
+	});
 
 	socket.on('client-requests-mixed-stream', () => {
 
+		console.log('[3.1] Client ', socket.id, ' requests mixed_stream');
+
 		// TODO: this will be selected using the playlist in the future
-		file1 = fs.createReadStream(__dirname + '/song1.wav');
+		file1 = fs.createReadStream(__dirname + '/16bit_44100_stereo.wav');
 		// TODO: fix for render.com! A good fix would be to stop using wav and switch to mp3!
 		// file1 = ss.createStream();
 
