@@ -21,31 +21,38 @@
 <header style="visibility: hidden;">
     <div class="now-playing-banner" id="now-playing-banner-object">
 		<!-- Play button -->
-		<div class="play-button"></div>
-		<vl style="height: 25%; border-left: 1px solid black; opacity: 0.3; border-top-right-radius: 50%;"></vl>
+		<div class="play-button" id="now-playing-banner-play-button"></div>
+		<vl style="height: 25%; border-left: 1px solid #000000; opacity: 0.3; border-top-right-radius: 50%;"></vl>
 		<div class="sound-button"></div>
 
 		<!-- Banner Text -->
         <p id="now-playing-banner-text"></p>
 
-		<!-- User Login Dropdwon -->
-		<div class="dropdown" id="login-dropdown">
-            <div class="dropbtn" id="user-login-dropdown-back-button" onclick="toggle_dropdown_with_ID('login-dropdown');"></div>
+		<div style="position: relative; float: right;" id="now-playing-banner-rightmost-part">
+			<div class="mic-onoff-icon"></div>
 
-			<div class="dropdown-content">
-				<div id="login-box">
-					<label for="login-form-uname">Username:</label><br>
-					<input type="text" class="textbox" id="login-form-uname" name="login-form-uname"><br>
-					<label for="login-form-passw">Password:</label><br>
-					<input type="password" class="textbox" id="login-form-passw" name="login-form-passw"><br><br>
-					<input type="submit" value="Sign In" onclick="sign_in(event);">
-					<hr>
-					<button>Sign Up</button>
+			<vl style="height: 25%; border-left: 1px solid #000000; opacity: 0.3; border-top-right-radius: 50%;"></vl>	
+	
+			<!-- User Login Dropdwon -->
+			<div class="dropdown" id="login-dropdown">
+				<div class="dropbtn" id="user-login-dropdown-back-button" onclick="toggle_dropdown_with_ID('login-dropdown');"></div>
+	
+				<div class="dropdown-content">
+					<div id="login-box">
+						<label for="login-form-uname">Username:</label><br>
+						<input type="text" class="textbox" id="login-form-uname" name="login-form-uname"><br>
+						<label for="login-form-passw">Password:</label><br>
+						<input type="password" class="textbox" id="login-form-passw" name="login-form-passw"><br><br>
+						<input type="submit" value="Sign In" onclick="sign_in(event);">
+						<hr>
+						<button>Sign Up</button>
+					</div>
 				</div>
-			</div>
+	
+				<script src="scripts/user-authentication.js"></script>
+			</div>	
+		</div>
 
-			<script src="scripts/user-authentication.js"></script>
-        </div>
 
 		<!-- This is for the login dropdown -->
 		<script>

@@ -6,18 +6,19 @@ try
         throw new Error('Failed to get the now-playing cookie!');
     }
 
-    var banner      = document.getElementById('now-playing-banner-object');
-    var banner_text = document.getElementById('now-playing-banner-text');
-    var user_photo  = document.getElementById('user-login-dropdown-back-button');
+    var banner                  = document.getElementById('now-playing-banner-object');
+    var banner_text             = document.getElementById('now-playing-banner-text');
+    var play_button             = document.getElementById('now-playing-banner-play-button');
+    var banner_rightmost_part   = document.getElementById('now-playing-banner-rightmost-part');
 
     banner_text.innerText = original_string;
 
     function get_container_width()
     {
-        // The banner now contains the User Photo; we need to subtract its width!
-        var user_photo_width = user_photo.offsetWidth;
+        // The banner now contains a rightmost part; we need to subtract its width
+        const banner_rightmost_part_width = banner_rightmost_part.offsetWidth;
 
-        return banner.offsetWidth - user_photo_width;
+        return banner.offsetWidth - (banner_rightmost_part_width + play_button.offsetWidth);
     }
 
     function move_banner()
