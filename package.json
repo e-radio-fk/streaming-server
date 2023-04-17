@@ -54,7 +54,6 @@
     "audio-mixer": "^2.1.4",
     "buffer-from": "^1.1.2",
     "microphone-stream": "^6.0.1",
-    "mpg123-decoder": "^0.4.7",
     "node-fetch": "^2.6.7",
     "speaker": "^0.5.4"
   }
