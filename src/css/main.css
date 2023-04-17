@@ -640,6 +640,8 @@ input:checked + .slider:before {
   margin-top: 15px;
   vertical-align: middle;
   opacity: 0.8;
+  border-radius: 20%;
+  background-color: rgba(174, 42, 59, 0.8);
   background-image: url('../img/micOff.png');
 }
 #control-panel-nav-bar {

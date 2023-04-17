@@ -14563,7 +14563,9 @@ function run_client() {
 
     (0, _socket2["default"])(socket).on('server-sends-mixed-stream', function (_mixed_stream) {
       // TODO: add a timeout here.  if we get no reply, schedule a retry...
-      document.getElementsByClassName('mic-onoff-icon')[0].style.backgroundImage = 'url("../img/mic.png")';
+      var mic_icon = document.getElementsByClassName('mic-onoff-icon')[0];
+      mic_icon.style.backgroundColor = 'rgba(68, 112, 83, 0.8)';
+      mic_icon.style.backgroundImage = 'url("../img/mic.png")';
       mixed_stream = _mixed_stream;
     }); // request mixed-stream
 
