@@ -224,13 +224,10 @@ io.of("/clients-communication").on("connection", (socket) => {
 		console.log('[3.1] Client ', socket.id, ' requests mixed_stream');
 
 		// TODO: this will be selected using the playlist in the future
-		file1 = fs.createReadStream(__dirname + '/16bit_44100_stereo.wav');
-		// TODO: fix for render.com! A good fix would be to stop using wav and switch to mp3!
-		// file1 = ss.createStream();
+		file1 = fs.createReadStream(__dirname + '/battle.mp3');
 
 		// create our mixer class & get output stream
 		radio_mixer = new RadioMixer(microphone_stream, file1);
-		// radio_mixer = new RadioMixer(microphone_stream, ss.createStream());
 
 		// get mixedStream
 		mixedStream = radio_mixer.outputStream();

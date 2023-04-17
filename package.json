@@ -53,6 +53,7 @@
   "dependencies": {
     "audio-mixer": "^2.1.4",
     "buffer-from": "^1.1.2",
+    "fluent-ffmpeg": "^2.1.2",
     "microphone-stream": "^6.0.1",
     "node-fetch": "^2.6.7",
     "speaker": "^0.5.4"
