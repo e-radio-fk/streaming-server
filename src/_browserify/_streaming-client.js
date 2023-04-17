@@ -36,7 +36,7 @@ function run_client()
     
             // TODO: add a timeout here.  if we get no reply, schedule a retry...
     
-            alert('got the mixed_stream!');
+            document.getElementsByClassName('mic-onoff-icon')[0].style.backgroundImage = 'url("../img/mic.png")';
     
             mixed_stream = _mixed_stream;
         });

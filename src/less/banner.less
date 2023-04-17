@@ -17,6 +17,12 @@
     display: inline-block;
 }
 
+.now-playing-banner .vl {
+    .no-select();
+    height: 25px;
+    opacity: 0.3;  
+}
+
 /* Play Button */
 
 .play-button {
@@ -53,6 +59,22 @@
 }
 .sound-button:active {
     transform: scale(0.95);
+}
+
+#now-playing-banner-rightmost-part {
+    height: inherit;
+}
+
+.mic-onoff-icon {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    margin-top: 15px;
+    vertical-align: middle;
+    opacity: 0.8;    background-image: url('../img/micOff.png');
 }
 
 // 

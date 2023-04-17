@@ -154,6 +154,13 @@ br {
   /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
 }
+.vl {
+  display: inline-block;
+  vertical-align: middle;
+  border-left: 1px solid #000000;
+  border-top-right-radius: 50%;
+  height: 100%;
+}
 .intro {
   text-align: center;
 }
@@ -560,6 +567,24 @@ input:checked + .slider:before {
   text-align: left;
   display: inline-block;
 }
+.now-playing-banner .vl {
+  /* disable selecting text */
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+  height: 25px;
+  opacity: 0.3;
+}
 /* Play Button */
 .play-button {
   background-repeat: no-repeat;
@@ -601,6 +626,21 @@ input:checked + .slider:before {
 }
 .sound-button:active {
   transform: scale(0.95);
+}
+#now-playing-banner-rightmost-part {
+  height: inherit;
+}
+.mic-onoff-icon {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  margin-top: 15px;
+  vertical-align: middle;
+  opacity: 0.8;
+  background-image: url('../img/micOff.png');
 }
 #control-panel-nav-bar {
   position: fixed;
@@ -863,7 +903,7 @@ button,
   font-family: 'Imprima';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/imprima/v16/VEMxRoN7sY3yuy-7yoKNzA.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/imprima/v18/VEMxRoN7sY3yuy-7yoKNzA.ttf) format('truetype');
 }
 #live-chat-section {
   width: 100%;
