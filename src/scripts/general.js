@@ -2,27 +2,6 @@
  * general scripts used everywhere 
  */
 
-var options = {
-  light: "css/_light.css",
-  dark: "css/_dark.css",
-  checkSystemScheme: true,
-  saveOnToggle: true
-};
-var DarkMode = new DarkMode(options);
-
-var darkmode_toggle_button = document.getElementById('darkmode-toggle-button');
-if (darkmode_toggle_button)
-  darkmode_toggle_button.onclick = toggle_dark_mode;
-
-/**
- * toggle_dark_mode()
- * 
- * Toggles the dark mode of the app
- */
-function toggle_dark_mode() {
-  DarkMode.toggleMode();
-}
-
 /**
  *  show_error(error_message:string, error:whatever)
  *  
