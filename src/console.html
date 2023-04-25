@@ -23,7 +23,7 @@
 </head>
 <header>
     <div class="now-playing-banner" id="control-panel-nav-bar" style="position: relative;">
-        <h4 style="position: absolute;" id="control-panel-nav-bar-title">Console&emsp;version 0.0.0.3</h4>
+        <h4 style="position: absolute;" id="control-panel-nav-bar-title">Console&emsp;version 0.0.0.4</h4>
 
         <div class="dropdown" id="console-user-dropdown" onclick="toggle_dropdown_with_ID('console-user-dropdown');">
             <div class="dropdown-content">
@@ -45,7 +45,7 @@
                 <p>Console</p>
             </div>
             <div class="console-nav-bar-item" onclick="show_section_with_id('podcast-section');">
-                <p>Schedule Podcasts</p>
+                <p>Podcast Planner</p>
             </div>
             <div class="console-nav-bar-item" onclick="show_section_with_id('playlist-section');">
                 <p>Playlist Manager</p>
@@ -98,7 +98,8 @@
 
                 <div class="console-panels" id="console-panels-object" style="display: none;">
                     <div class="console-panels-header">
-                        <h4 style="padding: 0; margin: 0;">Podcast Session (+ Title)</h4>
+                        <!-- ... automatically filled -->
+                        <h4 style="padding: 0; margin: 0;" id="podcast-session-title">(title)</h4>
                     </div>
 
                     <div id="console-panels-bar">
@@ -133,7 +134,7 @@
 
             <div id="podcast-section" style="display: none;">
                 <!-- Start Podcast Dropdown -->
-                <h3>Podcast</h3>
+                <h3 style="margin-top: 0px; margin-bottom: 0;">Podcast Planner</h3>
 
                 <button data-toggle="modal" data-target="#schedule-podcast-modal">Plan Podcast</button>
 
@@ -191,7 +192,7 @@
             </div>
 
             <div id="playlist-section" style="display: none;">
-                <h3>Playlists</h3>
+                <h3 style="margin-top: 0px; margin-bottom: 0;">Playlists</h3>
 
                 <button class="dropdown" id="import-playlist-button"
                     onclick="toggle_dropdown_with_ID('import-playlist-button')"><i class="fa fa-download"
@@ -212,17 +213,17 @@
                     aria-labelledby="import-playlist-modal-label" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <h4>Import from playlist</h4>
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal"><span
                                         aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                <h4 class="modal-title" id="import-playlist-modal-label">Έναρξη Podcast</h4>
+                                <h4 class="modal-title" id="import-playlist-modal-label">Import Playlist</h4>
                             </div>
                             <div class="modal-body">
-                                <textarea name="" id="" cols="30" rows="10"></textarea>
+                                <p style="display: inline-block;">Url</p> 
+                                <input type="text">
                             </div>
                             <div class="modal-footer">
-                                <button id="import-playlist-modal-ok-button" onclick=""></button>
+                                <button id="import-playlist-modal-ok-button" onclick="">Import</button>
                             </div>
                         </div>
                     </div>
@@ -230,9 +231,8 @@
             </div>
 
             <!-- Livechat -->
-            <div class="livechat" style="visibility: visible;">
-                <div class="live-chat-container" id="console-panels-livechat"
-                    style="left: 0; padding: 0; margin: 0; width: 100%">
+            <div class="livechat" style="width: 300px; padding-top: 10px;">
+                <div class="live-chat-container" id="console-panels-livechat" style="width: 300px;">
                     <yt-live-chat-renderer>
                         <yt-live-chat-item-list-renderer>
                         </yt-live-chat-item-list-renderer>

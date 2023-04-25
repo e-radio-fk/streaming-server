@@ -3,6 +3,7 @@
 //
 
 var import_playlist_platform;
+var podcast_title;
 
 // generates random id;
 // from: https://learnersbucket.com/examples/javascript/unique-id-generator-in-javascript/
@@ -100,8 +101,6 @@ function schedule_new_podcast()
 
 function start_podcast(podcast_id)
 {
-    var podcast_title = '';
-
     if (!podcast_id)
     {
         podcast_title = 'Random Podcast';
@@ -118,4 +117,6 @@ function start_podcast(podcast_id)
 function start_podcast_after_soundcheck()
 {
     $('#console-panels-object').css("display", "block");
+    $('#console-start-podcast-button').css('display', 'none');
+    $('#podcast-session-title').html(podcast_title);
 }
