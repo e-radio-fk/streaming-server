@@ -842,7 +842,6 @@ button,
 }
 #console-panels-bar {
   background-color: #74274c;
-  padding: 5px;
   margin: auto;
   position: initial;
   border-radius: initial;
@@ -894,6 +893,45 @@ button,
   transform: rotate(270deg);
   display: inline-block;
   width: 70px;
+}
+#console-grid-container {
+  display: grid;
+  grid-template-columns: 10% auto;
+  padding-top: 10px;
+}
+#console-nav-bar-container {
+  width: 100%;
+  border-right-width: 1px;
+  border-right-color: #74274c;
+  border-right-style: solid;
+  padding-right: 10px;
+}
+.console-nav-bar-item {
+  width: 100%;
+  justify-content: center;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  text-align: center;
+  color: black;
+  background-color: #f4a662;
+}
+.console-nav-bar-item:hover {
+  animation: fadeIn 0.5s linear;
+  animation-fill-mode: forwards;
+  color: black;
+  border-radius: 5px;
+}
+#console-body-container {
+  padding-left: 10px;
+}
+@keyframes fadeIn {
+  0% {
+    background-color: 'none';
+  }
+  100% {
+    background-color: #FFC145;
+  }
 }
 @font-face {
   font-family: 'Changa One';
