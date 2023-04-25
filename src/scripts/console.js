@@ -117,5 +117,5 @@ function start_podcast(podcast_id)
  */
 function start_podcast_after_soundcheck()
 {
-    $('#console-panels-object').css("visibility", "visible");
+    $('#console-panels-object').css("display", "block");
 }
