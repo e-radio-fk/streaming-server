@@ -36,12 +36,7 @@ class RadioMixer
 			sampleRate: 44100,
 			clearInterval: 100
 		});
-
-		// Use the PCM decoder stream like any other Node.js stream
-		pcmDecoder.on('data', (pcmChunk) => {
-			console.log(`Got PCM chunk with length ${pcmChunk.length}`);
-		});
-  
+		
 		//
 		// create 2 inputs
 		//

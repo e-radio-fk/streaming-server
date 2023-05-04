@@ -9381,9 +9381,17 @@ var MicrophoneStream = require('microphone-stream')["default"];
 var _require = require('stream'),
     Transform = _require.Transform;
 
-var bufferFrom = require('buffer-from');
+var floatTo16BitPCM = require('./lib/floatTo16bitPCM')["default"];
 
 var micStream = new MicrophoneStream();
+var to16bitPCMTransform = new Transform({
+  transform: function transform(chunk, encoding, done) {
+    // convert to 16bitInt
+    var raw = MicrophoneStream.toRaw(chunk);
+    var result = floatTo16BitPCM(raw);
+    done(null, result);
+  }
+});
 /* get microphone button handle */
 
 var microphoneButton = document.getElementById('console-toggle-microphone');
@@ -9401,28 +9409,7 @@ console.log(server_url + '/console-communication');
 
 if (!navigator.mediaDevices.getUserMedia) show_error('Error: Unsupported feature getUserMedia()'); // our microphone stream; this will be sent over to the server containing manipulated data from audioStream
 
-var microphone_stream = ss.createStream(); // convert to 16bitInt
-
-function floatTo16BitPCM(input) {
-  var output = new DataView(new ArrayBuffer(input.length * 2)); // length is in bytes (8-bit), so *2 to get 16-bit length
-
-  for (var i = 0; i < input.length; i++) {
-    var multiplier = input[i] < 0 ? 0x8000 : 0x7fff; // 16-bit signed range is -32768 to 32767
-
-    output.setInt16(i * 2, input[i] * multiplier | 0, true); // index, value ("| 0" = convert to 32-bit int, round towards 0), littleEndian.
-  }
-
-  return bufferFrom(output.buffer);
-}
-
-;
-var to16bitPCMTransform = new Transform({
-  transform: function transform(chunk, encoding, done) {
-    var raw = MicrophoneStream.toRaw(chunk);
-    var result = floatTo16BitPCM(raw);
-    done(null, result);
-  }
-});
+var microphone_stream = ss.createStream();
 /* initialise mic capture capability */
 
 navigator.mediaDevices.getUserMedia({
@@ -9434,22 +9421,45 @@ navigator.mediaDevices.getUserMedia({
   micStream.pipe(to16bitPCMTransform);
   to16bitPCMTransform.pipe(microphone_stream); // add handler for mic click
 
-  document.getElementById('console-toggle-microphone').onclick = toggle_mic;
-  ss(socket).emit('console-sends-microphone-stream', microphone_stream, function (answer) {
-    microphoneButton.style.disabled = 'false';
-  });
+  microphoneButton.onclick = function () {
+    if (microphoneButton.getAttribute('on') == 'yes') {
+      microphoneButton.setAttribute('on', 'no');
+      microphoneButton.innerHTML = 'start mic';
+    } else if (microphoneButton.getAttribute('on') == 'no') {
+      ss(socket).emit('console-sends-microphone-stream', microphone_stream, function (answer) {
+        /* if server replies; change button status */
+        microphoneButton.setAttribute('on', 'yes');
+        microphoneButton.innerHTML = 'stop mic';
+      });
+    }
+  };
 })["catch"](function (err) {
   show_error('Error: Microphone access has been denied probably!', err);
 });
 
-function toggle_mic() {
-  if (microphoneButton.getAttribute('on') == 'yes') {
-    microphoneButton.setAttribute('on', 'no');
-    microphoneButton.innerHTML = 'start mic';
-  } else if (microphoneButton.getAttribute('on') == 'no') {
-    microphoneButton.setAttribute('on', 'yes');
-    microphoneButton.innerHTML = 'stop mic';
-  }
-}
+},{"./lib/floatTo16bitPCM":45,"microphone-stream":8,"stream":26}],45:[function(require,module,exports){
+"use strict";
 
-},{"buffer-from":4,"microphone-stream":8,"stream":26}]},{},[44]);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
+var bufferFrom = require('buffer-from');
+
+var floatTo16BitPCM = function floatTo16BitPCM(input) {
+  var output = new DataView(new ArrayBuffer(input.length * 2)); // length is in bytes (8-bit), so *2 to get 16-bit length
+
+  for (var i = 0; i < input.length; i++) {
+    var multiplier = input[i] < 0 ? 0x8000 : 0x7fff; // 16-bit signed range is -32768 to 32767
+
+    output.setInt16(i * 2, input[i] * multiplier | 0, true); // index, value ("| 0" = convert to 32-bit int, round towards 0), littleEndian.
+  }
+
+  return bufferFrom(output.buffer);
+};
+
+var _default = floatTo16BitPCM;
+exports["default"] = _default;
+
+},{"buffer-from":4}]},{},[44]);
