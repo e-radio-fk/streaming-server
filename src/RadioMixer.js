@@ -3,11 +3,14 @@
 //
 'use strict';
 
-const ss    	= require('socket.io-stream');
-const Mixer 	= require('audio-mixer').Mixer;		// node package to support mixing
-const ffmpeg 	= require('fluent-ffmpeg');
-
+const ss    		= require('socket.io-stream');
+const Mixer 		= require('audio-mixer').Mixer;		// node package to support mixing
+const ffmpegPath 	= require('@ffmpeg-installer/ffmpeg').path;
+const ffmpeg 		= require('fluent-ffmpeg');
 const { Transform } = require('stream');
+
+/* set ffmpeg path */
+ffmpeg.setFfmpegPath(ffmpegPath);
 
 const pcmDecoder = new Transform({
 	transform(chunk, encoding, callback) {
