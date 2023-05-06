@@ -18,17 +18,22 @@ if (!socket)
     throw "Failed to load Socket.IO";
 }
 
-/* request list of songs */
-socket.emit('console-requests-songs-list');
-
 socket.on('server-sends-songs-list', (list) => {
     if (!list || list.length === 0)
         return null;
     
     list.forEach((item) => {
-        console.log('name: ', item.name, ' createdAt: ', item.createdAt);
+        const newRow = $("<tr>")
+            .append($("<td>").text(item.name))
+            .append($("<td>").text(item.createdAt));
+  
+        // Append the new row to the table body
+        $(createPlaylistTableId + " tbody").append(newRow);
     });
 });
+
+/* request list of songs */
+socket.emit('console-requests-songs-list');
 
 const downloadYTMP3 = () => {
     const url       = $(urlTextboxId).val();
@@ -55,5 +60,6 @@ const downloadYTMP3 = () => {
         alert('Failed to download. Reason: ' + reason)
     })
 
+    /* request download */
     socket.emit('console-requests-yt-mp3-download', {url, filename});
 }
