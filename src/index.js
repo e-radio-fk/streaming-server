@@ -219,6 +219,14 @@ io.of("/console-communication").on("connection", (socket) => {
 		// start downloading ...
 		MusicManager.downloadFromYT(url, filename, onProgress, onEnd, onError);
 	});
+
+	socket.on('console-requests-songs-list', () => {
+		console.log('sending song list');
+
+		MusicManager.songsList().then((list) => {
+			socket.emit('server-sends-songs-list', list);
+		})
+	})
 });
 
 // now we can start communications with clients!

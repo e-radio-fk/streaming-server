@@ -1,6 +1,8 @@
-const urlTextboxId      = '#console-import-yt-mp3-with-url-textbox';
-const filenameTextboxId = '#console-import-yt-mp3-with-filename-textbox';
-const progressLabelId   = '#console-import-yt-mp3-progress-label';
+const urlTextboxId          = '#console-import-yt-mp3-with-url-textbox';
+const filenameTextboxId     = '#console-import-yt-mp3-with-filename-textbox';
+const progressLabelId       = '#console-import-yt-mp3-progress-label';
+
+const createPlaylistTableId = "#console-create-playlist-table";
 
 // get current url (the server is running on same domain!)
 const server_url = window.location.origin;
@@ -9,6 +11,24 @@ const server_url = window.location.origin;
  *  Establish connection with the server
  */
 const socket = io.connect(server_url + '/console-communication', { withCredentials: true });
+
+if (!socket)
+{
+    show_error('Failed to load Socket.IO');
+    throw "Failed to load Socket.IO";
+}
+
+/* request list of songs */
+socket.emit('console-requests-songs-list');
+
+socket.on('server-sends-songs-list', (list) => {
+    if (!list || list.length === 0)
+        return null;
+    
+    list.forEach((item) => {
+        console.log('name: ', item.name, ' createdAt: ', item.createdAt);
+    });
+});
 
 const downloadYTMP3 = () => {
     const url       = $(urlTextboxId).val();

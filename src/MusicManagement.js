@@ -1,11 +1,15 @@
 'use strict';
 
-const fs = require('fs');
-const ytdl = require('ytdl-core');
+const ytdl      = require('ytdl-core');
+const firebase  = require("firebase");
+const firestore = require("firebase/firestore");
+
+const fs        = require('fs');
 
 class MusicManagement {
-    constructor() {
-
+    constructor()
+    {
+        this.db = firebase.firestore();
     }
 
     downloadFromYT(url, filename, onProgressCallback, onEndCallback, onErrorCallback) {
@@ -41,6 +45,41 @@ class MusicManagement {
 
         // create and start pipe
         audioStream.pipe(file);
+    }
+
+    async songsList()
+    {
+        return new Promise(async (resolve, rejects) => {
+
+            const list = [];
+
+            const snapshot = await this.db.collection('songs').get();
+            if (!snapshot)
+                rejects('Failed to get songs snapshot from Firestore');
+
+            snapshot.forEach((item) => {
+                if (!item || !item.data()) 
+                {
+                    console.log('error: null item or null data!')
+                    rejects('null item or null data!');
+                }
+
+                const data = item.data();
+
+                if (!data.name || !data.createdAt) 
+                {
+                    console.log('error: null name or null createdAt!')
+                    rejects('null name or null createdAt!')
+                }
+
+                list.push({
+                    name:       data.name,
+                    createdAt:  data.createdAt
+                });
+            });
+
+            resolve(list);
+        });
     }
 }
 
