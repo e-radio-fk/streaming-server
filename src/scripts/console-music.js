@@ -1,45 +1,39 @@
-// socket: created inside console-microphone.js and used here!
+const urlTextboxId      = '#console-import-yt-mp3-with-url-textbox';
+const filenameTextboxId = '#console-import-yt-mp3-with-filename-textbox';
+const progressLabelId   = '#console-import-yt-mp3-progress-label';
 
-/* toggle music button */
-var toggleMusicButton = document.getElementById('toggle-music-button');
-toggleMusicButton.setAttribute('on', 'no');
+// get current url (the server is running on same domain!)
+const server_url = window.location.origin;
 
-const musicAudioPlayback = new Audio();
+/*
+ *  Establish connection with the server
+ */
+const socket = io.connect(server_url + '/console-communication', { withCredentials: true });
 
-function startMusic()
-{
-    var song = "https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba.mp3";
+const downloadYTMP3 = () => {
+    const url       = $(urlTextboxId).val();
+    const filename  = $(filenameTextboxId).val();
+    const progress  = $(progressLabelId);
 
-    musicAudioPlayback.src = song;
-    musicAudioPlayback.volume = 0;  // we do not actually play the song; this is a dummy!
-    musicAudioPlayback.play();
+    console.log('url: ',        url);
+    console.log('filename: ',   filename);
+    console.log('progress: ',   progress);
 
-    socket.emit('MUSIC_TRACK_START_WITH_FILENAME', song);
-    console.log('console: starting song!');
-}
+    if (!url || !filename || !progress)
+        return null;
+    if (url === "" || filename === "")
+        return null;
 
-function stopMusic()
-{
-    socket.emit('MUSIC_TRACK_STOP');
-}
+    socket.on('server-download-mp3-sends-progress', ({downloaded, total}) => {
+        const progressText = Math.round(downloaded / total * 100) + ' %';
+        progress.text(progressText)
+    });
+    socket.on('server-download-mp3-sends-end', () => {
+        alert('end!');
+    });
+    socket.on('server-download-mp3-sends-failure', (reason) => {
+        alert('Failed to download. Reason: ' + reason)
+    })
 
-function toggle_music()
-{
-    if (toggleMusicButton.getAttribute('on') == 'yes')
-    {
-        stopMusic();
-        toggleMusicButton.setAttribute('on', 'no');
-        toggleMusicButton.innerHTML = 'start music';
-    }
-    else if (toggleMusicButton.getAttribute('on') == 'no') 
-    {
-        startMusic();
-        toggleMusicButton.setAttribute('on', 'yes');
-        toggleMusicButton.innerHTML = 'stop music';
-    }
-}
-
-function change_volume(newVolume)
-{
-    socket.emit('MUSIC_TRACK_VOLUME', newVolume);
+    socket.emit('console-requests-yt-mp3-download', {url, filename});
 }

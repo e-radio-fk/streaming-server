@@ -48,14 +48,6 @@ var livechat_config = {
     },
 }
 
-var ytdl_config = {
-    js: {
-        src: './src/_browserify/_ytdl.js',              // Entry point
-        outputDir: './src/scripts/lib',                 // Directory to save bundle to
-        outputFile: 'ytdl.js'                           // Name to use for bundle
-    },
-}
-
 var microphone_stream_config = {
     js: {
         src: './src/_browserify/_console-microphone.js',// Entry point
@@ -65,7 +57,7 @@ var microphone_stream_config = {
 }
 
 // configs array
-var configs = [sirv_config, settings_config, streaming_client_config, livechat_config, ytdl_config, microphone_stream_config]
+var configs = [sirv_config, settings_config, streaming_client_config, livechat_config, microphone_stream_config]
 
 // This method makes it easy to use common bundling options in different tasks
 function bundle (bundler, config) {

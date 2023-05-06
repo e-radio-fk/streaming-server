@@ -20,6 +20,8 @@ const fetch 			= require('node-fetch');
 
 // Mixing Support
 const RadioMixer 		= require('./RadioMixer');
+// Music Management
+const MusicManagement	= require('./MusicManagement');
 const fs 				= require('fs');
 
 const __project_root = __dirname + '/';
@@ -169,6 +171,8 @@ livechat_communication.on("connection", (socket) => {
 
 io.of("/console-communication").on("connection", (socket) => {
 
+	const MusicManager = new MusicManagement();
+
 	console.log('[2] Connection with console');
 
 	socket.on('disconnect', () => {
@@ -196,6 +200,24 @@ io.of("/console-communication").on("connection", (socket) => {
 
 		// we can now start listening for clients!
 		_listening_for_clients = true;
+	});
+
+	//
+	//	Music Management
+	//
+	socket.on('console-requests-yt-mp3-download', ({url, filename}) => {
+		const onProgress = (downloaded, total) => {
+			socket.emit('server-download-mp3-sends-progress', {downloaded, total});
+		}
+		const onEnd = () => {
+			socket.emit('server-download-mp3-sends-end');
+		};
+		const onError = (reason) => {
+			socket.emit('server-download-mp3-sends-failure', reason);
+		}
+
+		// start downloading ...
+		MusicManager.downloadFromYT(url, filename, onProgress, onEnd, onError);
 	});
 });
 

@@ -221,11 +221,19 @@
                                 <h4 class="modal-title" id="import-playlist-modal-label">Import Playlist</h4>
                             </div>
                             <div class="modal-body">
+                                <!-- url -->
                                 <p style="display: inline-block;">Url</p> 
-                                <input type="text">
+                                <input type="text" id="console-import-yt-mp3-with-url-textbox">
+          
+                                <!-- filename -->
+                                <p>filename</p> 
+                                <input type="text" id="console-import-yt-mp3-with-filename-textbox">
+
+                                <!-- progress label -->
+                                <p style="display: inline-block;" id="console-import-yt-mp3-progress-label"></p> 
                             </div>
                             <div class="modal-footer">
-                                <button id="import-playlist-modal-ok-button" onclick="">Import</button>
+                                <button id="import-playlist-modal-ok-button" onclick="downloadYTMP3()">Import</button>
                             </div>
                         </div>
                     </div>
