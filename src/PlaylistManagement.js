@@ -84,4 +84,78 @@ class MusicManagement {
     }
 }
 
-module.exports = MusicManagement;
+/*
+ * Importing and Uploading a playlist from:
+ * - Youtube
+ * - Spotify
+ */
+
+class PlaylistManagement {
+    /**
+     * constructor(forPlaylist: optional)
+     * 
+     * This creates a playlist handler for an already existing
+     *  playlist with name `forPlaylist`.  If ommited, only the
+     *  database is initialised.
+     */
+    constructor(forPlaylist) {
+        this.database = firebase.database();
+        if (!this.database)
+            throw new Error('playlistHandler: database could not be initialised.');
+
+        if (forPlaylist !== undefined)
+        {
+            if (!forPlaylist)
+                throw new Error('playlistHandler: playlist is null');
+
+            this.playlist = forPlaylist;
+        }
+    }
+
+    setPlaylist(playlistName) {
+        if (!playlistName)
+            throw new Error('playlistHandler: cannot set playlist of reference as null');
+        this.playlist = playlistName;
+    }
+
+    /**
+     * getList()
+     * 
+     * (Static Method)
+     * Queries the server and returns a list of all the Playlists saved
+     */
+    static async getList() {
+        var database = firebase.database();
+        if (!database)
+            return null;
+
+        var snapshot = await database.ref().child('/playlists').once('value');
+        if (!snapshot)
+            return null;
+
+        if (snapshot.exists())
+        {
+            var json = snapshot.val();
+            if (!json)
+                return null;
+            return Object.keys(json);
+        }
+        else
+            return null;
+    }
+
+    setPlaylist(playlistName) {
+        if (!playlistName)
+            throw new Error('playlistHandler: error setting playlist of reference!');
+        this.playlist = playlistName;
+    }
+
+    savePlaylist(playlist)
+    {
+        return new Promise((resolve, rejects) => {
+            resolve('success');
+        });
+    }
+}
+
+module.exports = {MusicManagement, PlaylistManagement};

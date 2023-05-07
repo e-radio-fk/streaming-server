@@ -3,6 +3,24 @@
  */
 
 /**
+ *  show_info
+ *  
+ *  takes the header element and adds an info banner
+ */
+function show_info(info_message) {
+  /* create new node */
+  var node = document.createElement('div');
+  /* get header */
+  var header = document.getElementsByTagName('header')[0];
+
+  /* create node's contents */
+  node.innerHTML = '<div class="info-alert">' + info_message + ' <span class="alert-close-button" onclick="this.parentElement.style.display=\'none\';">&times;</span></div>';
+
+  /* add node to header */
+  header.insertBefore(node, header.firstChild);
+}
+
+/**
  *  show_error(error_message:string, error:whatever)
  *  
  *  takes the header element and adds an error banner

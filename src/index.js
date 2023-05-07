@@ -2,27 +2,29 @@
 // This is site's main
 //
 
-const express 			= require('express');
-const app 				= express();
-const server 			= require('http').Server(app);
-const io 				= require('socket.io')(server, {
+const express 				= require('express');
+const app 					= express();
+const server 				= require('http').Server(app);
+const io 					= require('socket.io')(server, {
 	cors: {
 		origin: "https://e-radio-fk.onrender.com",
 		methods: ["GET", "POST"]
 	}
 });
-const ss 				= require('socket.io-stream');
-const bodyParser 		= require('body-parser');
-const firebase 			= require('firebase/app');
-const auth 				= require('firebase/auth');
+const ss 					= require('socket.io-stream');
+const bodyParser 			= require('body-parser');
+const firebase 				= require('firebase/app');
+const auth 					= require('firebase/auth');
 
-const fetch 			= require('node-fetch');
+const fetch 				= require('node-fetch');
 
 // Mixing Support
-const RadioMixer 		= require('./RadioMixer');
+const RadioMixer 			= require('./RadioMixer');
 // Music Management
-const MusicManagement	= require('./MusicManagement');
-const fs 				= require('fs');
+const MusicManagement		= require('./PlaylistManagement').MusicManagement;
+// Playlist Management
+const PlaylistManagement	= require('./PlaylistManagement').PlaylistManagement;
+const fs 					= require('fs');
 
 const __project_root = __dirname + '/';
 
@@ -171,7 +173,8 @@ livechat_communication.on("connection", (socket) => {
 
 io.of("/console-communication").on("connection", (socket) => {
 
-	const MusicManager = new MusicManagement();
+	const MusicManager 		= new MusicManagement();
+	const PlaylistManager 	= new PlaylistManagement();
 
 	console.log('[2] Connection with console');
 
@@ -203,7 +206,7 @@ io.of("/console-communication").on("connection", (socket) => {
 	});
 
 	//
-	//	Music Management
+	//	Music & Playlist Management
 	//
 	socket.on('console-requests-yt-mp3-download', ({url, filename}) => {
 		const onProgress = (downloaded, total) => {
@@ -221,12 +224,18 @@ io.of("/console-communication").on("connection", (socket) => {
 	});
 
 	socket.on('console-requests-songs-list', () => {
-		console.log('sending song list');
-
+		// send song list when ready
 		MusicManager.songsList().then((list) => {
 			socket.emit('server-sends-songs-list', list);
 		})
-	})
+	});
+
+	socket.on('console-requests-create-playlist', (playlist) => {
+		// create a playlist and send back result
+		PlaylistManager.savePlaylist(playlist).then((result) => {
+			socket.emit('server-sends-create-playlist-result', result);
+		});
+	});
 });
 
 // now we can start communications with clients!

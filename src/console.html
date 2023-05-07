@@ -180,6 +180,8 @@
                                 <br>
                                 <br>
 
+                                <!-- <select name="playlists-selection" id="playlists-selection"></select> -->
+
                                 <!-- Add font awesome icons -->
                                 <a href="#" class="fa fa-facebook"></a>
                                 <a href="#" class="fa fa-instagram"></a>
@@ -194,36 +196,31 @@
             </div>
 
             <div id="playlist-section" style="display: block;">
-                <h3 style="margin-top: 0px; margin-bottom: 0;">Playlists</h3>
+                <h3 style="margin-top: 0px; margin-bottom: 0;">Playlist Manager</h3>
 
-                <!-- New Button -->
-                <button>
-                    New
-                </button>
+                <div>
+                    <!-- New Button -->
+                    <button>
+                        New
+                    </button>
 
-                <!-- Import Button -->
-                <button class="dropdown" id="import-playlist-button" style="float: unset"
-                    onclick="toggle_dropdown_with_ID('import-playlist-button')"><i class="fa fa-download"
-                        style="padding: 0; margin: 0;"></i> import
-                    <div class="dropdown-content" id="start-podcast-dropdown-content">
-                        <p class="dropdown-content-button" onclick="import_playlist_from('yt')">From YT</p>
-                        <p class="dropdown-content-button" onclick="import_playlist_from('spotify')">From Spotify</p>
-                    </div>
-                </button>
+                    <!-- Import Button -->
+                    <button class="dropdown" id="import-playlist-button" style="float: unset"
+                        onclick="toggle_dropdown_with_ID('import-playlist-button')"><i class="fa fa-download"
+                            style="padding: 0; margin: 0;"></i> import
+                        <div class="dropdown-content" id="start-podcast-dropdown-content">
+                            <p class="dropdown-content-button" onclick="import_playlist_from('yt')">From YT</p>
+                            <p class="dropdown-content-button" onclick="import_playlist_from('spotify')">From Spotify</p>
+                        </div>
+                    </button>
 
-                <select name="playlists-selection" id="playlists-selection"></select>
+                </div>
+
+                <br>
 
                 <!-- Current Playlist Songs View -->
                 <div id="console-panel-playlist-view">
-                    <style>
-                        table,
-                        th,
-                        td {
-                            border: 1px solid black;
-                        }
-                    </style>
-
-                    <table style="width: 100%;" id="console-create-playlist-table">
+                    <table id="console-create-playlist-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -237,7 +234,9 @@
                     </table>
                 </div>
 
-                <button>
+                <br>
+
+                <button onclick="createPlaylist()">
                     Create
                 </button>
 
@@ -331,16 +330,12 @@
     <!-- Bootstrap -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Playlist Handler -->
-    <script src="scripts/lib/playlistHandler.js"></script>
-
     <!-- Timepicker -->
     <script src="scripts/timepicker.js"></script>
 
     <!-- Console Functionality -->
     <script src="scripts/console-microphone.js"></script>
     <script src="scripts/console-playlist.js"></script>
-    <script src="scripts/console-music.js"></script>
     <script src="scripts/console.js"></script>
 </body>
 
