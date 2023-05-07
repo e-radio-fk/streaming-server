@@ -21,10 +21,13 @@ if (!socket)
     throw "Failed to load Socket.IO";
 }
 
-socket.on('server-sends-songs-list', (list) => {
+const reloadTable = (list) => {
     if (!list || list.length === 0)
         return null;
-    
+
+    // clear old rows
+    $(createPlaylistTableId + " tbody").empty();
+
     list.forEach((item) => {
         const itemId = item.id;
         const buttonId = 'button-' + itemId;
@@ -56,16 +59,13 @@ socket.on('server-sends-songs-list', (list) => {
                     }
                 }))
             );
-  
+
         // Append the new row to the table body
         $(createPlaylistTableId + " tbody").append(newRow);
     });
-});
+};
 
-/* request list of songs */
-socket.emit('console-requests-songs-list');
-
-const downloadYTMP3 = () => {
+const downloadYTMP3 = (onSuccessCallback, onFailureCallback) => {
     const url       = $(urlTextboxId).val();
     const filename  = $(filenameTextboxId).val();
     const progress  = $(progressLabelId);
@@ -84,15 +84,29 @@ const downloadYTMP3 = () => {
         progress.text(progressText)
     });
     socket.on('server-download-mp3-sends-end', () => {
-        alert('end!');
+        onSuccessCallback();
     });
     socket.on('server-download-mp3-sends-failure', (reason) => {
-        alert('Failed to download. Reason: ' + reason)
+        onFailureCallback(reason);
     })
 
     /* request download */
     socket.emit('console-requests-yt-mp3-download', {url, filename});
 }
+
+const importYTMP3 = () => {
+    const onSuccess = () => {
+        show_green('Downloaded successfully!');
+
+        /* request new list of songs (after import) */
+        socket.emit('console-requests-songs-list');
+    }
+    const onFailure = (reason) => {
+        show_error('Failed to download. Reason: ' + reason);
+    }
+
+    downloadYTMP3(onSuccess, onFailure);
+};
 
 const createPlaylist = () => {
     if (!playlist || playlist.length === 0)
@@ -109,3 +123,14 @@ const createPlaylist = () => {
     /* request playlist creation */
     socket.emit('console-requests-create-playlist', playlist);
 }
+
+//                                       //
+//  -------------- START --------------  //
+//                                       //
+
+socket.on('server-sends-songs-list', (list) => {
+    reloadTable(list);
+});
+
+/* request list of songs */
+socket.emit('console-requests-songs-list');
