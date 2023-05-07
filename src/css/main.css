@@ -284,6 +284,24 @@ br {
   /* Red */
   color: white;
   margin-bottom: 15px;
+  border-radius: 5px;
+}
+/* The error alert message box */
+.info-alert {
+  padding: 20px;
+  background-color: #d4a43b;
+  color: black;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+/* The success alert box */
+.green-alert {
+  padding: 20px;
+  background-color: #85db85;
+  /* Red */
+  color: black;
+  margin-bottom: 15px;
+  border-radius: 5px;
 }
 /* The close button */
 .alert-close-button {
@@ -299,14 +317,6 @@ br {
 /* When moving the mouse over the close button */
 .alert-close-button:hover {
   color: black;
-}
-/* The alert message box */
-.green-alert {
-  padding: 20px;
-  background-color: lightgreen;
-  /* Red */
-  color: white;
-  margin-bottom: 15px;
 }
 /* The switch - the box around the slider */
 .switch {
@@ -1278,4 +1288,15 @@ label {
 .timepicker:focus {
   outline: 2px dashed #945;
   outline-offset: 3px;
+}
+#console-create-playlist-table,
+#console-create-playlist-table th,
+#console-create-playlist-table td {
+  border: 1px solid black;
+}
+#console-create-playlist-table {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  border-radius: 10px;
 }
