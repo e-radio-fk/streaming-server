@@ -58,7 +58,7 @@ class MusicManagement {
                 rejects('Failed to get songs snapshot from Firestore');
 
             snapshot.forEach((item) => {
-                if (!item || !item.data()) 
+                if (!item || !item.id || !item.data()) 
                 {
                     console.log('error: null item or null data!')
                     rejects('null item or null data!');
@@ -73,6 +73,7 @@ class MusicManagement {
                 }
 
                 list.push({
+                    id:         item.id,
                     name:       data.name,
                     createdAt:  data.createdAt
                 });

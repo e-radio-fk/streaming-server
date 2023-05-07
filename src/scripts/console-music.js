@@ -7,6 +7,9 @@ const createPlaylistTableId = "#console-create-playlist-table";
 // get current url (the server is running on same domain!)
 const server_url = window.location.origin;
 
+// playlist to be created
+var playlist = [];    // list of songId's
+
 /*
  *  Establish connection with the server
  */
@@ -23,9 +26,36 @@ socket.on('server-sends-songs-list', (list) => {
         return null;
     
     list.forEach((item) => {
+        const itemId = item.id;
+        const buttonId = 'button-' + itemId;
+
         const newRow = $("<tr>")
             .append($("<td>").text(item.name))
-            .append($("<td>").text(item.createdAt));
+            .append($("<td>").text(item.createdAt))
+            .append($("<td>")
+                .append($("<button>")
+                .text('add')
+                .addClass('playlist-add-song-button')
+                .attr('id', buttonId)
+                .prop('clicked', false)
+                .click(() => {
+                    const button = $('#' + buttonId);           // button id
+                    const clicked = button.prop('clicked');     // clicked status
+                    const text = button.text();                 // current text
+
+                    button.prop('clicked', !clicked);
+                    button.text(text === 'add' ? 'remove' : 'add');
+
+                    if (text === 'add')
+                    {
+                        playlist.push(item.id);
+                    }
+                    else if (text === 'remove')
+                    {
+                        playlist = playlist.filter(songId => songId !== item.id);
+                    }
+                }))
+            );
   
         // Append the new row to the table body
         $(createPlaylistTableId + " tbody").append(newRow);
@@ -62,4 +92,14 @@ const downloadYTMP3 = () => {
 
     /* request download */
     socket.emit('console-requests-yt-mp3-download', {url, filename});
+}
+
+const createPlaylist = () => {
+    if (!playlist || playlist.length === 0)
+    {
+        show_error('Please add songs to your playlist');
+        return null;
+    }
+
+    
 }
