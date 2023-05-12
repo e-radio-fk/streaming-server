@@ -76,8 +76,6 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span
-                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                 <h4 class="modal-title" id="schedule-podcast-modal-label">Έναρξη Podcast</h4>
                             </div>
                             <div class="modal-body">
@@ -91,6 +89,7 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
+                                <button type="button" data-dismiss="modal">Abort</button>
                                 <button id="console-start-podcast-after-soundcheck-button"
                                     onclick="start_podcast_after_soundcheck();">Εκκίνηση!</button>
                             </div>
@@ -146,8 +145,6 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span
-                                        aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                 <h4 class="modal-title" id="schedule-podcast-modal-label">Podcast Planner</h4>
                             </div>
                             <div class="modal-body">
@@ -187,7 +184,8 @@
                                 <a href="#" class="fa fa-instagram"></a>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" onclick="schedule_new_podcast()">Καταχώρηση</button>
+                                <button type="button" data-dismiss="modal">Abort</button>
+                                <button type="button" onclick="schedule_new_podcast()">Confirm</button>
                             </div>
                         </div>
                     </div>
@@ -200,9 +198,29 @@
 
                 <div>
                     <!-- New Button -->
-                    <button>
+                    <button onclick="$('#clear-playlist-modal').modal('show')">
                         New
                     </button>
+
+                    <!-- Start Podcast Modal -->
+                    <div class="modal fade" id="clear-playlist-modal" tabindex="-1" role="dialog"
+                        aria-labelledby="start-podcast-modal-label" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="schedule-podcast-modal-label">Clear playlist</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to clear everything?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="clear-playlist-modal-abort-button" data-dismiss="modal">No</button>
+                                    <button id="clear-playlist-modal-confirm-button"
+                                        onclick="clearPlaylist()" data-dismiss="modal">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- Import Button -->
                     <button class="dropdown" id="import-playlist-button" style="float: unset"
@@ -210,10 +228,16 @@
                             style="padding: 0; margin: 0;"></i> import
                         <div class="dropdown-content" id="start-podcast-dropdown-content">
                             <p class="dropdown-content-button" onclick="import_playlist_from('yt')">From YT</p>
-                            <p class="dropdown-content-button" onclick="import_playlist_from('spotify')">From Spotify</p>
+                            <p class="dropdown-content-button" onclick="import_playlist_from('spotify')">From Spotify
+                            </p>
                         </div>
                     </button>
+                </div>
 
+                <div>
+                    <p style="display: inline-block;">playlist name:</p>
+                    <input type="text" class="textbox" style="border-radius: 5px;"
+                        id="console-create-playlist-name-textbox">
                 </div>
 
                 <br>
@@ -225,7 +249,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Date Added</th>
-                                <th>Add</th>    
+                                <th>Add</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -252,15 +276,15 @@
                             </div>
                             <div class="modal-body">
                                 <!-- url -->
-                                <p style="display: inline-block;">Url</p> 
+                                <p style="display: inline-block;">Url</p>
                                 <input type="text" id="console-import-yt-mp3-with-url-textbox">
-          
+
                                 <!-- filename -->
-                                <p>filename</p> 
+                                <p>filename</p>
                                 <input type="text" id="console-import-yt-mp3-with-filename-textbox">
 
                                 <!-- progress label -->
-                                <p style="display: inline-block;" id="console-import-yt-mp3-progress-label"></p> 
+                                <p style="display: inline-block;" id="console-import-yt-mp3-progress-label"></p>
                             </div>
                             <div class="modal-footer">
                                 <button id="import-playlist-modal-ok-button" onclick="importYTMP3()">Import</button>
@@ -325,8 +349,7 @@
     <!-- RecordRTC -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.5.6/RecordRTC.js"></script>
     <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
-        integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
