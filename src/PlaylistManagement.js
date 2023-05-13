@@ -138,7 +138,7 @@ class PlaylistManagement {
      * (Static Method)
      * Queries the server and returns a list of all the Playlists saved
      */
-    static async getList() {
+    async getList() {
         var database = firebase.database();
         if (!database)
             return null;

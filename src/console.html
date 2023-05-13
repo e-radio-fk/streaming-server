@@ -12,6 +12,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <!-- Initialise Firebase -->
     <script src="scripts/Firebase/firebase-helpers.js"></script>
@@ -20,6 +21,9 @@
     <!-- MCDatepicker -->
     <link href="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/mc-datepicker/dist/mc-calendar.min.js"></script>
+
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <header>
     <div class="now-playing-banner" id="control-panel-nav-bar" style="position: relative;">
@@ -133,7 +137,7 @@
                 <script src="scripts/audio-visualisation.js"></script>
             </div>
 
-            <div id="podcast-section" style="display: none;">
+            <div id="podcast-section" style="display: block;">
                 <!-- Start Podcast Dropdown -->
                 <h3 style="margin-top: 0px; margin-bottom: 0;">Podcast Planner</h3>
 
@@ -148,9 +152,20 @@
                                 <h4 class="modal-title" id="schedule-podcast-modal-label">Podcast Planner</h4>
                             </div>
                             <div class="modal-body">
-                                <!-- Date Picker disguised as a button -->
-                                <button id="podcast-datepicker">Pick a date</button>
-                                <p id="podcast-date-picked-label"></p>
+                                <div>
+                                    <!-- Date Picker disguised as a button -->
+                                    <div style="display: inline-block;">
+                                        <button id="podcast-datepicker">Pick a date</button>
+                                        <p id="podcast-date-picked-label" style="display: inline-block;"></p>
+                                    </div>
+
+                                    <!-- Select Playlist -->
+                                    <div style="display: inline-block;">
+                                        <p style="display: inline-block;">Select Playlist</p>
+                                        <select name="playlists-selection" id="schedule-podcast-playlists-selection"
+                                            style="display: inline-block;"></select>
+                                    </div>
+                                </div>
 
                                 <div>
                                     <!-- Time Picker -->
@@ -169,15 +184,13 @@
 
                                 <p>Θέμα</p>
                                 <textarea class="textbox" id="podcast-title" rows="1"
-                                    style="width: 99%; resize: none;"></textarea>
+                                    style="width: 99%; resize: none; border-radius: 5px;"></textarea>
                                 <p>Περιγραφή</p>
                                 <textarea class="textbox" id="podcast-description" rows="10"
-                                    style="width: 99%; height: 300px;  resize: none;"></textarea>
+                                    style="width: 99%; height: 300px; resize: none; border-radius: 5px;"></textarea>
 
                                 <br>
                                 <br>
-
-                                <!-- <select name="playlists-selection" id="playlists-selection"></select> -->
 
                                 <!-- Add font awesome icons -->
                                 <a href="#" class="fa fa-facebook"></a>
@@ -193,7 +206,7 @@
 
             </div>
 
-            <div id="playlist-section" style="display: block;">
+            <div id="playlist-section" style="display: none;">
                 <h3 style="margin-top: 0px; margin-bottom: 0;">Playlist Manager</h3>
 
                 <div>
@@ -215,8 +228,8 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button id="clear-playlist-modal-abort-button" data-dismiss="modal">No</button>
-                                    <button id="clear-playlist-modal-confirm-button"
-                                        onclick="clearPlaylist()" data-dismiss="modal">Confirm</button>
+                                    <button id="clear-playlist-modal-confirm-button" onclick="clearPlaylist()"
+                                        data-dismiss="modal">Confirm</button>
                                 </div>
                             </div>
                         </div>
@@ -348,8 +361,7 @@
     <script src="scripts/lib/socket.io-stream.js"></script>
     <!-- RecordRTC -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.5.6/RecordRTC.js"></script>
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <!-- Bootstrap -->
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
@@ -359,6 +371,7 @@
     <!-- Console Functionality -->
     <script src="scripts/console-microphone.js"></script>
     <script src="scripts/console-playlist.js"></script>
+    <script src="scripts/console-podcast.js"></script>
     <script src="scripts/console.js"></script>
 </body>
 

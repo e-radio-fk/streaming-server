@@ -243,6 +243,12 @@ io.of("/console-communication").on("connection", (socket) => {
 			socket.emit('server-sends-create-playlist-result', result);
 		});
 	});
+
+	socket.on('console-requests-playlist-list', () => {
+		PlaylistManager.getList().then((list) => {
+			socket.emit('server-sends-playlist-list', list);
+		})
+	});
 });
 
 // now we can start communications with clients!
