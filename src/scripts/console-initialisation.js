@@ -73,11 +73,11 @@ const initialise_console_page = () => {
                 throw "Failed to get json";
 
             Object.keys(json).forEach(key => {
-                const element = json[key];
+                const currentPodcast = json[key];
 
-                if (element) {
-                    var title = element['title'];
-                    var podcast_id = element['id'];
+                if (currentPodcast) {
+                    var title = currentPodcast['title'];
+                    var podcast_id = currentPodcast['id'];
 
                     /* skip erroneous */
                     if (title && podcast_id)
@@ -86,7 +86,7 @@ const initialise_console_page = () => {
                                 .text(title)
                                 .addClass('dropdown-content-button')
                                 .click(() => {
-                                    start_podcast(podcast_id);
+                                    start_podcast(currentPodcast);
                                 })
                         );
                 }
