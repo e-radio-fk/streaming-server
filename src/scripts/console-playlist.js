@@ -62,7 +62,7 @@ const reloadTable = (list) => {
     });
 };
 
-const downloadYTMP3 = (onSuccessCallback, onFailureCallback) => {
+const downloadYTMP3 = (shouldImport, onSuccessCallback, onFailureCallback) => {
     const url = $(urlTextboxId).val();
     const filename = $(filenameTextboxId).val();
     const progress = $(progressLabelId);
@@ -88,21 +88,35 @@ const downloadYTMP3 = (onSuccessCallback, onFailureCallback) => {
     })
 
     /* request download */
-    socket.emit('console-requests-yt-mp3-download', { url, filename });
+    socket.emit('console-requests-yt-mp3-download', { url, filename, shouldImport });
 }
 
 const importYTMP3 = () => {
+    const shouldImport = true;  // do download w/ import
+
     const onSuccess = () => {
+        // TODO: this should show up on the modal...
         show_green('Downloaded successfully!');
 
-        /* request new list of songs (after import) */
-        socket.emit('console-requests-songs-list');
+        // -------- //
+        //  IMPORT  //
+        // -------- //
+
+        socket.on('server-import-mp3-sends-end', () => {
+            show_green('Successfully imported!');
+
+            /* request new list of songs (after import) */
+            socket.emit('console-requests-songs-list');
+        });
+        socket.on('server-import-mp3-sends-failure', (reason) => {
+            show_error('Failed to import: ' + reason);
+        })
     }
     const onFailure = (reason) => {
         show_error('Failed to download. Reason: ' + reason);
     }
 
-    downloadYTMP3(onSuccess, onFailure);
+    downloadYTMP3(shouldImport, onSuccess, onFailure);
 };
 
 const createPlaylist = () => {

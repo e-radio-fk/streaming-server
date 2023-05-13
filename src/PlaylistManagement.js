@@ -1,30 +1,39 @@
 'use strict';
 
-const ytdl      = require('ytdl-core');
-const firebase  = require("firebase");
+const ytdl = require('ytdl-core');
+const firebase = require("firebase");
 const firestore = require("firebase/firestore");
 
-const fs        = require('fs');
+const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 
 class MusicManagement {
-    constructor()
-    {
+    constructor() {
         this.db = firebase.firestore();
+
+        //
+        //  this.downloaded:
+        //      registry of downloaded files
+        //
+        //  JSON with structure: 
+        //      [uuid: string]: contents: fs.WriteSream, ...
+        //
+        this.downloaded = {};
     }
 
-    downloadFromYT(url, filename, onProgressCallback, onEndCallback, onErrorCallback) {
-        console.log('url: ',        url);
-        console.log('filename: ',   filename);
+    downloadFromYT(url, filename, shouldImport, onProgressCallback, onEndCallback, onErrorCallback) {
+        console.log('url: ', url);
+        console.log('filename: ', filename);
 
         if (!url || !filename || !onProgressCallback || !onErrorCallback)
             return;
         // check if url is valid yt url
-        if (!ytdl.validateURL(url)) 
-        {
+        if (!ytdl.validateURL(url)) {
             onErrorCallback('invalid url');
             return;
         }
 
+        const uuid = uuidv4();
         const file = fs.createWriteStream(filename);
 
         const audioStream = ytdl(url, {
@@ -40,15 +49,29 @@ class MusicManagement {
         audioStream.on('end', () => {
             // TODO: verify...
 
-            onEndCallback();
+            onEndCallback(uuid);
+        })
+        file.on('finish', () => {
+            if (!this.downloaded)
+                return;
+
+            // add to our registry of downloaded files...
+            if (shouldImport) {
+                this.downloaded[uuid] = file;
+            }
         })
 
         // create and start pipe
         audioStream.pipe(file);
     }
 
-    async songsList()
-    {
+    import(uuid) {
+        if (!this.downloaded || this.downloaded.length === 0 || !uuid)
+            return;
+        console.log('TODO: import: ', uuid);
+    }
+
+    async songsList() {
         return new Promise(async (resolve, rejects) => {
 
             const list = [];
@@ -58,24 +81,22 @@ class MusicManagement {
                 rejects('Failed to get songs snapshot from Firestore');
 
             snapshot.forEach((item) => {
-                if (!item || !item.id || !item.data()) 
-                {
+                if (!item || !item.id || !item.data()) {
                     console.log('error: null item or null data!')
                     rejects('null item or null data!');
                 }
 
                 const data = item.data();
 
-                if (!data.name || !data.createdAt) 
-                {
+                if (!data.name || !data.createdAt) {
                     console.log('error: null name or null createdAt!')
                     rejects('null name or null createdAt!')
                 }
 
                 list.push({
-                    id:         item.id,
-                    name:       data.name,
-                    createdAt:  data.createdAt
+                    id: item.id,
+                    name: data.name,
+                    createdAt: data.createdAt
                 });
             });
 
@@ -103,8 +124,7 @@ class PlaylistManagement {
         if (!this.database)
             throw new Error('playlistHandler: database could not be initialised.');
 
-        if (forPlaylist !== undefined)
-        {
+        if (forPlaylist !== undefined) {
             if (!forPlaylist)
                 throw new Error('playlistHandler: playlist is null');
 
@@ -133,8 +153,7 @@ class PlaylistManagement {
         if (!snapshot)
             return null;
 
-        if (snapshot.exists())
-        {
+        if (snapshot.exists()) {
             var json = snapshot.val();
             if (!json)
                 return null;
@@ -150,12 +169,11 @@ class PlaylistManagement {
         this.playlist = playlistName;
     }
 
-    savePlaylist(playlist)
-    {
+    savePlaylist(playlist) {
         return new Promise((resolve, rejects) => {
             resolve('success');
         });
     }
 }
 
-module.exports = {MusicManagement, PlaylistManagement};
+module.exports = { MusicManagement, PlaylistManagement };

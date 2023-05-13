@@ -208,19 +208,24 @@ io.of("/console-communication").on("connection", (socket) => {
 	//
 	//	Music & Playlist Management
 	//
-	socket.on('console-requests-yt-mp3-download', ({url, filename}) => {
+	socket.on('console-requests-yt-mp3-download', ({url, filename, shouldImport}) => {
 		const onProgress = (downloaded, total) => {
 			socket.emit('server-download-mp3-sends-progress', {downloaded, total});
 		}
-		const onEnd = () => {
+		const onEnd = (songUUID) => {
 			socket.emit('server-download-mp3-sends-end');
+
+			if (shouldImport)
+			{
+				MusicManager.import(songUUID);
+			}
 		};
 		const onError = (reason) => {
 			socket.emit('server-download-mp3-sends-failure', reason);
 		}
 
 		// start downloading ...
-		MusicManager.downloadFromYT(url, filename, onProgress, onEnd, onError);
+		MusicManager.downloadFromYT(url, filename, shouldImport, onProgress, onEnd, onError);
 	});
 
 	socket.on('console-requests-songs-list', () => {
