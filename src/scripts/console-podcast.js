@@ -6,7 +6,7 @@ $('#schedule-podcast-modal').on('show.bs.modal', () => {
 
         // Array of data to populate the <select> options; format [{ value, text }] 
         const optionsData = [
-            { value: "", text: "-" },
+            { value: "", text: "- select -" },
             ...list.map((item) => { return { value: item, text: item } })
         ];
 
@@ -37,19 +37,20 @@ $('#schedule-podcast-modal').on('show.bs.modal', () => {
  * from the podcast scheduler modal and uploads it to the Firestore NoSQL database.
  */
 function schedule_new_podcast() {
-    var title = document.getElementById('podcast-title').value;
-    var description = document.getElementById('podcast-description').value;
-    var date = document.getElementById('podcast-date-picked-label').innerText;
-    var start_time = document.getElementById('podcast-start-time').value;
-    var end_time = document.getElementById('podcast-end-time').value;
+    const title = document.getElementById('podcast-title').value;
+    const description = document.getElementById('podcast-description').value;
+    const date = document.getElementById('podcast-date-picked-label').innerText;
+    const start_time = document.getElementById('podcast-start-time').value;
+    const end_time = document.getElementById('podcast-end-time').value;
+    const playlist = document.getElementById('schedule-podcast-playlists-selection').value;
 
-    if (!title || !description || !date || !start_time || !end_time) {
+    if (!title || !description || !date || !start_time || !end_time || !playlist) {
         alert('Συμπλήρωσε όλα τα πεδία!');
         return;
     }
 
-    var currentdate = new Date();
-    var datetime = currentdate.getDate() + "-" +
+    const currentdate = new Date();
+    const datetime = currentdate.getDate() + "-" +
         (currentdate.getMonth() + 1) + "-" +
         currentdate.getFullYear() + " @ " +
         currentdate.getHours() + ":" +
@@ -62,6 +63,7 @@ function schedule_new_podcast() {
         date: date,
         start_time: start_time,
         end_time: end_time,
+        playlist: playlist,
         id: guid()          /* create a unique random podcast-id */
     }, (error) => {
         if (error) {
