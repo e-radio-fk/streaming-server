@@ -235,9 +235,11 @@ io.of("/console-communication").on("connection", (socket) => {
 		})
 	});
 
-	socket.on('console-requests-create-playlist', (playlist) => {
+	socket.on('console-requests-create-playlist', ({playlistName, playlist}) => {
+		console.log('got: ', playlistName);
+
 		// create a playlist and send back result
-		PlaylistManager.savePlaylist(playlist).then((result) => {
+		PlaylistManager.savePlaylist(playlistName, playlist).then((result) => {
 			socket.emit('server-sends-create-playlist-result', result);
 		});
 	});

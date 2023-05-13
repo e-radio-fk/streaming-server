@@ -132,12 +132,6 @@ class PlaylistManagement {
         }
     }
 
-    setPlaylist(playlistName) {
-        if (!playlistName)
-            throw new Error('playlistHandler: cannot set playlist of reference as null');
-        this.playlist = playlistName;
-    }
-
     /**
      * getList()
      * 
@@ -163,17 +157,14 @@ class PlaylistManagement {
             return null;
     }
 
-    setPlaylist(playlistName) {
-        if (!playlistName)
-            throw new Error('playlistHandler: error setting playlist of reference!');
-        this.playlist = playlistName;
-    }
+    async savePlaylist(playlistName, playlist) {
+        console.log('Saving playlist: ', playlistName, ' containing: ', playlist);
 
-    savePlaylist(playlist) {
-        return new Promise((resolve, rejects) => {
-            resolve('success');
-        });
-    }
+        if (!playlistName || !playlist || playlist.length === 0)
+            return null;
+
+        return this.database.ref().child('/playlists').child(playlistName).set(playlist);
+    };
 }
 
 module.exports = { MusicManagement, PlaylistManagement };

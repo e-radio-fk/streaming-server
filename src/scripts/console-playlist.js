@@ -120,8 +120,10 @@ const importYTMP3 = () => {
 };
 
 const createPlaylist = () => {
-    if (!playlist || playlist.length === 0) {
-        show_info('Please add songs to your playlist');
+    const playlistName = $('#console-create-playlist-name-textbox').val();
+
+    if (!playlistName || !playlist || playlist.length === 0) {
+        show_info('Please add songs to your playlist and a proper name');
         return null;
     }
 
@@ -131,7 +133,7 @@ const createPlaylist = () => {
     })
 
     /* request playlist creation */
-    socket.emit('console-requests-create-playlist', playlist);
+    socket.emit('console-requests-create-playlist', {playlistName, playlist});
 }
 
 const clearPlaylist = () => {
