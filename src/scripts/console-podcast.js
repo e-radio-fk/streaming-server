@@ -1,3 +1,5 @@
+var g_podcast_title = null;
+
 $('#schedule-podcast-modal').on('show.bs.modal', () => {
     socket.on('server-sends-playlist-list', (list) => {
 
@@ -79,7 +81,7 @@ function schedule_new_podcast() {
 
 function start_podcast(podcast_id) {
     if (!podcast_id) {
-        podcast_title = 'Random Podcast';
+        g_podcast_title = 'Random Podcast';
     }
 
     $('#start-podcast-modal').modal('show');
@@ -93,5 +95,5 @@ function start_podcast(podcast_id) {
 function start_podcast_after_soundcheck() {
     $('#console-panels-object').css("display", "block");
     $('#console-start-podcast-button').css('display', 'none');
-    $('#podcast-session-title').html(podcast_title);
+    $('#podcast-session-title').html(g_podcast_title);
 }

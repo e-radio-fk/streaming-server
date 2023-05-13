@@ -3,7 +3,6 @@
 //
 
 var import_playlist_platform;
-var podcast_title;
 
 // generates random id;
 // from: https://learnersbucket.com/examples/javascript/unique-id-generator-in-javascript/
