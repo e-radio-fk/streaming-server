@@ -2,29 +2,29 @@
 // This is site's main
 //
 
-const express 				= require('express');
-const app 					= express();
-const server 				= require('http').Server(app);
-const io 					= require('socket.io')(server, {
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server, {
 	cors: {
 		origin: "https://e-radio-fk.onrender.com",
 		methods: ["GET", "POST"]
 	}
 });
-const ss 					= require('socket.io-stream');
-const bodyParser 			= require('body-parser');
-const firebase 				= require('firebase/app');
-const auth 					= require('firebase/auth');
+const ss = require('socket.io-stream');
+const bodyParser = require('body-parser');
+const firebase = require('firebase/app');
+const auth = require('firebase/auth');
 
-const fetch 				= require('node-fetch');
+const fetch = require('node-fetch');
 
 // Mixing Support
-const RadioMixer 			= require('./RadioMixer');
+const RadioMixer = require('./RadioMixer');
 // Music Management
-const MusicManagement		= require('./PlaylistManagement').MusicManagement;
+const MusicManagement = require('./PlaylistManagement').MusicManagement;
 // Playlist Management
-const PlaylistManagement	= require('./PlaylistManagement').PlaylistManagement;
-const fs 					= require('fs');
+const PlaylistManagement = require('./PlaylistManagement').PlaylistManagement;
+const fs = require('fs');
 
 const __project_root = __dirname + '/';
 
@@ -78,7 +78,7 @@ if (!fb)
 app.post('/signin', (req, res) => {
 	const username = req.body.username;
 	const password = req.body.password;
-  
+
 	console.log('username: ', username);
 	console.log('password: ', password);
 
@@ -89,19 +89,19 @@ app.post('/signin', (req, res) => {
 	 * set sign-in persistance to be LOCAL: even after the browser closes the user is still logged in! 
 	 */
 	// fb.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(() => {
-		/* Now sign-in with email & password */
-		fb.auth().signInWithEmailAndPassword(username, password).then((userCredential) => {
-			/* ... the rest will be handled by the user-state-changed code */
-			
-			loggedInUser = userCredential.user;
+	/* Now sign-in with email & password */
+	fb.auth().signInWithEmailAndPassword(username, password).then((userCredential) => {
+		/* ... the rest will be handled by the user-state-changed code */
 
-			// TODO: fix isAdmin() part
+		loggedInUser = userCredential.user;
 
-			// res.redirect('/profile');
-			// TODO: fixme
-			res.redirect('/console');
-			res.end();
-		})
+		// TODO: fix isAdmin() part
+
+		// res.redirect('/profile');
+		// TODO: fixme
+		res.redirect('/console');
+		res.end();
+	})
 		.catch((error) => {
 			// Ολοκλήρωση του request χωρίς redirect
 			res.redirect('/');
@@ -120,22 +120,18 @@ app.post('/signin', (req, res) => {
 });
 
 app.get('/profile', (req, res) => {
-	if (!loggedInUser)
-	{
+	if (!loggedInUser) {
 		res.sendFile('permissionDenied.html', { root: __project_root });
 	}
-	else
-	{
+	else {
 		res.sendFile('profile.html', { root: __project_root });
 	}
 });
 app.get('/console', (req, res) => {
-	if (!loggedInUser)
-	{
+	if (!loggedInUser) {
 		res.sendFile('permissionDenied.html', { root: __project_root });
 	}
-	else
-	{
+	else {
 		res.sendFile('console.html', { root: __project_root });
 	}
 });
@@ -149,12 +145,12 @@ app.post('/signup', (req, res) => {
 
 app.get('/signout', (req, res) => {
 	fb.auth().signOut().then(() => {
-        /* signing-out; return to site home */
+		/* signing-out; return to site home */
 		loggedInUser = null;
 		res.sendFile('/', { root: __project_root });
-    }).catch((error) => {
-        console.log('error: ', error);
-    });
+	}).catch((error) => {
+		console.log('error: ', error);
+	});
 });
 
 app.get('*', (req, res) => {
@@ -173,8 +169,8 @@ livechat_communication.on("connection", (socket) => {
 
 io.of("/console-communication").on("connection", (socket) => {
 
-	const MusicManager 		= new MusicManagement();
-	const PlaylistManager 	= new PlaylistManagement();
+	const MusicManager = new MusicManagement();
+	const PlaylistManager = new PlaylistManagement();
 
 	console.log('[2] Connection with console');
 
@@ -208,15 +204,14 @@ io.of("/console-communication").on("connection", (socket) => {
 	//
 	//	Music & Playlist Management
 	//
-	socket.on('console-requests-yt-mp3-download', ({url, filename, shouldImport}) => {
+	socket.on('console-requests-yt-mp3-download', ({ url, filename, shouldImport }) => {
 		const onProgress = (downloaded, total) => {
-			socket.emit('server-download-mp3-sends-progress', {downloaded, total});
+			socket.emit('server-download-mp3-sends-progress', { downloaded, total });
 		}
 		const onEnd = (songUUID) => {
 			socket.emit('server-download-mp3-sends-end');
 
-			if (shouldImport)
-			{
+			if (shouldImport) {
 				MusicManager.import(songUUID);
 			}
 		};
@@ -235,7 +230,7 @@ io.of("/console-communication").on("connection", (socket) => {
 		})
 	});
 
-	socket.on('console-requests-create-playlist', ({playlistName, playlist}) => {
+	socket.on('console-requests-create-playlist', ({ playlistName, playlist }) => {
 		console.log('got: ', playlistName);
 
 		// create a playlist and send back result
@@ -254,8 +249,7 @@ io.of("/console-communication").on("connection", (socket) => {
 // now we can start communications with clients!
 io.of("/clients-communication").on("connection", (socket) => {
 
-	if (!_listening_for_clients)
-	{
+	if (!_listening_for_clients) {
 		socket.emit('server-sends-not-ready-yet');
 		socket.disconnect();
 		return;
@@ -275,8 +269,18 @@ io.of("/clients-communication").on("connection", (socket) => {
 
 		console.log('[3.1] Client ', socket.id, ' requests mixed_stream');
 
+		// TODO: find the proper size to be able to read the whole file without the music ending...
+		// maybe this could help: https://stackoverflow.com/questions/47732290/node-js-radio-audio-stream
+		const chunkSize = 128;
+
 		// TODO: this will be selected using the playlist in the future
-		file1 = fs.createReadStream(__dirname + '/battle.mp3');
+		file1 = fs.createReadStream(__dirname + '/battle.mp3', {
+			highWaterMark: chunkSize,
+		});
+
+		file1.on('end', () => {
+			console.log('File reading finished');
+		});
 
 		// create our mixer class & get output stream
 		radio_mixer = new RadioMixer(microphone_stream, file1);
