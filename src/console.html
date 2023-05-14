@@ -123,12 +123,25 @@
                     <div id="console-panels-bar">
                         <!-- <button style="top: 0; bottom: 0; margin: 0;">Stop Session</button> -->
                         <button style="top: 0; bottom: 0; margin: 0;" id="console-toggle-microphone">start mic</button>
-                        <!-- <p>Microphone <div id="microphone-visualisation"></div></p> -->
                     </div>
 
-                    <div id="console-panels-view" style="display: block; display: flex;">
+                    <div id="console-panels-view">
+                        <!-- Current Playlist Songs View -->
+                        <div id="console-panels-playlist-view">
+                            <table id="console-panels-playlist-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- ... filled automatically -->
+                                </tbody>
+                            </table>
+                        </div>
+
                         <!-- Controls View -->
-                        <div id="console-panel-controls">
+                        <div id="console-panel-controls" style="display: inline-block;">
                             <!-- Music Section -->
                             <div id="console-panel-controls-music-section">
                                 <h3>Music Playback</h3>

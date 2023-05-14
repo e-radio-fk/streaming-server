@@ -1289,14 +1289,26 @@ label {
   outline: 2px dashed #945;
   outline-offset: 3px;
 }
-#console-create-playlist-table,
-#console-create-playlist-table th,
-#console-create-playlist-table td {
-  border: 1px solid black;
-}
 #console-create-playlist-table {
   width: 100%;
   height: auto;
   padding: 10px;
-  border-radius: 10px;
+  background-color: #74274c;
+}
+#console-panels-playlist-table {
+  width: 100px;
+  height: auto;
+  background-color: #74274c;
+}
+#console-panels-playlist-view {
+  padding-top: 10px;
+  background-color: #74274c;
+}
+#console-create-playlist-table,
+#console-create-playlist-table th,
+#console-create-playlist-table td,
+#console-panels-playlist-table,
+#console-panels-playlist-table th,
+#console-panels-playlist-table td {
+  border: 1px solid black;
 }

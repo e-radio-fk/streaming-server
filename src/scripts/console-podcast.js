@@ -38,7 +38,7 @@ $('#schedule-podcast-modal').on('show.bs.modal', () => {
 
     /* ask for list of playlists */
     socket.emit('console-requests-playlist-list');
-})
+});
 
 /**
  * schedule_new_podcast()
@@ -104,6 +104,22 @@ function start_podcast(podcast) {
  * After all checks have been conducted pre-session we can start the session!
  */
 function start_podcast_after_soundcheck() {
+    const currentPlaylistTable = $("#console-panels-playlist-table tbody");
+
+    // clear old rows
+    currentPlaylistTable.empty();
+
+    // TODO: make this **actually** get the list
+
+    const list = ['song1.mp3', 'song2.mp3'];
+
+    list.forEach((item) => {
+        const newRow = $("<tr>")
+            .append($("<td>").text(item));
+
+        currentPlaylistTable.append(newRow);
+    });
+
     $('#console-panels-object').css("display", "block");
     $('#console-start-podcast-button').css('display', 'none');
     $('#podcast-session-title').html(g_podcast_data["title"]);
