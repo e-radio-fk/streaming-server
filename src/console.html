@@ -34,7 +34,20 @@
                 <a class="dropdown-content-button" href="./settings.html">Settings</a>
                 <a class="dropdown-content-button" id="console-sign-out-button" onclick="sign_out()">Sign Out</a>
             </div>
-            <img class="dropbtn" id="banner-user-img">
+            <div class="dropbtn" id="banner-user-img"></div>
+
+            <style>
+                #console-user-dropdown {
+                    width: 60px;
+                    height: 60px;
+                }
+
+                #banner-user-img {
+                    width: inherit;
+                    margin-left: 10px;
+                    background-image: url('../img/person.png');
+                }
+            </style>
         </div>
     </div>
 
@@ -61,7 +74,7 @@
             <!-- SECTIONS -->
             <!--          -->
 
-            <div id="mixer-console-section" style="display: none;">
+            <div id="mixer-console-section" style="display: block;">
                 <h3 style="margin-top: 0px; margin-bottom: 0;">Mixing Console</h3>
 
                 <button class="dropdown" id="console-start-podcast-button" style="float: unset;"
@@ -108,7 +121,7 @@
                     </div>
 
                     <div id="console-panels-bar">
-                        <button style="top: 0; bottom: 0; margin: 0;">Stop Session</button>
+                        <!-- <button style="top: 0; bottom: 0; margin: 0;">Stop Session</button> -->
                         <button style="top: 0; bottom: 0; margin: 0;" id="console-toggle-microphone">start mic</button>
                         <!-- <p>Microphone <div id="microphone-visualisation"></div></p> -->
                     </div>
@@ -137,7 +150,7 @@
                 <script src="scripts/audio-visualisation.js"></script>
             </div>
 
-            <div id="podcast-section" style="display: block;">
+            <div id="podcast-section" style="display: none;">
                 <!-- Start Podcast Dropdown -->
                 <h3 style="margin-top: 0px; margin-bottom: 0;">Podcast Planner</h3>
 
