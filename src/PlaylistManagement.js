@@ -158,12 +158,19 @@ class PlaylistManagement {
     }
 
     async savePlaylist(playlistName, playlist) {
-        console.log('Saving playlist: ', playlistName, ' containing: ', playlist);
+        return new Promise(async (resolve, rejects) => {
+            console.log('Saving playlist: ', playlistName, ' containing: ', playlist);
 
-        if (!playlistName || !playlist || playlist.length === 0)
-            return null;
+            if (!playlistName || !playlist || playlist.length === 0)
+                return null;
 
-        return this.database.ref().child('/playlists').child(playlistName).set(playlist);
+            this.database.ref().child('/playlists').child(playlistName).set(playlist, (error) => {
+                if (error)
+                    rejects(error);
+                else
+                    resolve('success');
+            });
+        })
     };
 }
 

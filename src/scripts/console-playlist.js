@@ -130,10 +130,12 @@ const createPlaylist = () => {
     socket.on('server-sends-create-playlist-result', (result) => {
         if (result === 'success')
             show_green('Playlist created successfully!');
+        else
+            show_error('Error creating playlist: ' + result);
     })
 
     /* request playlist creation */
-    socket.emit('console-requests-create-playlist', {playlistName, playlist});
+    socket.emit('console-requests-create-playlist', { playlistName, playlist });
 }
 
 const clearPlaylist = () => {
