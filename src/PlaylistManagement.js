@@ -46,19 +46,16 @@ class MusicManagement {
         audioStream.on('progress', (chunkLength, downloaded, total) => {
             onProgressCallback(downloaded, total);
         });
-        audioStream.on('end', () => {
-            // TODO: verify...
-
-            onEndCallback(uuid);
-        })
         file.on('finish', () => {
             if (!this.downloaded)
                 return;
 
             // add to our registry of downloaded files...
             if (shouldImport) {
-                this.downloaded[uuid] = file;
+                this.downloaded[uuid] = file.path;
             }
+
+            onEndCallback(uuid);
         })
 
         // create and start pipe
@@ -66,9 +63,32 @@ class MusicManagement {
     }
 
     import(uuid) {
-        if (!this.downloaded || this.downloaded.length === 0 || !uuid)
-            return;
-        console.log('TODO: import: ', uuid);
+        return new Promise((resolve, rejects) => {
+            console.log('TODO: import: ', uuid, '; importing just the song name for now...');
+
+            if (!this.downloaded || this.downloaded.length === 0 || !uuid || !this.downloaded[uuid])
+                rejects('Error importing song: something is null...');
+
+            const currentDate = new Date();
+
+            const year = currentDate.getFullYear();
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+            const day = String(currentDate.getDate()).padStart(2, '0');
+
+            const formattedDate = `${year}-${month}-${day}`;
+
+            // Add a new document in collection "cities"
+            this.db.collection("songs").add({
+                name: this.downloaded[uuid],
+                createdAt: formattedDate
+            })
+                .then(() => {
+                    resolve("success");
+                })
+                .catch((error) => {
+                    rejects(error);
+                });
+        })
     }
 
     async songsList() {

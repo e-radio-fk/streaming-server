@@ -94,23 +94,22 @@ const downloadYTMP3 = (shouldImport, onSuccessCallback, onFailureCallback) => {
 const importYTMP3 = () => {
     const shouldImport = true;  // do download w/ import
 
+    // -------- //
+    //  IMPORT  //
+    // -------- //
+
+    socket.on('server-import-mp3-sends-end', () => {
+        show_green('Successfully imported!');
+
+        /* request new list of songs (after import) */
+        socket.emit('console-requests-songs-list');
+    });
+    socket.on('server-import-mp3-sends-failure', (reason) => {
+        show_error('Failed to import!', reason);
+    })
+
     const onSuccess = () => {
-        // TODO: this should show up on the modal...
-        show_green('Downloaded successfully!');
-
-        // -------- //
-        //  IMPORT  //
-        // -------- //
-
-        socket.on('server-import-mp3-sends-end', () => {
-            show_green('Successfully imported!');
-
-            /* request new list of songs (after import) */
-            socket.emit('console-requests-songs-list');
-        });
-        socket.on('server-import-mp3-sends-failure', (reason) => {
-            show_error('Failed to import: ' + reason);
-        })
+        $(progressLabelId).text('Downloaded successfully! Importing...');
     }
     const onFailure = (reason) => {
         show_error('Failed to download. Reason: ' + reason);

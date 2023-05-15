@@ -212,7 +212,11 @@ io.of("/console-communication").on("connection", (socket) => {
 			socket.emit('server-download-mp3-sends-end');
 
 			if (shouldImport) {
-				MusicManager.import(songUUID);
+				MusicManager.import(songUUID).then((result) => {
+					socket.emit('server-import-mp3-sends-end');
+				}).catch((reason) => {
+					socket.emit('server-import-mp3-sends-failure', reason);
+				});
 			}
 		};
 		const onError = (reason) => {
