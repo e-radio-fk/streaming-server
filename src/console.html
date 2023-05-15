@@ -93,10 +93,10 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="schedule-podcast-modal-label">Έναρξη Podcast</h4>
+                                <h4 class="modal-title" id="schedule-podcast-modal-label">Start Podcast</h4>
                             </div>
                             <div class="modal-body">
-                                <p>Πρωτού ξεκινήσεις, έλεγξε το μικρόφωνο:</p>
+                                <p>Before you start, check the microphone...</p>
                                 <div>
                                     <button id="console-test-mic-button" style="display: inline-flex;"
                                         onclick="test_mic();">test
@@ -108,7 +108,7 @@
                             <div class="modal-footer">
                                 <button type="button" data-dismiss="modal">Abort</button>
                                 <button id="console-start-podcast-after-soundcheck-button"
-                                    onclick="start_podcast_after_soundcheck();">Εκκίνηση!</button>
+                                    onclick="start_podcast_after_soundcheck();">Start</button>
                             </div>
                         </div>
                     </div>
@@ -196,11 +196,11 @@
                                 <div>
                                     <!-- Time Picker -->
                                     <div style="left: 10px; position: absolute;">
-                                        <label for="time">Έναρξη</label>
+                                        <label for="time">Start</label>
                                         <input type="time" name="time" class="timepicker" id="podcast-start-time" />
                                     </div>
                                     <div style="right: 10px; position: absolute;">
-                                        <label for="time">Λήξη</label>
+                                        <label for="time">End</label>
                                         <input type="time" name="time" class="timepicker" id="podcast-end-time" />
                                     </div>
                                 </div>
@@ -208,10 +208,10 @@
                                 <br>
                                 <br>
 
-                                <p>Θέμα</p>
+                                <p>Title</p>
                                 <textarea class="textbox" id="podcast-title" rows="1"
                                     style="width: 99%; resize: none; border-radius: 5px;"></textarea>
-                                <p>Περιγραφή</p>
+                                <p>Description</p>
                                 <textarea class="textbox" id="podcast-description" rows="10"
                                     style="width: 99%; height: 300px; resize: none; border-radius: 5px;"></textarea>
 
