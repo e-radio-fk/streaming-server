@@ -1,7 +1,8 @@
 <html>
+
 <head>
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
-	<meta content="utf-8" http-equiv="encoding">	
+	<meta content="utf-8" http-equiv="encoding">
 
 	<title>OmniRadio</title>
 	<link rel="stylesheet" href="css/main.css">
@@ -19,24 +20,25 @@
 	<script src="scripts/Firebase/init-firebase.js"></script>
 </head>
 <header style="visibility: hidden;">
-    <div class="now-playing-banner" id="now-playing-banner-object">
+	<div class="now-playing-banner" id="now-playing-banner-object">
 		<!-- Play button -->
 		<div class="play-button" id="now-playing-banner-play-button"></div>
 		<div class="vl"></div>
 		<div class="sound-button"></div>
 
 		<!-- Banner Text -->
-        <p id="now-playing-banner-text"></p>
+		<p id="now-playing-banner-text"></p>
 
 		<div style="position: relative; float: right;" id="now-playing-banner-rightmost-part">
 			<div class="mic-onoff-icon"></div>
 
 			<div class="vl" style="margin-top: 15px;"></div>
-			
+
 			<!-- User Login Dropdwon -->
 			<div class="dropdown" id="login-dropdown">
-				<div class="dropbtn" id="user-login-dropdown-back-button" onclick="toggle_dropdown_with_ID('login-dropdown');"></div>
-	
+				<div class="dropbtn" id="user-login-dropdown-back-button"
+					onclick="toggle_dropdown_with_ID('login-dropdown');"></div>
+
 				<div class="dropdown-content">
 					<div id="login-box">
 						<label for="login-form-uname">Username:</label><br>
@@ -48,51 +50,47 @@
 						<button>Sign Up</button>
 					</div>
 				</div>
-	
+
 				<script src="scripts/user-authentication.js"></script>
-			</div>	
+			</div>
 		</div>
 
 
 		<!-- This is for the login dropdown -->
 		<script>
-			function toggle_dropdown_with_ID(id)
-			{
+			function toggle_dropdown_with_ID(id) {
 				var dropdown = document.getElementById(id);
 				var dropdown_content = dropdown.getElementsByClassName('dropdown-content')[0];
 
 				var clicked = dropdown.getAttribute('clicked');
-				if (clicked == 'yes')
-				{
+				if (clicked == 'yes') {
 					dropdown.setAttribute('clicked', 'no');
 					dropdown_content.style.display = 'none';
 				}
-				else
-				{
+				else {
 					dropdown.setAttribute('clicked', 'yes');
 					dropdown_content.style.display = 'block';
 				}
 			}
 
-			function toggle_dropup_with_ID(id)
-			{
-				var dropdown = document.getElementById(id);
-				var dropdown_content = dropdown.getElementsByClassName('dropup-content')[0];
+			function toggle_dropup_with_ID(id) {
+				var dropup = document.getElementById(id);
+				var dropup_content = dropup.getElementsByClassName('dropup-content')[0];
 
-				var clicked = dropdown.getAttribute('clicked');
-				if (clicked == 'yes')
-				{
-					dropdown.setAttribute('clicked', 'no');
-					dropdown_content.style.display = 'none';
+				var clicked = dropup.getAttribute('clicked');
+				if (clicked == 'yes') {
+					dropup.setAttribute('clicked', 'no');
+					dropup.style.display = 'none';
+					dropup_content.style.display = 'none';
 				}
-				else
-				{
-					dropdown.setAttribute('clicked', 'yes');
-					dropdown_content.style.display = 'block';
+				else {
+					dropup.setAttribute('clicked', 'yes');
+					dropup.style.display = 'block';
+					dropup_content.style.display = 'block';
 				}
 			}
 		</script>
-    </div>
+	</div>
 
 	<br>
 
@@ -101,6 +99,7 @@
 	<!-- Initialisation -->
 	<script src="scripts/index-initialisation.js"></script>
 </header>
+
 <body style="visibility: hidden;">
 
 	<br>
@@ -137,23 +136,26 @@
 
 	</div>
 
-	<div id="open-chatbox-button" class="dropup" onclick="toggle_dropup_with_ID('open-chatbox-button');">
+	<div id="open-chatbox-button" onclick="toggle_dropup_with_ID('chatbox-dropup');">
 		<img src="./img/chat.png">
+	</div>
 
-		<div class="dropup-content">
+	<div class="dropup" id="chatbox-dropup" style="right: 0;">
+		<div class="dropup-content" style="right: 5; bottom: -50; width: 300px;">
 			<!-- Chat space -->
-			<div class="livechat" style="right: 0; width: 100%;">
-				<div class="live-chat-container">
+			<div class="livechat" style="width: inherit;">
+				<div class="live-chat-container" style="width: inherit;">
 					<yt-live-chat-renderer>
 						<yt-live-chat-item-list-renderer>
 						</yt-live-chat-item-list-renderer>
 					</yt-live-chat-renderer>
 				</div>
 				<input type="text" class="yt-live-chat-message-box" id="live-chat-message-box">
-				<script src="scripts/livechat.js"></script>	
+				<script src="scripts/livechat.js"></script>
 			</div>
 		</div>
 	</div>
+
 
 	<script src="scripts/general.js"></script>
 
@@ -164,28 +166,26 @@
 	<script>
 		var podcast_table = document.getElementsByClassName('podcast-news-table')[0];
 
-		function get_html(title, description, date)
-		{
-			const html =	"<td>"																					+
-								"<div class='podcast-news-table-news-title'>" + title + "</div>"					+
-								"<div class='podcast-news-table-news-columns-separator'>"							+
-									"<div class='podcast-news-table-news-description'>" + description + "</div>"	+
-									"<div class='podcast-news-table-news-date'>" + date + "</div>"					+
-								"</div>"																			+
-							"</td>";
+		function get_html(title, description, date) {
+			const html = "<td>" +
+				"<div class='podcast-news-table-news-title'>" + title + "</div>" +
+				"<div class='podcast-news-table-news-columns-separator'>" +
+				"<div class='podcast-news-table-news-description'>" + description + "</div>" +
+				"<div class='podcast-news-table-news-date'>" + date + "</div>" +
+				"</div>" +
+				"</td>";
 
 			return html;
 		}
 
-		var title 		= 'error';
+		var title = 'error';
 		var description = 'error';
-		var date 		= 'no-date';
-		var start_time 	= 'start-time';
-		var end_time	= 'end-time';
+		var date = 'no-date';
+		var start_time = 'start-time';
+		var end_time = 'end-time';
 
 		database.ref().child('/scheduled-podcasts').get().then((snapshot) => {
-			if (snapshot.exists()) 
-			{
+			if (snapshot.exists()) {
 				var i = 0;
 
 				var json = snapshot.val();
@@ -195,28 +195,28 @@
 
 					console.log('got element', element);
 
-					title 		= element['title'];
+					title = element['title'];
 					description = element['description'];
-					date 		= element['date'];
-					start_time 	= element['start_time'];
-					stop_time 	= element['stop_time'];
+					date = element['date'];
+					start_time = element['start_time'];
+					stop_time = element['stop_time'];
 
 					var row = podcast_table.insertRow(i++);
 					row.innerHTML = get_html(title, description, date);
 				});
 			}
-			else
-			{
+			else {
 				// no data available; no podcasts scheduled for this week
 				var row = podcast_table.insertRow(0);
 				row.innerHTML = 'Sorry :( No podcasts scheduled for this week!';
 			}
 		}).catch((error) => {
-  			console.error(error);
+			console.error(error);
 		});
 	</script>
 
 	<!-- Move banner -->
 	<script src="scripts/move_banner.js"></script>
 </body>
+
 </html>
