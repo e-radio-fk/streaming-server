@@ -1,28 +1,26 @@
 //
 // Our own baked-in e-radio Mixer
 //
-'use strict';
+"use strict";
 
-const ss    		= require('socket.io-stream');
-const Mixer 		= require('audio-mixer').Mixer;		// node package to support mixing
-const ffmpegPath 	= require('@ffmpeg-installer/ffmpeg').path;
-const ffmpeg 		= require('fluent-ffmpeg');
-const { Transform } = require('stream');
+const ss = require("socket.io-stream");
+const Mixer = require("audio-mixer").Mixer; // node package to support mixing
+const ffmpegPath = require("@ffmpeg-installer/ffmpeg").path;
+const ffmpeg = require("fluent-ffmpeg");
+const { Transform } = require("stream");
 
 /* set ffmpeg path */
 ffmpeg.setFfmpegPath(ffmpegPath);
 
 const pcmDecoder = new Transform({
 	transform(chunk, encoding, callback) {
-	  // Pass the PCM chunk along to the next stream
-	  callback(null, chunk);
+		// Pass the PCM chunk along to the next stream
+		callback(null, chunk);
 	},
-  });
+});
 
-class RadioMixer
-{
-	constructor(_microphone_stream, _music_stream)
-	{
+class RadioMixer {
+	constructor(_microphone_stream, _music_stream) {
 		this.microphone_stream = _microphone_stream;
 		this.music_stream = _music_stream;
 
@@ -34,29 +32,31 @@ class RadioMixer
 			channels: 2,
 			bitDepth: 16,
 			sampleRate: 44100,
-			clearInterval: 100
+			clearInterval: 100,
 		});
-		
+
 		//
 		// create 2 inputs
 		//
 		this.input0 = this.mixer.input({
-			    channels: 1,
-			    bitDepth: 16,
-			    sampleRate: 44100,
-		});
-		
-		this.input1 = this.mixer.input({
-			    channels: 2,
-			    bitDepth: 16,
-			    sampleRate: 44100,
+			channels: 1,
+			bitDepth: 16,
+			sampleRate: 44100,
+			volume: 400,
 		});
 
-		var command = ffmpeg(this.music_stream)
-			.format('s16le')
+		this.input1 = this.mixer.input({
+			channels: 2,
+			bitDepth: 16,
+			sampleRate: 44100,
+			volume: 20,
+		});
+
+		ffmpeg(this.music_stream)
+			.format("s16le")
 			.audioFrequency(44100)
 			.audioChannels(2)
-			.on('error', (err) => {
+			.on("error", (err) => {
 				console.error(`Error decoding MP3 file: ${err}`);
 			})
 			.pipe(pcmDecoder);
@@ -67,8 +67,7 @@ class RadioMixer
 		this.mixer.pipe(this.mixedStream);
 	}
 
-	outputStream()
-	{
+	outputStream() {
 		return this.mixedStream;
 	}
 }
