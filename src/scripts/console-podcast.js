@@ -143,4 +143,7 @@ function start_podcast_after_soundcheck() {
 	$("#console-panels-object").css("display", "block");
 	$("#console-start-podcast-button").css("display", "none");
 	$("#podcast-session-title").html(g_podcast_data["title"]);
+
+	// close modal
+	$("#start-podcast-modal").modal("hide");
 }
