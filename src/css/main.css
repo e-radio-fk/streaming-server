@@ -931,13 +931,14 @@ button,
   animation-fill-mode: forwards;
   color: black;
   border-radius: 5px;
+  cursor: pointer;
 }
 #console-body-container {
   padding-left: 10px;
 }
 @keyframes fadeIn {
   0% {
-    background-color: 'none';
+    background-color: "none";
   }
   100% {
     background-color: #FFC145;
@@ -947,7 +948,7 @@ button,
   font-family: 'Changa One';
   font-style: normal;
   font-weight: 400;
-  src: url(https://fonts.gstatic.com/s/changaone/v18/xfu00W3wXn3QLUJXhzq42AHivA.ttf) format('truetype');
+  src: url(https://fonts.gstatic.com/s/changaone/v20/xfu00W3wXn3QLUJXhzq42AHivA.ttf) format('truetype');
 }
 @font-face {
   font-family: 'Imprima';
