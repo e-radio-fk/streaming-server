@@ -44,7 +44,10 @@
 						onclick="toggle_dropdown_with_ID('login-dropdown');"
 					></div>
 
-					<div class="dropdown-content">
+					<div
+						class="dropdown-content"
+						style="position: absolute; z-index: 1000 !important"
+					>
 						<div id="login-box">
 							<label for="login-form-uname">Username:</label><br />
 							<input
@@ -62,7 +65,7 @@
 							/><br /><br />
 							<input type="submit" value="Είσοδος" onclick="sign_in(event);" />
 							<hr />
-							<button>Εγγραφή</button>
+							<input type="submit" onclick="() => {}" value="Εγγραφή" />
 						</div>
 					</div>
 
@@ -131,7 +134,10 @@
 		</div>
 
 		<div class="intro">
-			<h3>Η all-in-one e-radio πλατφόρμα για επαγγελματίες και χομπίστες</h3>
+			<h3>
+				Η all-in-one e-radio πλατφόρμα <br />
+				για επαγγελματίες και χομπίστες
+			</h3>
 		</div>
 
 		<div class="podcast-news-table-space" style="width: 25%">
