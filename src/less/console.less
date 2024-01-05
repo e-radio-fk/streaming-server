@@ -1,82 +1,82 @@
-@import url('_light.less');
+@import url("_light.less");
 
 #import-playlist-button {
-    font-size: 20px;
-    text-align: center;
-    width: initial;
-    float: left;
+	font-size: 20px;
+	text-align: center;
+	width: initial;
+	float: left;
 }
 
 .console-panels-header {
-    background-color: @background-color-dark;
-    text-align: center;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+	background-color: @background-color-dark;
+	text-align: center;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
 }
 
 #console-panels-bar {
-    background-color: @background-color-dark;
-    margin: auto;
-    position: initial;
-    border-radius: initial;
+	background-color: @background-color-dark;
+	margin: auto;
+	position: initial;
+	border-radius: initial;
 }
 
 .console-panels {
-    width: 100%;
-    box-shadow: 1px 1px 5px #000000;
+	width: 100%;
+	box-shadow: 1px 1px 5px #000000;
 }
 
 #console-panel-playlist-view,
 #console-panel-controls {
-    background-color: @background-color-dark;
-    width: 100%;
-    height: auto;
-    border-style: none;
-    right: 0;
-    padding: 0;
-    margin: 0;
+	background-color: @background-color-dark;
+	width: 100%;
+	height: auto;
+	border-style: none;
+	right: 0;
+	padding: 0;
+	margin: 0;
 }
 
 #console-panel-controls {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 #console-panels-livechat {
-    border-top-left-radius: initial;
-    border-top-right-radius: initial;
-    border-bottom-right-radius: initial;
+	border-top-left-radius: initial;
+	border-top-right-radius: initial;
+	border-bottom-right-radius: initial;
 }
 
 #console-panel-controls-music-section {
-    display: block;
+	display: block;
 }
 
 #console-panel-controls-music-subsection {
-    height: 70px;
-    display: block;
+	height: 70px;
+	display: block;
 }
 
 #console-panel-controls-music-buttons {
-    display: inline-block;
-    margin: auto;
-    height: inherit;
-    top: 0;
-    bottom: 0;
+	display: inline-block;
+	margin: auto;
+	height: inherit;
+	top: 0;
+	bottom: 0;
 }
 
 #music-button-backward,
 #music-button-forward,
 #toggle-music-button {
-    top: 0;
-    bottom: 0;
+	top: 0;
+	bottom: 0;
 }
 
 #console-panel-controls-music-volume-slider {
-    // make it vertical
-    transform: rotate(270deg);
-    display: inline-block;
-    width: 70px; // width will become height when rotated
+	// make it vertical
+	transform: rotate(270deg);
+	display: inline-block;
+	width: 70px; // width will become height when rotated
 }
 
 // ---- //
@@ -84,50 +84,50 @@
 // ---- //
 
 #console-grid-container {
-    display: grid;
-    grid-template-columns: 10% auto;
-    padding-top: 10px;
+	display: grid;
+	grid-template-columns: 10% auto;
+	padding-top: 10px;
 }
 
 #console-nav-bar-container {
-    width: 100%;
-    border-right-width: 1px;
-    border-right-color: @background-color-dark;
-    border-right-style: solid;
-    padding-right: 10px;
+	width: 100%;
+	border-right-width: 1px;
+	border-right-color: @background-color-dark;
+	border-right-style: solid;
+	padding-right: 10px;
 }
 
 .console-nav-bar-item {
-    width: 100%;
+	width: 100%;
 
-    justify-content: center;
-    overflow-y: auto;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    text-align: center;
+	justify-content: center;
+	overflow-y: auto;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	text-align: center;
 
-    color: black;
-    background-color: rgb(244, 166, 98, 0.8);
+	color: black;
+	background-color: rgb(244, 166, 98, 0.8);
 
-    &:hover {
-        animation: fadeIn 0.5s linear;
-        animation-fill-mode: forwards;
-        color: black;
-        border-radius: 5px;
-    }
+	&:hover {
+		animation: fadeIn 0.5s linear;
+		animation-fill-mode: forwards;
+		color: black;
+		border-radius: 5px;
+		cursor: pointer;
+	}
 }
 
 #console-body-container {
-    padding-left: 10px;
+	padding-left: 10px;
 }
 
-
 @keyframes fadeIn {
-    0% {
-        background-color: 'none';
-    }
+	0% {
+		background-color: "none";
+	}
 
-    100% {
-        background-color: @select-color;
-    }
+	100% {
+		background-color: @select-color;
+	}
 }
