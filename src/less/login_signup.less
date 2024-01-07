@@ -1,45 +1,57 @@
-@import url('general.less');
+@import url("general.less");
 
 #login-box,
 #signup-box {
-    width: 300px;
-    margin: auto;
-    padding: 5px;
-    border-radius: 15px;
-    border-width: 3px;
+	width: 300px;
+	margin: auto;
+	padding: 5px;
+	border-radius: 15px;
+	border-width: 3px;
 
-    .no-select();
+	.no-select();
 }
 
-#login-box button {
-    width: 290px;           // -10px of the box's width
+#login-box button,
+#signup-box button {
+	width: 290px; // -10px of the box's width
 }
 
-#login-box input {
-    height: 35px;
-    width: 290px;           // -10px of the box's width
-    text-indent: 23px;
+#login-box input,
+#signup-box input {
+	height: 35px;
+	width: 290px; // -10px of the box's width
+	text-indent: 23px;
 }
 
-#login-box hr {
-    color: @ui-elements-tint;
+#login-box input[type="submit"]:extend(button) {
+}
+#signup-box input[type="submit"]:extend(button) {
 }
 
-#login-box input[type=submit]:extend(button) {}
+#signup-box input[type="checkbox"],
+#login-box input[type="checkbox"] {
+	height: 20px;
+	width: 20px;
+}
+
+#login-box hr,
+#signup-box hr {
+	color: @ui-elements-tint;
+}
 
 #login-box span,
 #signup-box span {
-    font-size: 23px;
-    top: 8px;
-    padding-left: 5px;
+	font-size: 23px;
+	top: 8px;
+	padding-left: 5px;
 }
 
 #login-box a {
-    width: 290px;           // -10px of the box's width
+	width: 290px; // -10px of the box's width
 }
 
 #user-login-dropdown-back-button {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
 }

@@ -48,6 +48,7 @@
 						class="dropdown-content"
 						style="position: absolute; z-index: 1000 !important"
 					>
+						<!-- Login Box -->
 						<div id="login-box">
 							<label for="login-form-uname">Username:</label><br />
 							<input
@@ -70,10 +71,69 @@
 								onclick="sign_in(event);"
 							/>
 							<hr />
-							<input type="submit" onclick="() => {}" value="Εγγραφή" />
+							<input
+								type="submit"
+								onclick="show_signup_box()"
+								value="Εγγραφή"
+							/>
+						</div>
+
+						<!-- SignUp Box -->
+						<div id="signup-box" style="display: none">
+							<img
+								src="../img/back.png"
+								width="25px"
+								height="25px"
+								onclick="show_login_box()"
+								style=""
+							/>
+							<br />
+
+							<label for="login-form-uname">Username:</label><br />
+							<input
+								type="text"
+								class="textbox"
+								id="login-form-uname"
+								name="login-form-uname"
+							/><br />
+							<label for="login-form-passw">Κωδικός:</label><br />
+							<input
+								type="password"
+								class="textbox"
+								id="login-form-passw"
+								name="login-form-passw"
+							/><br /><br />
+							<div
+								style="
+									display: flex;
+									flex-direction: row;
+									align-items: center;
+									gap: 2px;
+								"
+							>
+								<label for="signup-form-isProducer">Παραγωγός</label>
+								<input
+									type="checkbox"
+									id="signup-form-isProducer"
+									name="signup-form-isProducer"
+								/>
+								<br />
+							</div>
+							<hr />
+							<button type="submit" onclick="() => {}">Εγγραφή</button>
 						</div>
 					</div>
 
+					<script>
+						function show_signup_box() {
+							document.getElementById("login-box").style.display = "none";
+							document.getElementById("signup-box").style.display = "block";
+						}
+						function show_login_box() {
+							document.getElementById("login-box").style.display = "block";
+							document.getElementById("signup-box").style.display = "none";
+						}
+					</script>
 					<script src="scripts/user-authentication.js"></script>
 				</div>
 			</div>

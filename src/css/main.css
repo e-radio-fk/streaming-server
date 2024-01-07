@@ -76,7 +76,8 @@ small,
   font-size: 0.8rem;
 }
 button,
-#login-box input[type=submit] {
+#login-box input[type="submit"],
+#signup-box input[type="submit"] {
   height: 42px;
   border-radius: 4px;
   border-style: none;
@@ -697,15 +698,23 @@ input:checked + .slider:before {
   /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
 }
-#login-box button {
+#login-box button,
+#signup-box button {
   width: 290px;
 }
-#login-box input {
+#login-box input,
+#signup-box input {
   height: 35px;
   width: 290px;
   text-indent: 23px;
 }
-#login-box hr {
+#signup-box input[type="checkbox"],
+#login-box input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+}
+#login-box hr,
+#signup-box hr {
   color: sandybrown;
 }
 #login-box span,
@@ -803,7 +812,8 @@ h1 {
   color: #FFFFFF;
 }
 button,
-#login-box input[type=submit] {
+#login-box input[type="submit"],
+#signup-box input[type="submit"] {
   background-color: #FFC145;
 }
 #login-box .textbox::placeholder {
