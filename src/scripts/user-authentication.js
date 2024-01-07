@@ -7,6 +7,10 @@ function validateEmail(email) {
 	return re.test(String(email).toLowerCase());
 }
 
+function validatePassword(passw) {
+	return passw.length >= 6;
+}
+
 /* sign_in
  *
  * Handles backed and frontend aspects of sign-in process
@@ -40,7 +44,7 @@ function sign_in(event) {
 	// fetching data
 	fetch("/signin", option)
 		.then((res) => {
-			// Ύστερα από επιτυχές sign-up μπορούμε να χρησιμοποιήσουμε το πρόγραμμα ως user
+			// Ύστερα από επιτυχές sign-in μπορούμε να χρησιμοποιήσουμε το πρόγραμμα ως user
 			window.location.href = res.url;
 		})
 		.catch((err) => {
@@ -49,16 +53,13 @@ function sign_in(event) {
 }
 
 function sign_up() {
-	alert("here!");
-
-	var uname = document.getElementById("signup-form-uname").value;
 	var email = document.getElementById("signup-form-email").value;
 	var passw = document.getElementById("signup-form-passw").value;
-	var isProducer = document.getElementById("signup-form-isProducer").value;
+	var isProducer = document.getElementById("signup-form-isProducer").checked;
 
-	console.log("got: ", uname, email, passw, isProducer);
+	console.log("got: ", email, passw, isProducer);
 
-	if (!uname || !email || !passw) {
+	if (!email || !passw) {
 		alert("Πληκτρολογήστε έγκυρα στοιχεία!");
 		return;
 	}
@@ -68,23 +69,34 @@ function sign_up() {
 		return;
 	}
 
-	// TODO: sanitisation checks
+	if (!validatePassword(passw)) {
+		alert("Ο κωδικός πρέπει ναναι τουλαχ. 6 χαρακτήρες.");
+		return;
+	}
 
 	/* create user */
-	// firebase.auth().createUserWithEmailAndPassword(email, passw)
-	// .then((userCredential) => {
-	//     /* set username for this user */
-	//     userCredential.user.updateProfile({
-	//         displayName: uname
-	//     }).then(function() {
-	//         console.log('Successfully created a new account!');
-	//     }).catch(function(error) {
-	//         console.log('error: ', error);
-	//     });
-	// })
-	// .catch((error) => {
-	//     console.log('error: ', error);
-	// });
+	const option = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+		method: "POST",
+		method: "POST",
+		body: JSON.stringify({
+			email,
+			password: passw,
+			isProducer,
+		}),
+	};
+
+	// fetching data
+	fetch("/signup", option)
+		.then((res) => {
+			// Ύστερα από επιτυχές sign-up μπορούμε να χρησιμοποιήσουμε το πρόγραμμα ως user
+			window.location.href = res.url;
+		})
+		.catch((err) => {
+			alert("Something happen wrong!");
+		});
 }
 
 function sign_out() {
