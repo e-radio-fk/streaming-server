@@ -72,6 +72,38 @@ app.get("/", (req, res) => {
 const fb = firebase.initializeApp(firebaseConfig);
 if (!fb) console.log("server: Failure initialising Firebase!");
 
+const isAdmin = (userId) =>
+	firebase
+		.database()
+		.ref()
+		.child("/admins")
+		.get()
+		.then((snapshot) => {
+			if (!snapshot.exists()) {
+				console.log("error!");
+				return;
+			}
+
+			const value = snapshot.val();
+			if (!value) {
+				console.log("error2");
+				return;
+			}
+
+			console.log("userID: ", userId);
+
+			Object.entries(value).forEach(([key, value]) => {
+				console.log("key: ", key, " value: ", value);
+
+				if (value === userId) return Promise.resolve(true);
+			});
+
+			Promise.resolve(false);
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+
 /*
  * Handle Login
  */
@@ -97,11 +129,9 @@ app.post("/signin", (req, res) => {
 
 			loggedInUser = userCredential.user;
 
-			// TODO: fix isAdmin() part
-
-			// res.redirect('/profile');
-			// TODO: fixme
-			res.redirect("/console");
+			isAdmin(userCredential.user.id).then((res) =>
+				res.redirect(res ? "/console" : "/profile")
+			);
 			res.end();
 		})
 		.catch((error) => {
@@ -111,14 +141,6 @@ app.post("/signin", (req, res) => {
 
 			console.log("server: Error loging in: " + error);
 		});
-	// })
-	// .catch((error) => {
-	// 	console.log('error: ', error);
-
-	// 	// Ολοκλήρωση του request χωρίς redirect
-	// res.redirect('/');
-	// 	res.end();
-	// });
 });
 
 app.get("/profile", (req, res) => {
@@ -149,7 +171,11 @@ app.post("/signup", (req, res) => {
 		.then((userCredential) => {
 			loggedInUser = userCredential.user;
 
-			res.redirect("/console");
+			if (isProducer) {
+				// TODO: also add to admins list
+				res.redirect("/console");
+			} else res.redirect("/profile");
+
 			res.end();
 		})
 		.catch((error) => {
