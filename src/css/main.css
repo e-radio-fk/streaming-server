@@ -573,6 +573,7 @@ input:checked + .slider:before {
   left: 5px;
   right: 5px;
   margin: auto;
+  z-index: 1000;
 }
 .now-playing-banner p {
   text-align: left;
@@ -630,7 +631,7 @@ input:checked + .slider:before {
   background-image: url('../img/play.png');
   width: 25px;
   height: 25px;
-  background-image: url('../img/speaker.png');
+  background-image: url("../img/speaker.png");
 }
 .sound-button:hover {
   transform: scale(1.25);
@@ -653,7 +654,7 @@ input:checked + .slider:before {
   opacity: 0.8;
   border-radius: 20%;
   background-color: rgba(174, 42, 59, 0.8);
-  background-image: url('../img/micOff.png');
+  background-image: url("../img/micOff.png");
 }
 #control-panel-nav-bar {
   position: fixed;

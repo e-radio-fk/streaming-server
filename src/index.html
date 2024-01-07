@@ -85,24 +85,30 @@
 								width="25px"
 								height="25px"
 								onclick="show_login_box()"
-								style=""
 							/>
 							<br />
 
-							<label for="login-form-uname">Username:</label><br />
+							<label for="signup-form-uname">Username:</label><br />
 							<input
 								type="text"
 								class="textbox"
-								id="login-form-uname"
-								name="login-form-uname"
+								id="signup-form-uname"
+								name="signup-form-uname"
 							/><br />
-							<label for="login-form-passw">Κωδικός:</label><br />
+							<label for="signup-form-email">Email:</label><br />
+							<input
+								type="email"
+								class="textbox"
+								id="signup-form-email"
+								name="signup-form-email"
+							/><br />
+							<label for="signup-form-passw">Κωδικός:</label><br />
 							<input
 								type="password"
 								class="textbox"
-								id="login-form-passw"
-								name="login-form-passw"
-							/><br /><br />
+								id="signup-form-passw"
+								name="signup-form-passw"
+							/><br />
 							<div
 								style="
 									display: flex;
@@ -117,10 +123,9 @@
 									id="signup-form-isProducer"
 									name="signup-form-isProducer"
 								/>
-								<br />
 							</div>
 							<hr />
-							<button type="submit" onclick="() => {}">Εγγραφή</button>
+							<button onclick="alert('here!')">Εγγραφή</button>
 						</div>
 					</div>
 
@@ -186,7 +191,7 @@
 		<br />
 		<br />
 
-		<div class="intro" style="width: fit-content; margin: auto">
+		<div class="intro">
 			<h1>OmniRadio</h1>
 		</div>
 

@@ -1,109 +1,110 @@
 /* Banner */
 
 .now-playing-banner {
-    height: 60px;
-    background-color: rgba(194, 135, 224, 0.15);
-    backdrop-filter: blur(10px);
-    border-radius: 7px;
-    box-shadow: 5px 1px 300px #000000;
-    position: fixed;
-    left: 5px;
-    right: 5px;
-    margin: auto;
+	height: 60px;
+	background-color: rgba(194, 135, 224, 0.15);
+	backdrop-filter: blur(10px);
+	border-radius: 7px;
+	box-shadow: 5px 1px 300px #000000;
+	position: fixed;
+	left: 5px;
+	right: 5px;
+	margin: auto;
+	z-index: 1000;
 }
 
 .now-playing-banner p {
-    text-align: left;
-    display: inline-block;
+	text-align: left;
+	display: inline-block;
 }
 
 .now-playing-banner .vl {
-    .no-select();
-    height: 25px;
-    opacity: 0.3;  
+	.no-select();
+	height: 25px;
+	opacity: 0.3;
 }
 
 /* Play Button */
 
 .play-button {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    box-sizing: initial;
-    padding-left: 15px;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    vertical-align: middle;
-    opacity: 0.8;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	box-sizing: initial;
+	padding-left: 15px;
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	vertical-align: middle;
+	opacity: 0.8;
 }
 
 .play-button:hover {
-    transform: scale(1.25);
+	transform: scale(1.25);
 }
 
 .play-button:active {
-    transform: scale(0.95);
+	transform: scale(0.95);
 }
 
 /* Sound Button */
 
 .sound-button {
-    .play-button();
-    width: 25px;
-    height: 25px;
-    background-image: url('../img/speaker.png');
+	.play-button();
+	width: 25px;
+	height: 25px;
+	background-image: url("../img/speaker.png");
 }
 .sound-button:hover {
-    transform: scale(1.25);
+	transform: scale(1.25);
 }
 .sound-button:active {
-    transform: scale(0.95);
+	transform: scale(0.95);
 }
 
 #now-playing-banner-rightmost-part {
-    height: inherit;
+	height: inherit;
 }
 
 .mic-onoff-icon {
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    margin-top: 15px;
-    vertical-align: middle;
-    opacity: 0.8;
-    border-radius: 20%;
-    background-color: rgba(174, 42, 59, 0.8);
-    background-image: url('../img/micOff.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+	display: inline-block;
+	width: 25px;
+	height: 25px;
+	margin-top: 15px;
+	vertical-align: middle;
+	opacity: 0.8;
+	border-radius: 20%;
+	background-color: rgba(174, 42, 59, 0.8);
+	background-image: url("../img/micOff.png");
 }
 
-// 
+//
 // Console Banner
 //
 #control-panel-nav-bar {
-    position: fixed;
-    left: 5px;
-    right: 5px;
-    margin: auto;
+	position: fixed;
+	left: 5px;
+	right: 5px;
+	margin: auto;
 }
 
 #control-panel-nav-bar h4 {
-    vertical-align: middle;
-    margin: 15px;
-    text-align: left;
-    float: left;
+	vertical-align: middle;
+	margin: 15px;
+	text-align: left;
+	float: left;
 }
 
 #control-panel-nav-bar-title {
-    text-align: initial;
-    float: initial;
-    margin-left: auto; 
-    margin-right: auto;
+	text-align: initial;
+	float: initial;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 #banner-user-img {
-    background-image: none;
+	background-image: none;
 }
