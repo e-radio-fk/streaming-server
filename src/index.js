@@ -76,37 +76,26 @@ if (!fb) console.log("server: Failure initialising Firebase!");
 
 const database = firebase.database().ref();
 
-const isAdmin = (userId) =>
-	database
-		.child("/admins")
-		.get()
-		.then((snapshot) => {
-			if (!snapshot.exists()) {
-				console.log("error!");
-				return;
-			}
-
-			const value = snapshot.val();
-			if (!value) {
-				console.log("error2");
-				return;
-			}
-
-			console.log("userID: ", userId);
-
-			Object.entries(value).forEach(([key, value]) => {
-				console.log("key: ", key, " value: ", value);
-
-				if (value === userId) console.log("FOUND!");
-				if (value === userId) return true;
-			});
-
+const isAdmin = async (userId) => {
+	try {
+		const snapshot = await database.child("/admins").get();
+		if (!snapshot.exists()) {
+			console.log("error!");
 			return false;
-		})
-		.catch((error) => {
-			console.error(error);
-			Promise.reject();
-		});
+		}
+
+		const admins = snapshot.val();
+		if (!admins) {
+			console.log("error2");
+			return false;
+		}
+
+		return Object.values(admins).includes(userId);
+	} catch (error) {
+		console.error(error);
+		return false;
+	}
+};
 
 const makeAdmin = (userId) =>
 	database.child("/admins").set({
@@ -181,7 +170,7 @@ app.post("/signup", (req, res) => {
 			loggedInUser = userCredential.user;
 
 			if (isProducer) {
-				makeAdmin(email, userCredential.user.uid)
+				makeAdmin(userCredential.user.uid)
 					.then(() => {
 						res.redirect("/console");
 						res.end();
