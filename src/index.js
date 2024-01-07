@@ -16,6 +16,8 @@ const bodyParser = require("body-parser");
 const firebase = require("firebase/app");
 const auth = require("firebase/auth");
 
+const { v4: uuidv4 } = require("uuid");
+
 const fetch = require("node-fetch");
 
 // Mixing Support
@@ -72,10 +74,10 @@ app.get("/", (req, res) => {
 const fb = firebase.initializeApp(firebaseConfig);
 if (!fb) console.log("server: Failure initialising Firebase!");
 
+const database = firebase.database().ref();
+
 const isAdmin = (userId) =>
-	firebase
-		.database()
-		.ref()
+	database
 		.child("/admins")
 		.get()
 		.then((snapshot) => {
@@ -95,14 +97,21 @@ const isAdmin = (userId) =>
 			Object.entries(value).forEach(([key, value]) => {
 				console.log("key: ", key, " value: ", value);
 
-				if (value === userId) return Promise.resolve(true);
+				if (value === userId) console.log("FOUND!");
+				if (value === userId) return true;
 			});
 
-			Promise.resolve(false);
+			return false;
 		})
 		.catch((error) => {
 			console.error(error);
+			Promise.reject();
 		});
+
+const makeAdmin = (userId) =>
+	database.child("/admins").set({
+		[uuidv4()]: userId,
+	});
 
 /*
  * Handle Login
@@ -129,10 +138,10 @@ app.post("/signin", (req, res) => {
 
 			loggedInUser = userCredential.user;
 
-			isAdmin(userCredential.user.id).then((res) =>
-				res.redirect(res ? "/console" : "/profile")
-			);
-			res.end();
+			isAdmin(userCredential.user.uid).then((admin) => {
+				res.redirect(admin ? "/console" : "/profile");
+				res.end();
+			});
 		})
 		.catch((error) => {
 			// Ολοκλήρωση του request χωρίς redirect
@@ -172,11 +181,19 @@ app.post("/signup", (req, res) => {
 			loggedInUser = userCredential.user;
 
 			if (isProducer) {
-				// TODO: also add to admins list
-				res.redirect("/console");
-			} else res.redirect("/profile");
-
-			res.end();
+				makeAdmin(email, userCredential.user.uid)
+					.then(() => {
+						res.redirect("/console");
+						res.end();
+					})
+					.catch(() => {
+						res.redirect("/profile");
+						res.end();
+					});
+			} else {
+				res.redirect("/profile");
+				res.end();
+			}
 		})
 		.catch((error) => {
 			// Ολοκλήρωση του request χωρίς redirect
