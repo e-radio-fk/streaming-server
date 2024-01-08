@@ -64,14 +64,14 @@
 					>
 						<!-- Login Box -->
 						<div id="login-box">
-							<label for="login-form-uname">Όνομα Χρήστη:</label><br />
+							<label for="login-form-uname">Username:</label><br />
 							<input
 								type="text"
 								class="textbox"
 								id="login-form-uname"
 								name="login-form-uname"
 							/><br />
-							<label for="login-form-passw">Κωδικός:</label><br />
+							<label for="login-form-passw">Password:</label><br />
 							<input
 								type="password"
 								class="textbox"
@@ -80,7 +80,7 @@
 							/><br /><br />
 							<input
 								type="submit"
-								value="Είσοδος"
+								value="Sign In"
 								style="display: flex; justify-content: center; padding-left: 0"
 								onclick="sign_in(event);"
 							/>
@@ -88,7 +88,7 @@
 							<input
 								type="submit"
 								onclick="show_signup_box()"
-								value="Εγγραφή"
+								value="Sign Up"
 							/>
 						</div>
 
@@ -109,7 +109,7 @@
 								id="signup-form-email"
 								name="signup-form-email"
 							/><br />
-							<label for="signup-form-passw">Κωδικός:</label><br />
+							<label for="signup-form-passw">Password:</label><br />
 							<input
 								type="password"
 								class="textbox"
@@ -124,7 +124,7 @@
 									gap: 2px;
 								"
 							>
-								<label for="signup-form-isProducer">Παραγωγός</label>
+								<label for="signup-form-isProducer">Producer</label>
 								<input
 									type="checkbox"
 									id="signup-form-isProducer"
@@ -132,7 +132,7 @@
 								/>
 							</div>
 							<hr />
-							<button onclick="sign_up()">Εγγραφή</button>
+							<button onclick="sign_up()">Sign Up</button>
 						</div>
 					</div>
 
@@ -208,21 +208,21 @@
 
 		<div class="nav-menu">
 			<ul>
-				<li><a href="./menu/news.html">Ειδήσεις</a></li>
-				<li><a href="./menu/contact.html">Επικοινωνία</a></li>
-				<li><a href="./menu/about.html">Πληροφορίες</a></li>
+				<li><a href="./menu/news.html">News</a></li>
+				<li><a href="./menu/contact.html">Contact</a></li>
+				<li><a href="./menu/about.html">Information</a></li>
 			</ul>
 		</div>
 
 		<div class="intro">
 			<h3>
-				Η all-in-one e-radio πλατφόρμα <br />
-				για επαγγελματίες και χομπίστες
+				The all-in-one e-radio platform <br />
+				for professionals and hobbyists
 			</h3>
 		</div>
 
 		<div class="podcast-news-table-space" style="width: 25%">
-			<h4 class="podcast-news-table-title">Προγραμματισμένα Podcasts</h4>
+			<h4 class="podcast-news-table-title">Scheduled Podcasts</h4>
 			<div style="overflow-y: scroll; max-height: 425px">
 				<table class="podcast-news-table">
 					<tbody></tbody>

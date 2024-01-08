@@ -3,7 +3,7 @@
 		<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
 		<meta content="utf-8" http-equiv="encoding" />
 
-		<title>FK Live E-Radio: Κονσόλα</title>
+		<title>FK Live E-Radio: Console</title>
 		<link rel="stylesheet" href="css/main.css" />
 		<link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
 
@@ -34,7 +34,7 @@
 			style="position: relative"
 		>
 			<h4 style="position: absolute" id="control-panel-nav-bar-title">
-				Κονσόλα&emsp;έκδοση 0.0.0.4
+				Console&emsp;version 0.0.0.4
 			</h4>
 
 			<div
@@ -43,14 +43,12 @@
 				onclick="toggle_dropdown_with_ID('console-user-dropdown');"
 			>
 				<div class="dropdown-content">
-					<a class="dropdown-content-button" href="./settings.html"
-						>Ρυθμίσεις</a
-					>
+					<a class="dropdown-content-button" href="./settings.html">Settings</a>
 					<a
 						class="dropdown-content-button"
 						id="console-sign-out-button"
 						onclick="sign_out()"
-						>Αποσύνδεση</a
+						>Logout</a
 					>
 				</div>
 				<div class="dropbtn" id="banner-user-img"></div>
@@ -81,19 +79,19 @@
 					class="console-nav-bar-item"
 					onclick="show_section_with_id('mixer-console-section');"
 				>
-					<p>Κονσόλα</p>
+					<p>Console</p>
 				</div>
 				<div
 					class="console-nav-bar-item"
 					onclick="show_section_with_id('podcast-section');"
 				>
-					<p>Προγραμματισμός Εκπομπής</p>
+					<p>Schedule Podcast</p>
 				</div>
 				<div
 					class="console-nav-bar-item"
 					onclick="show_section_with_id('playlist-section');"
 				>
-					<p>Διαχείριση Playlist</p>
+					<p>Manage Playlist</p>
 				</div>
 			</div>
 
@@ -103,7 +101,7 @@
 				<!--          -->
 
 				<div id="mixer-console-section" style="display: block">
-					<h3 style="margin-top: 0px; margin-bottom: 0">Μίκτης</h3>
+					<h3 style="margin-top: 0px; margin-bottom: 0">Mixer</h3>
 
 					<button
 						class="dropdown"
@@ -111,11 +109,11 @@
 						style="float: unset"
 						onclick="toggle_dropdown_with_ID('console-start-podcast-button')"
 					>
-						Ξεκίνημα Εκπομπής
+						Start Podcast
 
 						<div class="dropdown-content" id="start-podcast-dropdown-content">
 							<p class="dropdown-content-button" onclick="start_podcast(null)">
-								... Τυχαία Εκπομπή
+								... Random Podcast
 							</p>
 							<!-- ... More entries must be filled here automatically from DB -->
 						</div>
@@ -134,18 +132,18 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<h4 class="modal-title" id="schedule-podcast-modal-label">
-										Ξεκίνημα Εκπομπής
+										Start Podcast
 									</h4>
 								</div>
 								<div class="modal-body">
-									<p>Πριν ξεκινήσετε, ελέγξτε το μικρόφωνο...</p>
+									<p>Before you begin, check the microphone...</p>
 									<div>
 										<button
 											id="console-test-mic-button"
 											style="display: inline-flex"
 											onclick="test_mic();"
 										>
-											Έλεγχος
+											Check
 										</button>
 										<canvas
 											id="console-microphone-visualisation"
@@ -154,12 +152,12 @@
 									</div>
 								</div>
 								<div class="modal-footer">
-									<button type="button" data-dismiss="modal">Ακύρωση</button>
+									<button type="button" data-dismiss="modal">Cancel</button>
 									<button
 										id="console-start-podcast-after-soundcheck-button"
 										onclick="start_podcast_after_soundcheck();"
 									>
-										Έναρξη
+										Start
 									</button>
 								</div>
 							</div>
@@ -174,7 +172,7 @@
 						<div class="console-panels-header">
 							<!-- ... automatically filled -->
 							<h4 style="padding: 0; margin: 0" id="podcast-session-title">
-								(τίτλος)
+								(title)
 							</h4>
 						</div>
 
@@ -184,7 +182,7 @@
 								style="top: 0; bottom: 0; margin: 0"
 								id="console-toggle-microphone"
 							>
-								έναρξη μικροφώνου
+								start mic
 							</button>
 						</div>
 
@@ -194,7 +192,7 @@
 								<table id="console-panels-playlist-table">
 									<thead>
 										<tr>
-											<th>Όνομα</th>
+											<th>Name</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -207,7 +205,7 @@
 							<div id="console-panel-controls" style="display: inline-block">
 								<!-- Music Section -->
 								<div id="console-panel-controls-music-section">
-									<h3>Μουσική</h3>
+									<h3>Music</h3>
 									<div id="console-panel-controls-music-subsection">
 										<div id="console-panel-controls-music-buttons">
 											<button
@@ -242,12 +240,10 @@
 
 				<div id="podcast-section" style="display: none">
 					<!-- Start Podcast Dropdown -->
-					<h3 style="margin-top: 0px; margin-bottom: 0">
-						Προγραμματισμός Εκπομπής
-					</h3>
+					<h3 style="margin-top: 0px; margin-bottom: 0">Schedule Podcast</h3>
 
 					<button data-toggle="modal" data-target="#schedule-podcast-modal">
-						Προγραμματισμός Εκπομπής
+						Schedule Podcast
 					</button>
 
 					<!-- Schedule Podcast Modal -->
@@ -263,16 +259,14 @@
 							<div class="modal-content">
 								<div class="modal-header">
 									<h4 class="modal-title" id="schedule-podcast-modal-label">
-										Προγραμματισμός Εκπομπής
+										Schedule Podcast
 									</h4>
 								</div>
 								<div class="modal-body">
 									<div>
 										<!-- Date Picker disguised as a button -->
 										<div style="display: inline-block">
-											<button id="podcast-datepicker">
-												Επιλογή Ημερομηνίας
-											</button>
+											<button id="podcast-datepicker">Choose a date</button>
 											<p
 												id="podcast-date-picked-label"
 												style="display: inline-block"
@@ -281,7 +275,7 @@
 
 										<!-- Select Playlist -->
 										<div style="display: inline-block">
-											<p style="display: inline-block">Επιλογή Playlist</p>
+											<p style="display: inline-block">Choose Playlist</p>
 											<select
 												name="playlists-selection"
 												id="schedule-podcast-playlists-selection"
@@ -293,7 +287,7 @@
 									<div>
 										<!-- Time Picker -->
 										<div style="left: 10px; position: absolute">
-											<label for="time">Έναρξη</label>
+											<label for="time">Start</label>
 											<input
 												type="time"
 												name="time"
@@ -302,7 +296,7 @@
 											/>
 										</div>
 										<div style="right: 10px; position: absolute">
-											<label for="time">Λήξη</label>
+											<label for="time">End</label>
 											<input
 												type="time"
 												name="time"
@@ -322,7 +316,7 @@
 										rows="1"
 										style="width: 99%; resize: none; border-radius: 5px"
 									></textarea>
-									<p>Περιγραφή</p>
+									<p>Description</p>
 									<textarea
 										class="textbox"
 										id="podcast-description"
@@ -343,9 +337,9 @@
 									<a href="#" class="fa fa-instagram"></a>
 								</div>
 								<div class="modal-footer">
-									<button type="button" data-dismiss="modal">Ακύρωση</button>
+									<button type="button" data-dismiss="modal">Cancel</button>
 									<button type="button" onclick="schedule_new_podcast()">
-										Επιβεβαίωση
+										Confirm
 									</button>
 								</div>
 							</div>
@@ -354,14 +348,12 @@
 				</div>
 
 				<div id="playlist-section" style="display: none">
-					<h3 style="margin-top: 0px; margin-bottom: 0">
-						Διαχειριστής Playlist
-					</h3>
+					<h3 style="margin-top: 0px; margin-bottom: 0">Playlist Manager</h3>
 
 					<div>
 						<!-- New Button -->
 						<button onclick="$('#clear-playlist-modal').modal('show')">
-							Νέα
+							New
 						</button>
 
 						<!-- Start Podcast Modal -->
@@ -377,25 +369,25 @@
 								<div class="modal-content">
 									<div class="modal-header">
 										<h4 class="modal-title" id="schedule-podcast-modal-label">
-											Εκκαθάριση
+											Clear
 										</h4>
 									</div>
 									<div class="modal-body">
-										<p>Είστε σίγουρος ότι θέλετε να καθαρίσετε όλα τα πεδία;</p>
+										<p>Are you sure you want to clear all the fields?</p>
 									</div>
 									<div class="modal-footer">
 										<button
 											id="clear-playlist-modal-abort-button"
 											data-dismiss="modal"
 										>
-											όχι
+											no
 										</button>
 										<button
 											id="clear-playlist-modal-confirm-button"
 											onclick="clearPlaylist()"
 											data-dismiss="modal"
 										>
-											Επιβεβαίωση
+											Confirm
 										</button>
 									</div>
 								</div>
@@ -410,26 +402,20 @@
 							onclick="toggle_dropdown_with_ID('import-playlist-button')"
 						>
 							<i class="fa fa-download" style="padding: 0; margin: 0"></i>
-							εισαγωγή
+							import
 							<div class="dropdown-content">
 								<p
 									class="dropdown-content-button"
 									onclick="import_playlist_from('yt')"
 								>
-									Από YouTube
+									From YouTube
 								</p>
-								<!-- <p
-									class="dropdown-content-button"
-									onclick="import_playlist_from('spotify')"
-								>
-									Από Spotify
-								</p> -->
 							</div>
 						</button>
 					</div>
 
 					<div>
-						<p style="display: inline-block">όνομα playlist:</p>
+						<p style="display: inline-block">playlist name:</p>
 						<input
 							type="text"
 							class="textbox"
@@ -445,9 +431,9 @@
 						<table id="console-create-playlist-table">
 							<thead>
 								<tr>
-									<th>Όνομα</th>
-									<th>Ημερομηνία Προσθήκης</th>
-									<th>Προσθήκη</th>
+									<th>Name</th>
+									<th>Date Added</th>
+									<th>Add</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -458,7 +444,7 @@
 
 					<br />
 
-					<button onclick="createPlaylist()">Δημιουργία</button>
+					<button onclick="createPlaylist()">Create</button>
 
 					<!-- Import Playlist Modal -->
 					<div
@@ -474,10 +460,10 @@
 								<div class="modal-header">
 									<button type="button" class="close" data-dismiss="modal">
 										<span aria-hidden="true">&times;</span
-										><span class="sr-only">Κλείσιμο</span>
+										><span class="sr-only">Close</span>
 									</button>
 									<h4 class="modal-title" id="import-playlist-modal-label">
-										Εισαγωγή Playlist
+										Import Playlist
 									</h4>
 								</div>
 								<div class="modal-body">
@@ -489,7 +475,7 @@
 									/>
 
 									<!-- filename -->
-									<p>όνομα αρχείου</p>
+									<p>file name</p>
 									<input
 										type="text"
 										id="console-import-yt-mp3-with-filename-textbox"
@@ -506,7 +492,7 @@
 										id="import-playlist-modal-ok-button"
 										onclick="importYTMP3()"
 									>
-										Εισαγωγή
+										Import
 									</button>
 								</div>
 							</div>
