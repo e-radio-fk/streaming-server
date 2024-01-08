@@ -18,7 +18,21 @@
 		<script src="scripts/Firebase/firebase-helpers.js"></script>
 		<script src="scripts/Firebase/init-firebase.js"></script>
 	</head>
-	<header style="visibility: hidden">
+	<header style="visibility: hidden; position: relative">
+		<img
+			style="
+				position: absolute;
+				right: 5px;
+				top: 80px;
+				width: 30px;
+				height: 30px;
+				border-radius: 15px;
+				z-index: 6000;
+			"
+			src="./uk.webp"
+			onclick="change_to_english()"
+		/>
+
 		<div class="now-playing-banner" id="now-playing-banner-object">
 			<!-- Play button -->
 			<div class="play-button" id="now-playing-banner-play-button"></div>
@@ -122,6 +136,11 @@
 						</div>
 					</div>
 
+					<script>
+						function change_to_english() {
+							window.location.href = "/en";
+						}
+					</script>
 					<script>
 						function show_signup_box() {
 							document.getElementById("login-box").style.display = "none";
