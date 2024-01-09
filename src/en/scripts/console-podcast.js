@@ -119,6 +119,27 @@ function start_podcast(podcast) {
 	$("#start-podcast-modal").modal("show");
 }
 
+const getPlaylistSongIds = async () => {
+	const database = firebase.database();
+
+	const snapshot = await database.ref().child("/playlists").get();
+
+	if (!snapshot.exists()) throw "Failed to get snapshot!";
+
+	const json = snapshot.val();
+	if (!json) throw "Failed to get json";
+
+	let list = [];
+
+	Object.entries(json).map(([key, value]) => {
+		if (key === g_podcast_data.playlist) list = value;
+	});
+
+	return list;
+};
+
+const getSongNamesFromIds = async () => {};
+
 /**
  * start_podcast_after_soundcheck()
  *
@@ -130,15 +151,17 @@ function start_podcast_after_soundcheck() {
 	// clear old rows
 	currentPlaylistTable.empty();
 
-	// TODO: make this **actually** get the list
+	getPlaylistSongIds()
+		.then(getSongNamesFromIds)
+		.then((names) => {
+			if (names.length === 0) return;
 
-	const list = ["song1.mp3", "song2.mp3"];
+			names.forEach((item) => {
+				const newRow = $("<tr>").append($("<td>").text(item));
 
-	list.forEach((item) => {
-		const newRow = $("<tr>").append($("<td>").text(item));
-
-		currentPlaylistTable.append(newRow);
-	});
+				currentPlaylistTable.append(newRow);
+			});
+		});
 
 	$("#console-panels-object").css("display", "block");
 	$("#console-start-podcast-button").css("display", "none");
