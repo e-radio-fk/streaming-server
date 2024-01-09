@@ -27,17 +27,15 @@ function sign_in(event) {
 		return;
 	}
 
-	// TODO: sanitisation checks
-
 	const option = {
 		headers: {
 			"Content-Type": "application/json",
 		},
 		method: "POST",
-		method: "POST",
 		body: JSON.stringify({
-			username: username,
-			password: password,
+			username,
+			password,
+			isEnglish: false,
 		}),
 	};
 

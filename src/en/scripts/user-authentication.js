@@ -38,6 +38,7 @@ function sign_in(event) {
 		body: JSON.stringify({
 			username: username,
 			password: password,
+			isEnglish: true,
 		}),
 	};
 

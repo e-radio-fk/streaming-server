@@ -108,9 +108,11 @@ const makeAdmin = (userId) =>
 app.post("/signin", (req, res) => {
 	const username = req.body.username;
 	const password = req.body.password;
+	const isEnglish = req.body.isEnglish;
 
 	console.log("username: ", username);
 	console.log("password: ", password);
+	console.log("isEnglish: ", isEnglish);
 
 	// TODO: sanitisation checks
 
@@ -128,7 +130,11 @@ app.post("/signin", (req, res) => {
 			loggedInUser = userCredential.user;
 
 			isAdmin(userCredential.user.uid).then((admin) => {
-				res.redirect(admin ? "/console" : "/profile");
+				res.redirect(
+					admin
+						? `${isEnglish ? "/en" : ""}/console`
+						: `${isEnglish ? "/en" : ""}/profile`
+				);
 				res.end();
 			});
 		})
@@ -153,6 +159,41 @@ app.get("/console", (req, res) => {
 		res.sendFile("permissionDenied.html", { root: __project_root });
 	} else {
 		res.sendFile("console.html", { root: __project_root });
+	}
+});
+app.get("/settings", (req, res) => {
+	if (!loggedInUser) {
+		res.sendFile("permissionDenied.html", { root: __project_root });
+	} else {
+		res.sendFile("settings.html", { root: __project_root });
+	}
+});
+
+app.get("/en/profile", (req, res) => {
+	if (!loggedInUser) {
+		res.sendFile("permissionDenied.html", {
+			root: __project_root + "/" + "en",
+		});
+	} else {
+		res.sendFile("profile.html", { root: __project_root + "/" + "en" });
+	}
+});
+app.get("/en/console", (req, res) => {
+	if (!loggedInUser) {
+		res.sendFile("permissionDenied.html", {
+			root: __project_root + "/" + "en",
+		});
+	} else {
+		res.sendFile("console.html", { root: __project_root + "/" + "en" });
+	}
+});
+app.get("/en/settings", (req, res) => {
+	if (!loggedInUser) {
+		res.sendFile("permissionDenied.html", {
+			root: __project_root + "/" + "en",
+		});
+	} else {
+		res.sendFile("settings.html", { root: __project_root + "/" + "en" });
 	}
 });
 
