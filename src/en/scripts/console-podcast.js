@@ -138,7 +138,20 @@ const getPlaylistSongIds = async () => {
 	return list;
 };
 
-const getSongNamesFromIds = async () => {};
+const getSongNamesFromIds = async (songIds) => {
+	let list = [];
+
+	const myDB = fb.firestore();
+	const snapshot = await myDB.collection("songs").get();
+	snapshot.forEach((doc) => {
+		const id = doc.id;
+		const data = doc.data();
+
+		if (songIds.includes(id)) list.push(data.name);
+	});
+
+	return list;
+};
 
 /**
  * start_podcast_after_soundcheck()
